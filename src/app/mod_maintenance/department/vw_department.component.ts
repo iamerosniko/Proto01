@@ -13,7 +13,7 @@ export class VWDepartmentComponent {
   viewMode : number = 0;
   department : Department = new Department(0,'',true);
   departments: Department[] = [];
-
+  mode:number=0;
   newDetails(){
     this.department=new Department(0,'',true);
   }
@@ -21,18 +21,24 @@ export class VWDepartmentComponent {
   editDetails(dept: Department){
     this.viewMode=1;
     //get detail
+    this.mode=1;
     this.getDetails(dept);
   }
+
   getDetails(dept : Department){
     this.department = dept;
   }
 
+  goBack(){
+    this.mode=0;
+  }
+
   async saveDepartment(){
     this.viewMode==0 ?  await this.deptSvc.postDepartment(this.department) : await this.deptSvc.putDepartment(this.department);
-    alert("yes");
     document.getElementById("btnGoBack").click();
     this.getLocations();
     this.department=new Department(0,'',true);
+    this.goBack();
   }
 
   async getLocations(){
