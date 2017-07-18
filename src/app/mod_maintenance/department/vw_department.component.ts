@@ -8,7 +8,7 @@ import { Department } from '../../com_entities/entities';
 })
 export class VWDepartmentComponent {
   constructor(private deptSvc:DepartmentSvc){
-    this.getLocations();
+    this.getDepartments();
   }
   viewMode : number = 0;
   department : Department = new Department(0,'',true);
@@ -36,12 +36,12 @@ export class VWDepartmentComponent {
   async saveDepartment(){
     this.viewMode==0 ?  await this.deptSvc.postDepartment(this.department) : await this.deptSvc.putDepartment(this.department);
     document.getElementById("btnGoBack").click();
-    this.getLocations();
+    this.getDepartments();
     this.department=new Department(0,'',true);
     this.goBack();
   }
 
-  async getLocations(){
+  async getDepartments(){
     this.departments=await this.deptSvc.getDepartments();
   }
 }

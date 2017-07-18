@@ -1,16 +1,47 @@
 import { Component } from '@angular/core';
+import { SkillsetSvc } from '../../com_services/skillset.svc';
+import { Skillset } from '../../com_entities/entities';
 @Component({
   moduleId: module.id,
   selector: 'vw-skillset',
   templateUrl: 'vw_skillset.component.html',
 })
 export class VWSkillsetComponent {
-  constructor(){
-
+  constructor(private skillsetSvc:SkillsetSvc){
+    this.getskillsets();
   }
   viewMode : number = 0;
-  editDetails(){
+  skillset : Skillset = new Skillset(0,'',true);
+  skillsets: Skillset[] = [];
+  mode:number=0;
+  newDetails(){
+    this.skillset=new Skillset(0,'',true);
+  }
+
+  editDetails(dept: Skillset){
     this.viewMode=1;
     //get detail
+    this.mode=1;
+    this.getDetails(dept);
+  }
+
+  getDetails(dept : Skillset){
+    this.skillset = dept;
+  }
+
+  goBack(){
+    this.mode=0;
+  }
+
+  async saveSkillset(){
+    this.viewMode==0 ?  await this.skillsetSvc.postSkillset(this.skillset) : await this.skillsetSvc.putSkillset(this.skillset);
+    document.getElementById("btnGoBack").click();
+    this.getskillsets();
+    this.skillset=new Skillset(0,'',true);
+    this.goBack();
+  }
+
+  async getskillsets(){
+    this.skillsets=await this.skillsetSvc.getSkillsets();
   }
 }
