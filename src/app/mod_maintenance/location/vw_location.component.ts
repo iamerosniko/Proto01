@@ -22,9 +22,8 @@ export class VWLocationComponent {
   }
 
   async saveLocation(){
-    await this.locSvc.postLocation(this.location);
-
-    alert("yes")
+    this.viewMode==0 ?  await this.locSvc.postLocation(this.location) : await this.locSvc.putLocation(this.location);
+    alert("yes");
   }
 
   async getLocations(){
