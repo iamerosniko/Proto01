@@ -13,9 +13,15 @@ export class VWLocationComponent {
   viewMode : number = 0;
   location : Location = new Location(0,'',true);
   locations: Location[] = [];
-  editDetails(){
+
+  newDetails(){
+    this.location=new Location(0,'',true);
+  }
+
+  editDetails(loc: Location){
     this.viewMode=1;
     //get detail
+    this.getDetails(loc);
   }
   getDetails(loc : Location){
     this.location = loc;
@@ -24,6 +30,9 @@ export class VWLocationComponent {
   async saveLocation(){
     this.viewMode==0 ?  await this.locSvc.postLocation(this.location) : await this.locSvc.putLocation(this.location);
     alert("yes");
+    document.getElementById("btnGoBack").click();
+    this.getLocations();
+    this.location=new Location(0,'',true);
   }
 
   async getLocations(){
