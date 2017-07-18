@@ -48,3 +48,5 @@ dist/*
 Network Trash Folder
 Temporary Items
 .apdisk
+dist/inline.bundle.js.map
+dist/main.bundle.js.map
