@@ -4,7 +4,9 @@ import { Component } from '@angular/core';
   templateUrl: 'profile.component.html',
 })
 export class ProfileComponent {
-  constructor(){
+  testData: string;
 
+  constructor(){
+    this.testData = "Rico"
   }
 }
