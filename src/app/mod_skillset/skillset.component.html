@@ -1,25 +1,89 @@
 <div class="col-md-12">
-    <div class="row">
-        <div class="col-md-12">
-            <h3>Skillset</h3>
-            <br />
+    <form>
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Skillset</h3>
+                <br />
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="profile-content">
-            <!--profile component here-->
-            <profile></profile>
+        <div class="row">
+            <div class="profile-content">
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Name</label>
+                        <div class="col-md-8">
+                            <!--locked field-->
+                            <input type="text" class="form-control" value="Albert Rick Martires" disabled />
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Current Department</label>
+                        <div class="col-md-8">
+                            <select class="form-control"></select>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Location</label>
+                        <div class="col-md-8">
+                            <select class="form-control"></select>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">VPN Capable</label>
+                        <div class="col-md-8">
+                            <label class="switch">
+                                <input class="fieldSelection" type="checkbox" />
+                                <div class="slider round"></div>
+                            </label>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Best Phone Number to be Reached</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" [(ngModel)]="phone"/>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Last Updated</label>
+                        <div class="col-md-8">
+                            <!--auto generated-->
+                            <input type="text" class="form-control" disabled />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="dep-skillset">
-            <department></department>
-            <!--department skillsets component here-->
+        <br />
+        <!--
+        <div class="row">
+            <div class="dep-skillset">
+                <department></department>
+                department skillsets component here
+            </div>
         </div>
-    </div>
-</div>
-<div class="save-bar">
-    <!--save bar component here-->
-    <save-bar></save-bar>
+        -->
+        <nav class="navbar navbar-fixed-bottom save-navbar">
+            <div class="container-fluid">
+                <div class="navbar-form navbar-right">
+                    <button 
+                            type="submit" 
+                            class="btn btn-primary btn-sm pull-right"
+                            [disabled]="!skillsetForm.valid">
+                        <i class="fa fa-save"></i>&nbsp;Update 
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </form>
 </div>

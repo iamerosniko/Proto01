@@ -1,4 +1,45 @@
 <div class="col-md-12">
+    <form 
+            [formGroup]="skillsetForm"
+            (ngSubmit)="onSubmit(skillsetForm.value)">
+        <div class="col-md-6">
+            <label for="skuInput" class="control-label col-md-4">Name</label>
+            
+            <div class="col-md-8">
+                <!--locked field-->
+                <input 
+                        type="text" 
+                        class="form-control" 
+                        id="skuInput" 
+                        placeholder="SKU"
+                        name="name"
+                    
+                        [formControl]="skillsetForm.get('skuName')"
+                        [(ngModel)]="productName"/>
+                <div *ngIf="!skillsetForm.controls['skuName'].valid">SKU is Invalid</div>
+                <div *ngIf="skillsetForm.controls['skuName'].hasError('required')">SKU is Required</div>
+                <br />
+            </div>
+        </div>
+<nav class="navbar navbar-fixed-bottom save-navbar">
+    <div class="container-fluid">
+        <div class="navbar-form navbar-right">
+            <button 
+                    type="submit" 
+                    class="btn btn-primary btn-sm pull-right"
+                    [disabled]="!skillsetForm.valid">
+                <i class="fa fa-save"></i>&nbsp;Update 
+            </button>
+            
+        </div>
+    </div>
+</nav>
+
+    </form>
+</div>
+
+<!--
+<div class="col-md-12">
     <textbox-name></textbox-name>
     <combobox-department></combobox-department>
 </div>
@@ -11,3 +52,4 @@
     <textbox-phone [(phone)]="testData" ></textbox-phone>
     <textbox-updated></textbox-updated>
 </div>
+-->
