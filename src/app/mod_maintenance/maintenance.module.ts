@@ -14,6 +14,9 @@ import { VWSkillsetComponent } from './skillset/vw_skillset.component';
 import { CommonCompModule } from '../mod_common/common_comp.module';
 //services
 import { LocationSvc } from '../com_services/location.svc';
+import { DepartmentSvc } from '../com_services/department.svc';
+import { SkillsetSvc } from '../com_services/skillset.svc';
+import { AssociateSvc } from '../com_services/associate.svc';
 @NgModule({
   //components area
   declarations: [
@@ -28,7 +31,7 @@ import { LocationSvc } from '../com_services/location.svc';
   ],
   //services area
   providers: [
-    LocationSvc
+    LocationSvc,DepartmentSvc,SkillsetSvc,AssociateSvc
   ],
   //components to be shared and used using selector
   exports: [

@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <!--tool bar-->
             <div class="row">
-                <a href="#" class="btn btn-primary btn-sm" data-toggle="tab" data-target="#ski_editor"><i class="fa fa-plus"></i>&nbsp;New Record</a>
+                <a href="#" (click)="newDetails()" class="btn btn-primary btn-sm" data-toggle="tab" data-target="#ski_editor"><i class="fa fa-plus"></i>&nbsp;New Record</a>
             </div>
             <br />
             <!--table-->
@@ -19,13 +19,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Row 1 Col 1</td>
-                                <td>Row 1 Col 2</td>
-                                <td>Row 1 Col 3</td>
+                            <tr *ngFor="let ss of skillsets">
+                                <td>{{ss.SkillsetID}}</td>
+                                <td>{{ss.SkillsetDescr}}</td>
+                                <td>{{ss.IsActive}}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="#" (click)="editDetails()" class="btn btn-default btn-xs" data-toggle="tab" data-target="#ski_editor" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a href="#" (click)="editDetails(ss)" class="btn btn-default btn-xs" data-toggle="tab" data-target="#ski_editor" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="#" class="btn btn-default btn-xs" title="Delete"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
@@ -62,7 +62,7 @@
         <div class="col-md-12">
             <!--return button-->
             <div class="row">
-                <a href="#" class="btn btn-default btn-sm" data-toggle="tab" data-target="#ski_default"><i class="fa fa-chevron-left"></i>&nbsp;Go Back</a>
+                <a href="#" id="btnGoBack" (click)="goBack()" class="btn btn-default btn-sm" data-toggle="tab" data-target="#ski_default"><i class="fa fa-chevron-left"></i>&nbsp;Go Back</a>
             </div>
             <br />
             <!--header-->
@@ -78,14 +78,14 @@
             <div class="row">
                 <label class="col-md-2 control-label">Skill Id</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" />
+                    <input type="text" [(ngModel)]="skillset.SkillsetID" readonly class="form-control input-sm" />
                 </div>
             </div>
             <br />
             <div class="row">
                 <label class="col-md-2 control-label">Skill Description</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" />
+                    <input type="text" [(ngModel)]="skillset.SkillsetDescr" class="form-control input-sm" />
                 </div>
             </div>
             <br />
@@ -93,7 +93,7 @@
                 <label class="col-md-2 control-label">Is Active</label>
                 <div class="col-md-4">
                     <label class="switch">
-                        <input type="checkbox" />
+                        <input type="checkbox" [(ngModel)]="skillset.IsActive" />
                         <div class="slider round"></div>
                     </label>
                     <br />
@@ -101,7 +101,7 @@
             </div>
         </div>
         <div class="save-bar">
-          <save-bar></save-bar>
+          <save-bar [buttonMode]="mode" (triggerParentFunc)="saveSkillset()"></save-bar>
             <!--save bar component here-->
         </div>
     </div>
