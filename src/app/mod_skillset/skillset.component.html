@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <form>
+    <form [formGroup]="skillsetFrm" [ngSubmit]="onSubmit(skillsetFrm.value)">
         <div class="row">
             <div class="col-md-12">
                 <h3>Skillset</h3>
@@ -73,7 +73,7 @@
             </div>
         </div>
         -->
-    
+
         <nav class="navbar navbar-fixed-bottom save-navbar">
             <div class="container-fluid">
                 <div class="navbar-form navbar-right">
