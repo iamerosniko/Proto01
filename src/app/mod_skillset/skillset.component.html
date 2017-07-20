@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    <form [formGroup]="skillsetFrm" [ngSubmit]="onSubmit(skillsetFrm.value)">
+    <form [formGroup]="skillsetFrm" (ngSubmit)="onSubmit(skillsetFrm.value)">
         <div class="row">
             <div class="col-md-12">
                 <h3>Skillset</h3>
@@ -13,7 +13,11 @@
                         <label class="control-label col-md-4">Name</label>
                         <div class="col-md-8">
                             <!--locked field-->
-                            <input type="text" class="form-control" value="Albert Rick Martires" disabled />
+                            <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    [formControl]="skillsetFrm.get('UserName')"
+                                    [(ngModel)]="acs.UserName" />
                             <br />
                         </div>
                     </div>
@@ -49,7 +53,7 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Best Phone Number to be Reached</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" [(ngModel)]="phone"/>
+                            <input type="text" class="form-control" />
                             <br />
                         </div>
                     </div>
@@ -80,7 +84,7 @@
                     <button 
                             type="submit" 
                             class="btn btn-primary btn-sm pull-right"
-                            [disabled]="!skillsetForm.valid">
+                            [disabled]="!skillsetFrm.valid" >
                         <i class="fa fa-save"></i>&nbsp;Update 
                     </button>
                 </div>

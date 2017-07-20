@@ -12,6 +12,7 @@ export class ProfileComponent {
   testData: string;
   skillsetForm: FormGroup;
   skuName: string;
+  
 
   constructor(fb: FormBuilder){
     this.testData = "Rico"
