@@ -17,7 +17,7 @@ export class SkillSetComponent {
   departments: any;
   locations: any;
   dateToday: Date;
-  
+  //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
   constructor(fb: FormBuilder  ){
     this.skillsetFrm = fb.group({
       'UserName': [{value: '', disabled: true}],
