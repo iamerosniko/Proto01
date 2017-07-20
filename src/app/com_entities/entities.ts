@@ -45,7 +45,6 @@ export class Skillset {
     ){}
 }
 
-
 export class Location {
     constructor (
         public LocationID: number,//primary key

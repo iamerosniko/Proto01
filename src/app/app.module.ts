@@ -6,6 +6,7 @@ import { Ng2Datetime } from 'ng2-datetime-picker';
 import { HttpModule } from '@angular/http';
 //app
 import { ContainerComponent } from './com_layout/admin/container.component';
+import { UserComponent } from './com_layout/common_user/container.component';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 // import { AppService } from './app.svc';EROS: i comment out this line because this is for simulation purposes only
@@ -17,7 +18,7 @@ import { CommonCompModule } from './mod_common/common_comp.module';
 @NgModule({
   //components area
   declarations: [
-    AppComponent,ContainerComponent
+    AppComponent,ContainerComponent,UserComponent
   ],
   //modules area
   imports: [
