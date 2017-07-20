@@ -16,6 +16,7 @@
                             <input 
                                     type="text" 
                                     class="form-control" 
+                                    [readonly]="true"
                                     [formControl]="skillsetFrm.get('UserName')"
                                     [(ngModel)]="acs.UserName" />
                             <br />
@@ -82,9 +83,10 @@
                             <!--auto generated-->
                             <input 
                                     type="text" 
-                                    class="form-control"  
+                                    class="form-control"
+                                    [readonly]="true"
                                     [formControl]="skillsetFrm.get('UpdatedOn')"
-                                    [(ngModel)]="acs.UpdatedOn" />
+                                    value="{{dateToday | date: 'dd/MM/yyyy'}}"/>
                             <br />
                         </div>
                     </div>

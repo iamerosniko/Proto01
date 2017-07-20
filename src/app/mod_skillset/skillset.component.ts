@@ -20,16 +20,17 @@ export class SkillSetComponent {
   //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
   constructor(fb: FormBuilder  ){
     this.skillsetFrm = fb.group({
-      'UserName': [{value: '', disabled: true}],
+      'UserName': [''],
       'Department': [1],
       'Location': [1],
       'VPN': [false],
       'PhoneNumber': ['',Validators.maxLength(20)],
-      'UpdatedOn': [{value: new Date(), disabled: true}]
+      'UpdatedOn': [{value: new Date(), readonly: true}]
     });
   }
   
   ngOnInit():void {
+    this.dateToday = new Date();
     this.acs = new Associate(
       0,
       "rty",
@@ -37,7 +38,7 @@ export class SkillSetComponent {
       true,
       2,
       3,
-      new Date(),
+      this.dateToday,
       false
     );
 
