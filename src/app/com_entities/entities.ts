@@ -21,10 +21,10 @@ export class Associate {
         public AssociateID: number,
         public UserName : string,
         public PhoneNumber : string,
-        public VPN : string,
-        public DepartmentID : string,
-        public LocationID : string,
-        public UpdatedOn : string,
+        public VPN : Boolean,
+        public DepartmentID : number,
+        public LocationID : number,
+        public UpdatedOn : Date,
         public IsActive : Boolean,
     ){}
 }
