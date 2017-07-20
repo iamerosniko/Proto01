@@ -13,11 +13,15 @@ import { Associate } from '../com_entities/entities';
 
 export class SkillSetComponent {
   skillsetFrm: FormGroup;
-  acs: Associate
+  acs: Associate;
+  departments: any;
+  locations: any;
   
   constructor(fb: FormBuilder  ){
     this.skillsetFrm = fb.group({
-      'UserName': [{value: '', disabled: true}, Validators.required]
+      'UserName': [{value: '', disabled: true}, Validators.required],
+      'Department': [1],
+      'Location': [1]
     });
   }
   
@@ -27,11 +31,23 @@ export class SkillSetComponent {
       "rty",
       "",
       false,
-      0,
-      0,
+      2,
+      3,
       new Date(),
       false
     );
+
+    this. departments = [
+       {id: 1, name: "Admin"},
+       {id: 2, name: "Marketing"},
+       {id: 3, name: "Sales"}
+     ];
+
+     this.locations = [
+       {id: 1, name: "New York"},
+       {id: 2, name: "Los Angeles"},
+       {id: 3, name: "Houston"}
+     ];
     
 }
 

@@ -24,7 +24,12 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Current Department</label>
                         <div class="col-md-8">
-                            <select class="form-control"></select>
+                            <select 
+                                    class="form-control"
+                                    [formControl]="skillsetFrm.get('Department')"
+                                    [(ngModel)]="acs.DepartmentID">
+                                <option *ngFor="let dept of departments" [ngValue]="dept.id">{{dept.name}}</option>
+                            </select>
                             <br />
                         </div>
                     </div>
@@ -33,7 +38,12 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Location</label>
                         <div class="col-md-8">
-                            <select class="form-control"></select>
+                            <select 
+                                    class="form-control"
+                                    [formControl]="skillsetFrm.get('Location')"
+                                    [(ngModel)]="acs.LocationID">
+                                <option *ngFor="let loc of locations" [ngValue]="loc.id">{{loc.name}}</option>
+                            </select>
                             <br />
                         </div>
                     </div>
