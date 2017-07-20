@@ -51,7 +51,11 @@
                         <label class="control-label col-md-4">VPN Capable</label>
                         <div class="col-md-8">
                             <label class="switch">
-                                <input class="fieldSelection" type="checkbox" />
+                                <input 
+                                        class="fieldSelection" 
+                                        type="checkbox" 
+                                        [formControl]="skillsetFrm.get('VPN')"
+                                        [(ngModel)]="acs.VPN"/>
                                 <div class="slider round"></div>
                             </label>
                             <br />
@@ -63,7 +67,12 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Best Phone Number to be Reached</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" />
+                            <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    [formControl]="skillsetFrm.get('PhoneNumber')"
+                                    [(ngModel)]="acs.PhoneNumber" 
+                                    maxlength="20"/>
                             <br />
                         </div>
                     </div>
@@ -71,7 +80,11 @@
                         <label class="control-label col-md-4">Last Updated</label>
                         <div class="col-md-8">
                             <!--auto generated-->
-                            <input type="text" class="form-control" disabled />
+                            <input 
+                                    type="text" 
+                                    class="form-control"  
+                                    [formControl]="skillsetFrm.get('UpdatedOn')"
+                                    [(ngModel)]="acs.UpdatedOn" />
                             <br />
                         </div>
                     </div>

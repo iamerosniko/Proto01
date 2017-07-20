@@ -16,12 +16,16 @@ export class SkillSetComponent {
   acs: Associate;
   departments: any;
   locations: any;
+  dateToday: Date;
   
   constructor(fb: FormBuilder  ){
     this.skillsetFrm = fb.group({
-      'UserName': [{value: '', disabled: true}, Validators.required],
+      'UserName': [{value: '', disabled: true}],
       'Department': [1],
-      'Location': [1]
+      'Location': [1],
+      'VPN': [false],
+      'PhoneNumber': ['',Validators.maxLength(20)],
+      'UpdatedOn': [{value: new Date(), disabled: true}]
     });
   }
   
@@ -30,12 +34,13 @@ export class SkillSetComponent {
       0,
       "rty",
       "",
-      false,
+      true,
       2,
       3,
       new Date(),
       false
     );
+
 
     this. departments = [
        {id: 1, name: "Admin"},
