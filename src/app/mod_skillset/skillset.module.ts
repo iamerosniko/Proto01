@@ -8,14 +8,12 @@ import { HttpModule } from '@angular/http';
 import { SkillSetComponent } from './skillset.component';
 import { SkillSetRouting } from './skillset.routing';
 import { DepartmentComponent } from './department/department.component';
-import { ProfileComponent } from './profile/profile.component';
-//profile component
 import { CommonCompModule } from '../mod_common/common_comp.module';
+import { CurrentUserSvc } from '../com_services/currentuser.svc';
 
 @NgModule({
   declarations: [
-    SkillSetComponent,DepartmentComponent,
-    ProfileComponent
+    SkillSetComponent,DepartmentComponent
   ],
   imports: [
     CommonModule,
@@ -26,11 +24,12 @@ import { CommonCompModule } from '../mod_common/common_comp.module';
     SkillSetRouting,
     CommonCompModule
   ],
-  providers: [],
+  providers: [
+    CurrentUserSvc
+  ],
   exports: [
     SkillSetComponent,
-    DepartmentComponent,
-    ProfileComponent,
+    DepartmentComponent
   ]
 })
 export class SkillsetModule { }

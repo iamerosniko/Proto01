@@ -40,6 +40,7 @@ export class VWLocationComponent {
     this.goBack();
   }
 
+  
   async getLocations(){
     this.locations=await this.locSvc.getLocations();
   }

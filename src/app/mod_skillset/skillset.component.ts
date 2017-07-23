@@ -5,20 +5,25 @@ import {
   Validators 
 } from '@angular/forms'
 import { Associate } from '../com_entities/entities';
+import { CurrentUserSvc } from '../com_services/currentuser.svc';
 
 @Component({
+  moduleId: module.id,
   selector: 'skillset',
   templateUrl: 'skillset.component.html',
 })
 
 export class SkillSetComponent {
+  currentUser: string;
   skillsetFrm: FormGroup;
   acs: Associate;
   departments: any;
   locations: any;
   dateToday: Date;
   //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
-  constructor(fb: FormBuilder  ){
+  constructor(
+      private curUserSvc: CurrentUserSvc,
+      fb: FormBuilder){
     this.skillsetFrm = fb.group({
       'UserName': [''],
       'Department': [1],
@@ -29,7 +34,13 @@ export class SkillSetComponent {
     });
   }
   
+  //TEMPLATE: this will get all needed data
+  async getDependencies() {
+    await this.curUserSvc.getCurrentUser().then(user=>this.currentUser = user.UserName);
+  }
+
   ngOnInit():void {
+    this.getDependencies();
     this.dateToday = new Date();
     this.acs = new Associate(
       0,
