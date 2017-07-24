@@ -1,16 +1,16 @@
 /*AssociateViews*/
-export class AssociateSkillsets {
+export class AssociateDepartmentSkillsets {
     constructor (
-        public AssociateSkillsetID: string,//primary key
+        public AssociateDepartmentSkillsetID: number,//primary key
         public AssociateID: number,
-        public SkillsetID : number,
+        public DepartmentSkillsetID : number,
     ){}
 }
 
 /*AssociateViews*/
 export class DepartmentSkillsets {
     constructor (
-        public DepartmentSkillsetID: string,//primary key
+        public DepartmentSkillsetID: number,//primary key
         public DepartmentID: number,
         public SkillsetID: number,
     ){}
