@@ -9,7 +9,10 @@ import { SkillSetComponent } from './skillset.component';
 import { SkillSetRouting } from './skillset.routing';
 import { DepartmentComponent } from './department/department.component';
 import { CommonCompModule } from '../mod_common/common_comp.module';
+import { AssociateSvc } from '../com_services/associate.svc';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
+import { LocationSvc } from '../com_services/location.svc';
+import { DepartmentSvc } from '../com_services/department.svc';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,10 @@ import { CurrentUserSvc } from '../com_services/currentuser.svc';
     CommonCompModule
   ],
   providers: [
-    CurrentUserSvc
+    AssociateSvc,
+    CurrentUserSvc,
+    LocationSvc,
+    DepartmentSvc
   ],
   exports: [
     SkillSetComponent,

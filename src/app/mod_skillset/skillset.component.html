@@ -18,7 +18,7 @@
                                     class="form-control" 
                                     [readonly]="true"
                                     [formControl]="skillsetFrm.get('UserName')"
-                                    [(ngModel)]="acs.UserName" />
+                                    [(ngModel)]="associate.UserName" />
                             <br />
                         </div>
                     </div>
@@ -28,8 +28,8 @@
                             <select 
                                     class="form-control"
                                     [formControl]="skillsetFrm.get('Department')"
-                                    [(ngModel)]="acs.DepartmentID">
-                                <option *ngFor="let dept of departments" [ngValue]="dept.id">{{dept.name}}</option>
+                                    [(ngModel)]="associate.DepartmentID">
+                                <option *ngFor="let dept of departments" [ngValue]="dept.DepartmentID">{{dept.DepartmentDescr}}</option>
                             </select>
                             <br />
                         </div>
@@ -42,8 +42,8 @@
                             <select 
                                     class="form-control"
                                     [formControl]="skillsetFrm.get('Location')"
-                                    [(ngModel)]="acs.LocationID">
-                                <option *ngFor="let loc of locations" [ngValue]="loc.id">{{loc.name}}</option>
+                                    [(ngModel)]="associate.LocationID">
+                                <option *ngFor="let loc of locations" [ngValue]="loc.LocationID">{{loc.LocationDescr}}</option>
                             </select>
                             <br />
                         </div>
@@ -56,7 +56,7 @@
                                         class="fieldSelection" 
                                         type="checkbox" 
                                         [formControl]="skillsetFrm.get('VPN')"
-                                        [(ngModel)]="acs.VPN"/>
+                                        [(ngModel)]="associate.VPN"/>
                                 <div class="slider round"></div>
                             </label>
                             <br />
@@ -72,7 +72,7 @@
                                     type="text" 
                                     class="form-control" 
                                     [formControl]="skillsetFrm.get('PhoneNumber')"
-                                    [(ngModel)]="acs.PhoneNumber" 
+                                    [(ngModel)]="associate.PhoneNumber" 
                                     maxlength="20"/>
                             <br />
                         </div>
@@ -86,7 +86,7 @@
                                     class="form-control"
                                     [readonly]="true"
                                     [formControl]="skillsetFrm.get('UpdatedOn')"
-                                    value="{{dateToday | date: 'dd/MM/yyyy'}}"/>
+                                    [(ngModel)]="associate.UpdatedOn" />
                             <br />
                         </div>
                     </div>
