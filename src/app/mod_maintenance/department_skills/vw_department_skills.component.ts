@@ -33,7 +33,9 @@ export class VWDepartmentSkillsComponent {
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
     for (let skill in this.skillsets){
-
+      this.selectedSkillsets.push(
+        
+      )
     }
   }
   //step3

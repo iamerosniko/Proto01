@@ -94,3 +94,12 @@ export class User {
         public UserName:string
     ){}
 }
+
+//extra entity
+export class SelectedSkillset{
+    constructor (
+       public departmentSkillsets: DepartmentSkillsets,
+       public IsSelected:boolean,
+       public SkillsetDescr:string
+    ){}
+}
