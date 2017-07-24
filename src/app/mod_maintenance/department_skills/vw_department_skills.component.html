@@ -51,13 +51,5 @@
 </div>
 <div class="save-bar">
     <!--save bar component here-->
+    <save-bar [buttonMode]="0" (triggerParentFunc)=""></save-bar>
 </div>
-
-<script>
-    $(function () {
-        //save bar container
-        var $save_bar = $('.save-bar');
-        //load content to save bar container
-        $save_bar.load('../ProjectSkillset/UIComponents/Common/SaveBar.html');
-    });
-</script>
