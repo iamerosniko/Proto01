@@ -8,6 +8,7 @@ import { MaintenanceRouting } from './maintenance.routing';
 import { MaintenanceComponent } from './maintenance.component';
 import { VWAssociateComponent } from './associate/vw_associate.component';
 import { VWDepartmentComponent } from './department/vw_department.component';
+import { VWDepartmentSkillsComponent } from './department_skills/vw_department_skills.component';
 import { VWLocationComponent } from './location/vw_location.component';
 import { VWSkillsetComponent } from './skillset/vw_skillset.component';
 //common
@@ -22,7 +23,7 @@ import { AssociateSvc } from '../com_services/associate.svc';
   declarations: [
     MaintenanceComponent,
     //maintenance-route
-    VWAssociateComponent,VWDepartmentComponent,VWLocationComponent,VWSkillsetComponent
+    VWAssociateComponent,VWDepartmentComponent,VWLocationComponent,VWSkillsetComponent,VWDepartmentSkillsComponent
   ],
   //module area
   imports: [

@@ -1,0 +1,63 @@
+<div class="tab-content">
+    <div id="dep_skill_default" class="tab-pane fade in active">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <label class="control-label col-md-3">Department</label>
+                        <div class="col-md-7">
+                            <select class="form-control input-sm"></select>
+                            <br />
+                        </div>
+                        <div class="col-md-2">
+                            <a href="#" class="btn btn-primary btn-sm">
+                                <i class="fa fa-search"></i>
+                            </a>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped table-hover input-sm">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1"><input id="checkall" type="checkbox" class="css-checkbox med"><label for="checkall" class="css-label med elegant"></label></th>
+                                <th class="col-md-11">Skill</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input id="skill1" type="checkbox" class="css-checkbox med"><label for="skill1" class="css-label med elegant"></label></td>
+                                <td>Row 1 Col 2</td>
+                            </tr>
+                            <tr>
+                                <td><input id="skill2" type="checkbox" class="css-checkbox med"><label for="skill2" class="css-label med elegant"></label></td>
+                                <td>Row 2 Col 2</td>
+                            </tr>
+                            <tr>
+                                <td><input id="skill3" type="checkbox" class="css-checkbox med"><label for="skill3" class="css-label med elegant"></label></td>
+                                <td>Row 3 Col 2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="save-bar">
+    <!--save bar component here-->
+</div>
+
+<script>
+    $(function () {
+        //save bar container
+        var $save_bar = $('.save-bar');
+        //load content to save bar container
+        $save_bar.load('../ProjectSkillset/UIComponents/Common/SaveBar.html');
+    });
+</script>

@@ -5,6 +5,7 @@ import { MaintenanceComponent } from './maintenance.component';
 
 import { VWAssociateComponent } from './associate/vw_associate.component';
 import { VWDepartmentComponent } from './department/vw_department.component';
+import { VWDepartmentSkillsComponent } from './department_skills/vw_department_skills.component';
 import { VWLocationComponent } from './location/vw_location.component';
 import { VWSkillsetComponent } from './skillset/vw_skillset.component';
 
@@ -24,6 +25,9 @@ const routes: Routes = [
             },
             {
                 path : 'Skillsets' , component : VWSkillsetComponent, outlet : 'maintenance-route'
+            },
+            {
+                path : 'DepartmentSkills' , component : VWDepartmentSkillsComponent, outlet : 'maintenance-route'
             },
         ]
     }
