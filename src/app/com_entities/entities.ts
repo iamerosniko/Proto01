@@ -1,3 +1,20 @@
+
+
+
+
+//THIS SHOULD BE REMOVEDBEFORE DEPLOYEMENT IN LIVE
+export class AssociateSkillsets {
+    constructor (
+        public AssociateSkillsetID: number,//primary key
+        public AssociateID: number,
+        public SkillsetID: number,
+    ){}
+}
+
+
+
+
+
 /*AssociateViews*/
 export class AssociateDepartmentSkillsets {
     constructor (
