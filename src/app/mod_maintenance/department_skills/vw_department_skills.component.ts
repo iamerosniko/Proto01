@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { DepartmentSvc } from '../../com_services/department.svc';
 import { SkillsetSvc } from '../../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../../com_services/dept_skillset.svc';
-import { Department,Skillset,DepartmentSkillsets } from '../../com_entities/entities';
+import { Department,Skillset,DepartmentSkillsets,SelectedSkillset } from '../../com_entities/entities';
 @Component({
   moduleId: module.id,
   selector: 'vw-dept',
@@ -34,7 +34,9 @@ export class VWDepartmentSkillsComponent {
     //2. loop skillsets to custom array
     for (let skill in this.skillsets){
       this.selectedSkillsets.push(
-        
+        new SelectedSkillset(
+          
+        )
       )
     }
   }

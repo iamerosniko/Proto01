@@ -115,7 +115,7 @@ export class User {
 //extra entity
 export class SelectedSkillset{
     constructor (
-       public departmentSkillsets: DepartmentSkillsets,
+       public departmentSkillset: DepartmentSkillsets,
        public IsSelected:boolean,
        public SkillsetDescr:string
     ){}
