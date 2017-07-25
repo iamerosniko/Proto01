@@ -70,7 +70,7 @@ export class SkillSetComponent {
   async ngOnInit() {
     this.getDependencies();
     
-    this.currentUser = "sarmife";
+    this.currentUser = "bermoy";
     this.dateToday = new Date();
     this.acs = new Associate(
       0,
