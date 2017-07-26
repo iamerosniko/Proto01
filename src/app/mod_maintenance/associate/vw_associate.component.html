@@ -35,7 +35,7 @@
                                 <td>{{getStatus(x.IsActive)}}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a (click)="editDetails()" href="#" class="btn btn-default btn-xs" data-toggle="tab" data-target="#asc_editor" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a (click)="editDetails(x)" class="btn btn-default btn-xs" data-toggle="tab" data-target="#asc_editor" title="Edit"><i class="fa fa-edit"></i></a>
                                         <a href="#" class="btn btn-default btn-xs" title="Delete"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
@@ -72,7 +72,7 @@
         <div class="col-md-12">
             <!--return button-->
             <div class="row">
-                <a href="#" class="btn btn-default btn-sm" data-toggle="tab" data-target="#asc_default"><i class="fa fa-chevron-left"></i>&nbsp;Go Back</a>
+                <a id="btnGoBack" (click)="goBack()" class="btn btn-default btn-sm" data-toggle="tab" data-target="#asc_default"><i class="fa fa-chevron-left"></i>&nbsp;Go Back</a>
             </div>
             <br />
             <!--header-->
@@ -96,7 +96,7 @@
                 <label class="col-md-2 control-label">Full Name</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" [(ngModel)]="associate.UserName">
-                        <option *ngFor="let x of set_Users" [value]="x.user_name"> {{x.user_first_name+x.user_lasst_name}} </option>
+                        <option *ngFor="let x of set_Users" [value]="x.user_name"> {{x.user_first_name+" " +x.user_last_name}} </option>
                     </select>
                 </div>
             </div>
@@ -111,7 +111,7 @@
             <div class="row">
                 <label class="col-md-2 control-label">Phone Number</label>
                 <div class="col-md-4">
-                    <input [(ngModel)]="associate.PhoneNumber" type="text" class="form-control input-sm" />
+                    <input maxlength="20" [(ngModel)]="associate.PhoneNumber" type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
@@ -163,7 +163,7 @@
             </div>
         </div>
         <div class="save-bar">
-           <save-bar [buttonMode]="mode" ></save-bar>
+           <save-bar [buttonMode]="mode" (triggerParentFunc)="saveAssociate()"></save-bar>
             <!--save bar component here-->
         </div>
     </div>

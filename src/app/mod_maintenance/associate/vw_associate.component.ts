@@ -57,12 +57,30 @@ export class VWAssociateComponent implements OnInit {
     return setUser!=null ? setUser.user_first_name+ " " + setUser.user_last_name : username;
   }
 
-  editDetails(){
+  editDetails(assoc : Associate){
     this.mode=1;
     //get detail
+    this.getDetails(assoc);
+
   }
 
-  clear(){
+  getDetails(assoc : Associate){
+    this.associate = assoc;
+  }
 
+  cleanUp(){
+    this.getDependencies();
+    this.associate=new Associate(0,'','',false,0,0,new Date,true);
+  }
+
+  async saveAssociate(){
+    this.mode==0 ?  await this.associateSvc.postAssociate(this.associate) : await this.associateSvc.putAssociate(this.associate);
+    document.getElementById("btnGoBack").click();
+    this.goBack();
+  }
+
+  goBack(){
+    this.mode=0;
+    this.cleanUp();
   }
 }
