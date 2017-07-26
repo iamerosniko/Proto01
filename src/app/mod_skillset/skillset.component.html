@@ -12,7 +12,7 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Name</label>
                         <div class="col-md-8">
-                            <!--locked field-->
+                            <!--locked field -->
                             <input 
                                     type="text" 
                                     class="form-control" 
@@ -80,13 +80,13 @@
                     <div class="col-md-6">
                         <label class="control-label col-md-4">Last Updated</label>
                         <div class="col-md-8">
-                            <!--auto generated-->
+                            <!--auto generated [(ngModel)]="associate.UpdatedOn"-->
                             <input 
                                     type="text" 
                                     class="form-control"
                                     [readonly]="true"
                                     [formControl]="skillsetFrm.get('UpdatedOn')"
-                                    [(ngModel)]="associate.UpdatedOn" />
+                                    value="{{dateToday | date: 'dd/MM/yyyy'}}" />
                             <br />
                         </div>
                     </div>

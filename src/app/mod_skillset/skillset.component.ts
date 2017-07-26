@@ -9,10 +9,12 @@ import {
 } from '@angular/forms'
 import {
   Associate,
+  Set_User,
   Location,
   Department
 } from '../com_entities/entities';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
+import { Set_UserSvc } from '../com_services/set_user.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
@@ -24,112 +26,80 @@ import { DepartmentSvc } from '../com_services/department.svc';
 })
 
 export class SkillSetComponent {
-  private currentUser: string;
+  private dateToday: Date;
+  private currentUser: any;
+  private currentUserFullname: string;
   private associate: Associate;
-  private associates: Associate[];
+  private associateForPosting: Associate;
+  private user: Set_User;
   private locations: Location[];
   private departments: Department[];
-  
-
-
-  skillsetFrm: FormGroup;
-  acs: Associate;
-  dateToday: Date;
-  
+  private skillsetFrm: FormGroup;
+  private trueForm: any;
   //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+  
   constructor(
       private curUserSvc: CurrentUserSvc,
+      private useSvc: Set_UserSvc,
       private assSvc: AssociateSvc,
       private locSvc: LocationSvc,
       private depSvc: DepartmentSvc,
-      fb: FormBuilder){
-      
-    this.skillsetFrm = fb.group({
-      'UserName': [''],
+      private fb: FormBuilder){
+        
+    this.skillsetFrm = this.fb.group({
+      'UserName': [' '],
       'Department': [1],
       'Location': [1],
       'VPN': [false],
-      'PhoneNumber': ['',Validators.maxLength(20)],
-      'UpdatedOn': ['']
+      'PhoneNumber': [' ',Validators.maxLength(20)],
+      'UpdatedOn': [' ']
       //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
     });
   }
   
   //TEMPLATE: this will get all needed data
-  getDependencies(): void {
-    //this.curUserSvc.getCurrentUser().then(user => this.currentUser = user.UserName);
-    //this.assSvc.getAssociates().then(associates => this.associates = associates);
-    //this.locSvc.getLocations().then(locations => this.locations = locations);
-    //this.depSvc.getDepartments().then(departments => this.departments = departments);
-    
+  async getDependencies() {
+    this.currentUser = await this.curUserSvc.getCurrentUser();
+    this.locations = await this.locSvc.getLocations();
+    this.departments = await this.depSvc.getDepartments();
   }
  
-  getAssData(): void {
-    this.associate =  this.associates.find(associate => associate.UserName == this.currentUser);
+  //this will get info of current user
+  async getCurrentUserData() {
+    let associates = await this.assSvc.getAssociates();
+    this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
+    let users = await this.useSvc.getSet_Users();
+    this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+    this.associateForPosting = await JSON.parse(JSON.stringify(this.associate));
+    this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
   }
-  async ngOnInit() {
-    this.getDependencies();
-    
-    this.currentUser = "bermoy";
+
+  //TEMPLATE: this will run functions in order
+  async runFunctions() {
+    await this.getDependencies();
+    await this.getCurrentUserData();
+  }
+  ngOnInit(): void {
     this.dateToday = new Date();
-    this.acs = new Associate(
+    this.associate = new Associate(
       0,
-      "rty",
-      "",
-      true,
-      2,
-      3,
-      this.dateToday,
+      ' ',
+      ' ',
+      false,
+      0,
+      0,
+      new Date(),
       false
     );
 
-    this.associates = [
-      {AssociateID: 1,
-      UserName: "bermoy",
-      PhoneNumber: " ",
-      VPN: true,
-      DepartmentID: 1,
-      LocationID: 1,
-      UpdatedOn: this.dateToday,
-      IsActive: true},
-      {AssociateID: 1,
-      UserName: "sarmife",
-      PhoneNumber: " ",
-      VPN: true,
-      DepartmentID: 1,
-      LocationID: 1,
-      UpdatedOn: this.dateToday,
-      IsActive: true},
-      {AssociateID: 1,
-      UserName: "albert",
-      PhoneNumber: " ",
-      VPN: true,
-      DepartmentID: 1,
-      LocationID: 1,
-      UpdatedOn: this.dateToday,
-      IsActive: true}
-    
-    ];
-
-  await this.getAssData();
-
-    // this. departments = [
-    //    {id: 1, name: "Admin"},
-    //    {id: 2, name: "Marketing"},
-    //    {id: 3, name: "Sales"}
-    //  ];
-
-    //  this.locations = [
-    //    {id: 1, name: "New York"},
-    //    {id: 2, name: "Los Angeles"},
-    //    {id: 3, name: "Houston"}
-    //  ];
+    this.runFunctions();
     
 }
 
   onSubmit(form: any): void {
     console.log('you submitted value:', form);
     //this.testData = this.skillsetForm.controls.sku.value;
+    this.trueForm = form;
 
   }
 }
