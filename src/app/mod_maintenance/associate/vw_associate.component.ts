@@ -48,6 +48,15 @@ export class VWAssociateComponent implements OnInit {
     return location.LocationDescr
   }
 
+  getStatus(status:boolean):string{
+    return status ? "Yes" : "No";
+  }
+
+  getFullName(username:string):string{
+    let setUser:Set_User = this.set_Users.find(x=>x.user_name==username);
+    return setUser!=null ? setUser.user_first_name+ " " + setUser.user_last_name : username;
+  }
+
   editDetails(){
     this.mode=1;
     //get detail
