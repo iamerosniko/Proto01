@@ -9,7 +9,7 @@ Desktop.ini
 $RECYCLE.BIN/
 node_modules/
 dist/*
-
+src/app/mod_maintenance
 
 # Windows Installer files
 *.cab

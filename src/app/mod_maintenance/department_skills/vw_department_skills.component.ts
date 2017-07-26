@@ -32,13 +32,13 @@ export class VWDepartmentSkillsComponent {
     //clears the checkboxes
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
-    for (let skill in this.skillsets){
-      this.selectedSkillsets.push(
-        new SelectedSkillset(
+    // for (let skill in this.skillsets){
+    //   this.selectedSkillsets.push(
+    //     new SelectedSkillset(
           
-        )
-      )
-    }
+    //     )
+    //   )
+    // }
   }
   //step3
   async getDepartmentSkillsets(deptID:number){

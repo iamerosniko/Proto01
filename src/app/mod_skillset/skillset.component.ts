@@ -25,6 +25,7 @@ import { DepartmentSvc } from '../com_services/department.svc';
 
 export class SkillSetComponent {
   private currentUser: any;
+  private currentUserFullname: string;
   private associate: Associate;
   private associates: Associate[];
   private locations: Location[];
@@ -52,16 +53,16 @@ export class SkillSetComponent {
     });
 
     this.dateToday = new Date();
-    this.associate = new Associate(
-      0,
-      ' ',
-      ' ',
-      false,
-      0,
-      0,
-      new Date(),
-      false
-    );
+    // this.associate = new Associate(
+    //   0,
+    //   ' ',
+    //   ' ',
+    //   false,
+    //   0,
+    //   0,
+    //   new Date(),
+    //   false
+    // );
   }
   
   //TEMPLATE: this will get all needed data
@@ -82,51 +83,6 @@ export class SkillSetComponent {
     this.getDependencies().then(() => {
       this.getCurrentUserData();
     });
-    // this.getDependencies();
-    // this.getCurrentUserData();
-    //this.createForm();
-    
-    
-    
-    //this.currentUser = "bermoy";
-    // this.associate = new Associate(
-    //   0,
-    //   "rty",
-    //   "",
-    //   true,
-    //   2,
-    //   3,
-    //   this.dateToday,
-    //   false
-    // );
-
-    // this.associates = [
-    //   {AssociateID: 1,
-    //   UserName: "bermoy",
-    //   PhoneNumber: " ",
-    //   VPN: true,
-    //   DepartmentID: 1,
-    //   LocationID: 1,
-    //   UpdatedOn: this.dateToday,
-    //   IsActive: true},
-    //   {AssociateID: 1,
-    //   UserName: "sarmife",
-    //   PhoneNumber: " ",
-    //   VPN: true,
-    //   DepartmentID: 1,
-    //   LocationID: 1,
-    //   UpdatedOn: this.dateToday,
-    //   IsActive: true},
-    //   {AssociateID: 1,
-    //   UserName: "albert",
-    //   PhoneNumber: " ",
-    //   VPN: true,
-    //   DepartmentID: 1,
-    //   LocationID: 1,
-    //   UpdatedOn: this.dateToday,
-    //   IsActive: true}
-    
-    // ];
 }
 
   onSubmit(form: any): void {
