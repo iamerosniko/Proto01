@@ -24,15 +24,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Row 1 Col 1</td>
-                                <td>Row 1 Col 2</td>
-                                <td>Row 1 Col 3</td>
-                                <td>Row 1 Col 4</td>
-                                <td>Row 1 Col 5</td>
-                                <td>Row 1 Col 6</td>
-                                <td>Row 1 Col 7</td>
-                                <td>Row 1 Col 8</td>
+                            <tr *ngFor="let x of set_Users">
+                                <td>{{x.AssociateID}}</td>
+                                <td>{{x.UserName}}</td>
+                                <td>{{x.PhoneNumber}}</td>
+                                <td>{{x.VPN}}</td>
+                                <td>{{getDepartmentName(x.DepartmentID)}}</td>
+                                <td>{{getLocationName(x.LocationID)}}</td>
+                                <td>{{x.UpdatedOn}}</td>
+                                <td>{{x.IsActive}}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a (click)="editDetails()" href="#" class="btn btn-default btn-xs" data-toggle="tab" data-target="#asc_editor" title="Edit"><i class="fa fa-edit"></i></a>
@@ -79,8 +79,8 @@
             <div class="row">
                 <!--for example you are in adding mode, span.add should be displayed while span.edit will be hidden-->
                 <h4>
-                  <span class="add" *ngIf="viewMode==0"><i class="fa fa-plus"></i>&nbsp;New Record</span>
-                  <span class="edit" *ngIf="viewMode==1"><i class="fa fa-edit"></i>&nbsp;Edit Details</span>
+                  <span class="add" *ngIf="mode==0"><i class="fa fa-plus"></i>&nbsp;New Record</span>
+                  <span class="edit" *ngIf="mode==1"><i class="fa fa-edit"></i>&nbsp;Edit Details</span>
                 </h4>
             </div>
             <br />
@@ -88,28 +88,30 @@
             <div class="row">
                 <label class="col-md-2 control-label">Associate Id</label>
                 <div class="col-md-4">
-                    <input readonly type="text" class="form-control input-sm" />
-                </div>
-            </div>
-            <br />
-            <div class="row">
-                <label class="col-md-2 control-label">UserName</label>
-                <div class="col-md-4">
-                    <input readonly type="text" class="form-control input-sm" />
+                    <input [(ngModel)]="associate.AssociateID" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
             <div class="row">
                 <label class="col-md-2 control-label">Full Name</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" />
+                    <select class="form-control input-sm" [(ngModel)]="associate.UserName">
+                        <option *ngFor="let x of set_Users" [value]="x.user_name"> {{x.user_first_name+x.user_lasst_name}} </option>
+                    </select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <label class="col-md-2 control-label">Username</label>
+                <div class="col-md-4">
+                    <input [(ngModel)]="associate.UserName" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
             <div class="row">
                 <label class="col-md-2 control-label">Phone Number</label>
                 <div class="col-md-4">
-                    <input type="text" class="form-control input-sm" />
+                    <input [(ngModel)]="associate.PhoneNumber" type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
@@ -117,7 +119,7 @@
                 <label class="col-md-2 control-label">VPN Capable</label>
                 <div class="col-md-4">
                     <label class="switch">
-                        <input type="checkbox" />
+                        <input type="checkbox" [(ngModel)]="associate.VPN" />
                         <div class="slider round"></div>
                     </label>
                     <br />
@@ -127,21 +129,25 @@
             <div class="row">
                 <label class="col-md-2 control-label">Department</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm"></select>
+                    <select [(ngModel)]="associate.DepartmentID" class="form-control input-sm">
+                        <option *ngFor="let x of departments" [value]="x.DepartmentID"> {{x.DepartmentDescr}} </option>
+                    </select>
                 </div>
             </div>
             <br />
             <div class="row">
                 <label class="col-md-2 control-label">Location</label>
                 <div class="col-md-4">
-                    <select class="form-control input-sm"></select>
+                    <select [(ngModel)]="associate.LocationID" class="form-control input-sm">
+                        <option *ngFor="let x of locations" [value]="x.LocationID"> {{x.LocationDescr}} </option>
+                    </select>
                 </div>
             </div>
             <br />
             <div class="row">
                 <label class="col-md-2 control-label">Updated On</label>
                 <div class="col-md-4">
-                    <input readonly type="text" class="form-control input-sm" />
+                    <input [(ngModel)]="associate.UpdatedOn" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
@@ -149,7 +155,7 @@
                 <label class="col-md-2 control-label">Is Active</label>
                 <div class="col-md-4">
                     <label class="switch">
-                        <input type="checkbox" />
+                        <input type="checkbox" [(ngModel)]="associate.IsActive" />
                         <div class="slider round"></div>
                     </label>
                     <br />
@@ -157,7 +163,7 @@
             </div>
         </div>
         <div class="save-bar">
-          <save-bar></save-bar>
+           <save-bar [buttonMode]="mode" ></save-bar>
             <!--save bar component here-->
         </div>
     </div>
