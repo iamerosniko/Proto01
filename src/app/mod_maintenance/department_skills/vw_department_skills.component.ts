@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { DepartmentSvc } from '../../com_services/department.svc';
 import { SkillsetSvc } from '../../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../../com_services/dept_skillset.svc';
@@ -8,7 +8,7 @@ import { Department,Skillset,DepartmentSkillsets,SelectedSkillset } from '../../
   selector: 'vw-dept',
   templateUrl: 'vw_department_skills.component.html',
 })
-export class VWDepartmentSkillsComponent {
+export class VWDepartmentSkillsComponent implements OnInit {
   constructor(
     private deptSvc:DepartmentSvc,
     private skillsetSvc:SkillsetSvc,
@@ -16,11 +16,15 @@ export class VWDepartmentSkillsComponent {
   ){
     this.getDepartments();
   }
+  ngOnInit(){
+    this.getDepartments();
+  }
   //department combobox
+  selectedDepartmentID:number;
   departments: Department[] = [];
   departmentSkillsets:DepartmentSkillsets[]=[];
   skillsets: Skillset[]=[];
-  selectedSkillsets:any[]=[];
+  selectedSkillsets:SelectedSkillset[]=[];
   //step1
   async getDepartments(){
     this.departments=await this.deptSvc.getDepartments();
@@ -32,10 +36,12 @@ export class VWDepartmentSkillsComponent {
     //clears the checkboxes
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
-    for (let skill in this.skillsets){
+    for (var i = 0 ; i<this.skillsets.length; i++){
       this.selectedSkillsets.push(
-        new SelectedSkillset(
-          
+        new SelectedSkillset( 
+          new DepartmentSkillsets(0,deptID,this.skillsets[i].SkillsetID)
+          ,false
+          ,this.skillsets[i].SkillsetDescr
         )
       )
     }
@@ -46,35 +52,23 @@ export class VWDepartmentSkillsComponent {
   }
   //step 4
   async compareSelectedSkillsets(){
+
+    for (var i = 0; i < this.selectedSkillsets.length; i++){
+      var selectedSkillset=this.selectedSkillsets[i];
+      var deptSkill = this.departmentSkillsets.find(ds=>
+        ds.DepartmentSkillsetID==selectedSkillset.departmentSkillset.DepartmentSkillsetID);
+      console.log(deptSkill);  
+      if (deptSkill!=null){
+        selectedSkillset.IsSelected=true;
+      } 
+    }
   }
 
-  // newDetails(){
-  //   this.department=new Department(0,'',true);
-  // }
-
-  // editDetails(dept: Department){
-  //   this.viewMode=1;
-  //   //get detail
-  //   this.mode=1;
-  //   this.getDetails(dept);
-  // }
-
-  // getDetails(dept : Department){
-  //   this.department = dept;
-  // }
-
-  // goBack(){
-  //   this.mode=0;
-  // }
-
-
-
-  async saveDepartment(){
-    // this.viewMode==0 ?  await this.deptSvc.postDepartment(this.department) : await this.deptSvc.putDepartment(this.department);
-    // document.getElementById("btnGoBack").click();
-    // this.getDepartments();
-    // this.department=new Department(0,'',true);
-    // this.goBack();
+  checkAllSkills(){
+    for (var i = 0; i < this.selectedSkillsets.length; i++){
+      var selectedSkillset=this.selectedSkillsets[i];
+      selectedSkillset.IsSelected=true;
+    }
   }
 
 }

@@ -6,11 +6,13 @@
                     <div class="row">
                         <label class="control-label col-md-3">Department</label>
                         <div class="col-md-7">
-                            <select class="form-control input-sm"></select>
+                            <select class="form-control input-sm" [(ngModel)]="selectedDepartmentID">
+                                <option *ngFor="let x of departments" [value]="x.DepartmentID"> {{x.DepartmentDescr}} </option>
+                            </select>
                             <br />
                         </div>
                         <div class="col-md-2">
-                            <a href="#" class="btn btn-primary btn-sm">
+                            <a (click)="getSkillSets(selectedDepartmentID)" class="btn btn-primary btn-sm">
                                 <i class="fa fa-search"></i>
                             </a>
                             <br />
@@ -30,17 +32,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td><input id="skill1" type="checkbox" class="css-checkbox med"><label for="skill1" class="css-label med elegant"></label></td>
-                                <td>Row 1 Col 2</td>
-                            </tr>
-                            <tr>
-                                <td><input id="skill2" type="checkbox" class="css-checkbox med"><label for="skill2" class="css-label med elegant"></label></td>
-                                <td>Row 2 Col 2</td>
-                            </tr>
-                            <tr>
-                                <td><input id="skill3" type="checkbox" class="css-checkbox med"><label for="skill3" class="css-label med elegant"></label></td>
-                                <td>Row 3 Col 2</td>
+                            <tr *ngFor="let x of selectedSkillsets" >
+                                <td><input [(ngModel)]="x.IsSelected" type="checkbox" class="css-checkbox med"><label for="skill1" class="css-label med elegant"></label></td>
+                                <td>{{x.SkillsetDescr}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -51,5 +45,5 @@
 </div>
 <div class="save-bar">
     <!--save bar component here-->
-    <save-bar [buttonMode]="0" (triggerParentFunc)=""></save-bar>
+    <save-bar [buttonMode]="0" ></save-bar>
 </div>
