@@ -39,6 +39,8 @@ export class VWDepartmentSkillsComponent {
     //     )
     //   )
     // }
+
+    ////
   }
   //step3
   async getDepartmentSkillsets(deptID:number){

@@ -9,10 +9,12 @@ import {
 } from '@angular/forms'
 import {
   Associate,
+  Set_User,
   Location,
   Department
 } from '../com_entities/entities';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
+import { Set_UserSvc } from '../com_services/set_user.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
@@ -24,19 +26,20 @@ import { DepartmentSvc } from '../com_services/department.svc';
 })
 
 export class SkillSetComponent {
+  private dateToday: Date;
   private currentUser: any;
   private currentUserFullname: string;
   private associate: Associate;
-  private associates: Associate[];
+  private user: Set_User;
   private locations: Location[];
   private departments: Department[];
   private skillsetFrm: FormGroup;
   private trueForm: any;
-
-  dateToday: Date;
   //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
+  
   constructor(
       private curUserSvc: CurrentUserSvc,
+      private useSvc: Set_UserSvc,
       private assSvc: AssociateSvc,
       private locSvc: LocationSvc,
       private depSvc: DepartmentSvc,
@@ -51,38 +54,43 @@ export class SkillSetComponent {
       'UpdatedOn': [' ']
       //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
     });
-
-    this.dateToday = new Date();
-    // this.associate = new Associate(
-    //   0,
-    //   ' ',
-    //   ' ',
-    //   false,
-    //   0,
-    //   0,
-    //   new Date(),
-    //   false
-    // );
   }
   
   //TEMPLATE: this will get all needed data
   async getDependencies() {
     this.currentUser = await this.curUserSvc.getCurrentUser();
-    this.associates = await this.assSvc.getAssociates();
     this.locations = await this.locSvc.getLocations();
     this.departments = await this.depSvc.getDepartments();
   }
  
   //this will get info of current user
   async getCurrentUserData() {
-    this.associate = await this.associates.find(associate => associate.UserName == this.currentUser.UserName);
-    this.associates = await null;
+    let associates = await this.assSvc.getAssociates();
+    this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
+    let users = await this.useSvc.getSet_Users();
+    this.user = await users.find(user => user.user_name == this.currentUser.UserName);
   }
 
+  //TEMPLATE: this will run functions in order
+  async runFunctions() {
+    await this.getDependencies();
+    await this.getCurrentUserData();
+  }
   ngOnInit(): void {
-    this.getDependencies().then(() => {
-      this.getCurrentUserData();
-    });
+    this.dateToday = new Date();
+    this.associate = new Associate(
+      0,
+      ' ',
+      ' ',
+      false,
+      0,
+      0,
+      new Date(),
+      false
+    );
+
+    this.runFunctions();
+    
 }
 
   onSubmit(form: any): void {
