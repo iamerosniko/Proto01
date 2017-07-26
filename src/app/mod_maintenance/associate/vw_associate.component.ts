@@ -61,7 +61,6 @@ export class VWAssociateComponent implements OnInit {
     this.mode=1;
     //get detail
     this.getDetails(assoc);
-
   }
 
   getDetails(assoc : Associate){
