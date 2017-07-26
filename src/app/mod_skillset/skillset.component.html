@@ -91,33 +91,48 @@
                         </div>
                     </div>
                 </div>
-<!---->
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="dep-skillset">
                 <div class="col-md-12">
-                    <div class="col-md-6">
-                        <label class="control-label col-md-4">Check</label>
-                        <div class="col-md-8">
-                            <!--locked field -->
-                            <input 
-                                    type="text" 
-                                    class="form-control" 
-                                    [formControl]="skillsetFrm.get('checkBox1')"
-                                    [(ngModel)]="checkBox1" />
-                            <br />
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel-group" id="accordion">
+
+                            <div 
+                                    class="panel panel-primary"
+                                    *ngFor="let dept of departments">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{dept.DepartmentID}}">
+                                            {{dept.DepartmentDescr}}
+                                        </a>
+                                    </h4>
+                                </div> <!--panel heading-->
+                                <div id="collapse{{dept.DepartmentID}}" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-3"><input id="checkall" type="checkbox" class="css-checkbox med"><label for="checkall" class="css-label med elegant">Check All</label></div>
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-md-3"><input id="skill1" type="checkbox" class="css-checkbox med"><label for="skill1" class="css-label med elegant">Skill 1</label></div>
+                                            <div class="col-md-3"><input id="skill2" type="checkbox" class="css-checkbox med"><label for="skill2" class="css-label med elegant">Skill 2</label></div>
+                                            <div class="col-md-3"><input id="skill3" type="checkbox" class="css-checkbox med"><label for="skill3" class="css-label med elegant">Skill 3</label></div>
+                                            <div class="col-md-3"><input id="skill4" type="checkbox" class="css-checkbox med"><label for="skill4" class="css-label med elegant">Skill 4</label></div>
+                                            <div class="col-md-3"><input id="skill5" type="checkbox" class="css-checkbox med"><label for="skill5" class="css-label med elegant">Skill 5</label></div>
+                                        </div>
+                                    </div>
+                                </div> <!--collapse-->
+                            </div><!--panel primary-->
+
                         </div>
                     </div>
                 </div>
-<!---->
             </div>
         </div>
-        <br />
-        <!--
-        <div class="row">
-            <div class="dep-skillset">
-                <department></department>
-                department skillsets component here
-            </div>
-        </div>
-        -->
 
         <nav class="navbar navbar-fixed-bottom save-navbar">
             <div class="container-fluid">

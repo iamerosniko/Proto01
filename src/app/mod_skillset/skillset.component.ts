@@ -93,6 +93,7 @@ export class SkillSetComponent {
     await this.cleanUp();
   }
 
+  //this will assign values to the object to be saved
   async assignValues(formData: any) {
     this.associateForPosting.DepartmentID = await formData.Department;
     this.associateForPosting.LocationID = await formData.Location;
@@ -113,10 +114,12 @@ export class SkillSetComponent {
       new Date(),
       false
     );
-
     this.runFunctions();
-    this.testVal = this.skillsetFrm.controls;
-    
+
+
+    //allfunctions here are for test
+    // this.testVal = this.skillsetFrm.controls;
+    // this.setMockValues();
 }
 
   async onSubmit(formData: any) {
@@ -124,5 +127,25 @@ export class SkillSetComponent {
     console.log('you submitted value:', formData);
     await this.assignValues(formData);
     await this.assSvc.putAssociate(this.associateForPosting);
+  }
+
+  setMockValues(): void {
+    this.departments =[
+      new Department(
+        1,
+        'Admin',
+        true
+      ),
+      new Department(
+        2,
+        'Sales',
+        true
+      ),
+      new Department(
+        3,
+        'Support',
+        true
+      )
+    ];
   }
 }
