@@ -43,7 +43,7 @@ export class VWAssociateComponent implements OnInit {
     return department.DepartmentDescr
   }
 
-  getLocationtName(id:number):string{
+  getLocationName(id:number):string{
     let location:Location = this.locations.find(x=>x.LocationID==id);
     return location.LocationDescr
   }
