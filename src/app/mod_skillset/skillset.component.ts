@@ -1,11 +1,14 @@
 import { 
   Component, 
-  OnInit 
+  OnInit ,
+  ChangeDetectorRef
 } from '@angular/core';
 import { 
   FormBuilder, 
   FormGroup, 
-  Validators 
+  Validators,
+  AbstractControl,
+  FormControl
 } from '@angular/forms'
 import {
   Associate,
@@ -28,23 +31,22 @@ import { DepartmentSvc } from '../com_services/department.svc';
 export class SkillSetComponent {
   private dateToday: Date;
   private currentUser: any;
-  private currentUserFullname: string;
   private associate: Associate;
   private associateForPosting: Associate;
   private user: Set_User;
   private locations: Location[];
   private departments: Department[];
   private skillsetFrm: FormGroup;
-  private trueForm: any;
-  //new Date().toISOString().replace('-', '/').split('T')[0].replace('-', '/');
-  
+  testVal: any;
+  checkBox1: any;
   constructor(
       private curUserSvc: CurrentUserSvc,
       private useSvc: Set_UserSvc,
       private assSvc: AssociateSvc,
       private locSvc: LocationSvc,
       private depSvc: DepartmentSvc,
-      private fb: FormBuilder){
+      private fb: FormBuilder,
+      private ref:ChangeDetectorRef){
         
     this.skillsetFrm = this.fb.group({
       'UserName': [' '],
@@ -55,6 +57,8 @@ export class SkillSetComponent {
       'UpdatedOn': [' ']
       //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
     });
+    let checkBox1 = new FormControl();
+    this.skillsetFrm.addControl('checkBox1', checkBox1);
   }
   
   //TEMPLATE: this will get all needed data
@@ -74,11 +78,29 @@ export class SkillSetComponent {
     this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
   }
 
+  //TEMPLATE: memory clean up
+  cleanUp(): void {
+      this.curUserSvc = null;
+      this.useSvc = null;
+      this.locSvc = null;
+      this.depSvc = null;
+  }
+
   //TEMPLATE: this will run functions in order
   async runFunctions() {
     await this.getDependencies();
     await this.getCurrentUserData();
+    await this.cleanUp();
   }
+
+  async assignValues(formData: any) {
+    this.associateForPosting.DepartmentID = await formData.Department;
+    this.associateForPosting.LocationID = await formData.Location;
+    this.associateForPosting.VPN = await formData.VPN;
+    this.associateForPosting.PhoneNumber = await formData.PhoneNumber;
+    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-4));
+  }
+  
   ngOnInit(): void {
     this.dateToday = new Date();
     this.associate = new Associate(
@@ -93,13 +115,14 @@ export class SkillSetComponent {
     );
 
     this.runFunctions();
+    this.testVal = this.skillsetFrm.controls;
     
 }
 
-  onSubmit(form: any): void {
-    console.log('you submitted value:', form);
-    //this.testData = this.skillsetForm.controls.sku.value;
-    this.trueForm = form;
-
+  async onSubmit(formData: any) {
+    alert('Your record has been updated.')
+    console.log('you submitted value:', formData);
+    await this.assignValues(formData);
+    await this.assSvc.putAssociate(this.associateForPosting);
   }
 }

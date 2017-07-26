@@ -86,11 +86,27 @@
                                     class="form-control"
                                     [readonly]="true"
                                     [formControl]="skillsetFrm.get('UpdatedOn')"
-                                    value="{{dateToday | date: 'dd/MM/yyyy'}}" />
+                                    value="{{associate.UpdatedOn | date: 'dd/MM/yyyy'}}" />
                             <br />
                         </div>
                     </div>
                 </div>
+<!---->
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <label class="control-label col-md-4">Check</label>
+                        <div class="col-md-8">
+                            <!--locked field -->
+                            <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    [formControl]="skillsetFrm.get('checkBox1')"
+                                    [(ngModel)]="checkBox1" />
+                            <br />
+                        </div>
+                    </div>
+                </div>
+<!---->
             </div>
         </div>
         <br />
