@@ -30,6 +30,7 @@ export class SkillSetComponent {
   private currentUser: any;
   private currentUserFullname: string;
   private associate: Associate;
+  private associateForPosting: Associate;
   private user: Set_User;
   private locations: Location[];
   private departments: Department[];
@@ -69,6 +70,8 @@ export class SkillSetComponent {
     this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
     let users = await this.useSvc.getSet_Users();
     this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+    this.associateForPosting = await JSON.parse(JSON.stringify(this.associate));
+    this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
   }
 
   //TEMPLATE: this will run functions in order
@@ -94,7 +97,7 @@ export class SkillSetComponent {
 }
 
   onSubmit(form: any): void {
-    //console.log('you submitted value:', form);
+    console.log('you submitted value:', form);
     //this.testData = this.skillsetForm.controls.sku.value;
     this.trueForm = form;
 
