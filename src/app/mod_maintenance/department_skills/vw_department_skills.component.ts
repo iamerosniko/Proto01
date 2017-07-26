@@ -20,6 +20,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
     this.getDepartments();
   }
   //department combobox
+  checkallValue:boolean;
+  tempDeptSkill:DepartmentSkillsets
   selectedDepartmentID:number;
   departments: Department[] = [];
   departmentSkillsets:DepartmentSkillsets[]=[];
@@ -31,6 +33,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
   //step2
   async getSkillSets(deptID:number){
+    //reset checkall
+    this.checkallValue=false;
     //1. get skillsets
     this.skillsets=await this.skillsetSvc.getSkillsets();
     //clears the checkboxes
@@ -45,20 +49,25 @@ export class VWDepartmentSkillsComponent implements OnInit {
         )
       )
     }
+    this.getDepartmentSkillsets(deptID).then(()=>{
+      this.compareSelectedSkillsets();
+    });
   }
   //step3
   async getDepartmentSkillsets(deptID:number){
     this.departmentSkillsets = await this.departmentSkillsetSvc.getDepartmentSkillsets();
+    this.departmentSkillsets = this.departmentSkillsets.filter(ds=>ds.DepartmentID==deptID);
   }
   //step 4
   async compareSelectedSkillsets(){
 
     for (var i = 0; i < this.selectedSkillsets.length; i++){
       var selectedSkillset=this.selectedSkillsets[i];
-      var deptSkill = this.departmentSkillsets.find(ds=>
-        ds.DepartmentSkillsetID==selectedSkillset.departmentSkillset.DepartmentSkillsetID);
-      console.log(deptSkill);  
-      if (deptSkill!=null){
+        console.log(selectedSkillset.departmentSkillset.SkillsetID)
+        this.tempDeptSkill= await this.departmentSkillsets.find(ds=>
+        ds.SkillsetID==selectedSkillset.departmentSkillset.SkillsetID);
+      console.log(this.tempDeptSkill);  
+      if (this.tempDeptSkill!=null){
         selectedSkillset.IsSelected=true;
       } 
     }
@@ -72,4 +81,18 @@ export class VWDepartmentSkillsComponent implements OnInit {
     }
   }
 
+  async saveDepartmentSkillset(){
+    //delete all departmentSkillsets
+    for (var i = 0; i < this.departmentSkillsets.length; i++){
+      var departmentSkillset=this.departmentSkillsets[i];
+      await this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID);
+    }
+
+    for (var i = 0; i < this.selectedSkillsets.length; i++){
+      var selectedSkillset=this.selectedSkillsets[i];
+      if(selectedSkillset.IsSelected==true){
+        await this.departmentSkillsetSvc.postDepartmentSkillset(selectedSkillset.departmentSkillset);
+      }
+    }
+  }
 }
