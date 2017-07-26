@@ -26,13 +26,13 @@
                         <tbody>
                             <tr *ngFor="let x of associates">
                                 <td>{{x.AssociateID}}</td>
-                                <td>{{x.UserName}}</td>
+                                <td>{{getFullName(x.UserName)}}</td>
                                 <td>{{x.PhoneNumber}}</td>
-                                <td>{{x.VPN}}</td>
+                                <td>{{getStatus(x.VPN)}}</td>
                                 <td>{{getDepartmentName(x.DepartmentID)}}</td>
                                 <td>{{getLocationName(x.LocationID)}}</td>
-                                <td>{{x.UpdatedOn}}</td>
-                                <td>{{x.IsActive}}</td>
+                                <td>{{x.UpdatedOn | date: 'dd/MM/yyyy'}}</td>
+                                <td>{{getStatus(x.IsActive)}}</td>
                                 <td>
                                     <div class="btn-group">
                                         <a (click)="editDetails()" href="#" class="btn btn-default btn-xs" data-toggle="tab" data-target="#asc_editor" title="Edit"><i class="fa fa-edit"></i></a>
