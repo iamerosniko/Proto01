@@ -39,8 +39,8 @@ export class VWDepartmentSkillsComponent {
     //     )
     //   )
     // }
-
-    ////
+      //Paki build muna bago commit sa github
+    
   }
   //step3
   async getDepartmentSkillsets(deptID:number){
