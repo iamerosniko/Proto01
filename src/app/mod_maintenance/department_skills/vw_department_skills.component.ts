@@ -64,10 +64,11 @@ export class VWDepartmentSkillsComponent implements OnInit {
     }
   }
 
-  checkAllSkills(){
+  checkAllSkills(isChecked:boolean){
     for (var i = 0; i < this.selectedSkillsets.length; i++){
       var selectedSkillset=this.selectedSkillsets[i];
-      selectedSkillset.IsSelected=true;
+      selectedSkillset.IsSelected=isChecked;
+      console.log('done');
     }
   }
 
