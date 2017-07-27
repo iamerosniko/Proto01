@@ -212,6 +212,8 @@ export class SkillSetComponent {
     this.setMockValues();
     this.filterDataList();
     this.prepareDBO()
+    this.skillsetCheck['3'] = true;
+    this.skillsetCheck['4'] = true;
     //TEST:
   }
 
