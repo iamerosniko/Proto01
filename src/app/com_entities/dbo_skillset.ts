@@ -5,11 +5,17 @@ export class DepartmentSkillsetDBO {
             public DepartmentID?: number,
             public DepartmentDescr?: string,
             public SkillsetID?: number,
-            public SkillsetDescr?: string){
+            public SkillsetDescr?: string,
+            public IsSelected?: boolean,
+            public DepartmentIsActive?: Boolean,
+            public SkillsetIsActive?: Boolean){
         this.DepartmentSkillsetID = 0,
         this.DepartmentID = 0,
         this.DepartmentDescr = '',
         this.SkillsetID = 0,
-        this.SkillsetDescr =''
+        this.SkillsetDescr ='',
+        this.IsSelected = false,
+        this.DepartmentIsActive = false,
+        this.SkillsetIsActive = false
     }
 }

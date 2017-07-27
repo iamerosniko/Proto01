@@ -44,6 +44,7 @@ export class SkillSetComponent {
   private departmentSkillsets: DepartmentSkillsets[];
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   private skillsetFrm: FormGroup;
+  private skillsetCheck: any;
 
   constructor(
       private curUserSvc: CurrentUserSvc,
@@ -64,8 +65,8 @@ export class SkillSetComponent {
       'UpdatedOn': [' ']
     });
     //TEST:
-    let checkBox1 = new FormControl();
-    this.skillsetFrm.addControl('checkBox1', checkBox1);
+    //let checkBox1 = new FormControl();
+    //this.skillsetFrm.addControl('checkBox1', checkBox1);
     //TEST:
   }
   
@@ -88,11 +89,18 @@ export class SkillSetComponent {
       this.dptSklSvc = null;
   }
 
+  //TEMPLATE: filter/sort data remove inactive
+  async filterDataList() {
+    this.locations = await this.locations.filter(location => location.IsActive == true);
+    this.departments = await this.departments.filter(department => department.IsActive == true);
+  }
+
   //TEMPLATE: this will run functions in order
   async runFunctions() {
     await this.getDependencies();
     await this.getCurrentUserData();
     await this.cleanUp();
+    await this.filterDataList();
     await this.prepareDBO();
   }
 
@@ -112,11 +120,11 @@ export class SkillSetComponent {
     this.associateForPosting.LocationID = await formData.Location;
     this.associateForPosting.VPN = await formData.VPN;
     this.associateForPosting.PhoneNumber = await formData.PhoneNumber;
-    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-4));
+    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-4));             
   }
-  
+
   //this will prepare DBO
-  prepareDBO(): void {
+  async prepareDBO()  {
     if(this.departmentSkillsets && this.departments && this.skillsets) {
       //extract data from DepartmentSkillsets
       for (let item of this.departmentSkillsets) {
@@ -131,28 +139,61 @@ export class SkillSetComponent {
       for (let item of this.departmentSkillsetDBOs) {
         let dpt = this.departments.find(dept => dept.DepartmentID === item.DepartmentID);
         item.DepartmentDescr = dpt.DepartmentDescr;
+        item.DepartmentIsActive = dpt.IsActive;
       }
 
       //get description of Skillsets
       for (let item of this.departmentSkillsetDBOs) {
         let skl = this.skillsets.find(skill => skill.SkillsetID === item.SkillsetID);
         item.SkillsetDescr = skl.SkillsetDescr;
+        item.SkillsetIsActive = skl.IsActive;
       }
+
+      //this remove entries that are InActive
+      this.departmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(dptSklDBO => dptSklDBO.DepartmentIsActive == true);
+      this.departmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(dptSklDBO => dptSklDBO.SkillsetIsActive == true);
     } else {
       alert('There are missing dependencies');
     }
   }
 
+  //this will map the skills selected by user
+  mapSkillSet(): void {
+    for ( let property in this.skillsetCheck ) {
+      if( this.skillsetCheck.hasOwnProperty(property) ) {
+        //alert(property);
+        //let result += p + " , " + this.skillsetCheck[p] + "\n";
+        for (let item of this.departmentSkillsetDBOs) {
+          if( parseInt(property) == item.DepartmentSkillsetID) {
+            item.IsSelected = this.skillsetCheck[property];
+          }
+        }
+      } 
+    } 
+  }
+
+  //add record in AssociateDepartmentSkill
+  async addSkillset() {
+    //this.skillsetCheck['3'] = true;
+  }
+
+  //remove record in AssociateDepartmentSkill
+  async removeSkillset() {
+
+  }
+
   //form submission
   async onSubmit(formData: any) {
-    alert('Your record has been updated.')
+    //!alert('Your record has been updated.')
     console.log('you submitted value:', formData);
-    await this.assignValues(formData);
-    await this.assSvc.putAssociate(this.associateForPosting);
+    //! await this.assignValues(formData);
+    //! await this.assSvc.putAssociate(this.associateForPosting);
+    //! await this.mapSkillSet();
   }
 
   ngOnInit(): void {
     this.departmentSkillsetDBOs = [];
+    this.skillsetCheck = {};
     this.dateToday = new Date();
     this.associate = new Associate(
       0,
@@ -164,19 +205,60 @@ export class SkillSetComponent {
       new Date(),
       false
     );
-    this.runFunctions();
+    //!this.runFunctions();
 
     //TEST:
     // this.testVal = this.skillsetFrm.controls;
-    //this.setMockValues();
+    this.setMockValues();
+    this.filterDataList();
+    this.prepareDBO()
     //TEST:
   }
 
+  
+
+
+  //cocoM: {[k:string]: any} = {};
   //TEST:
+  //counter: number = 0;
   //testVal: any;
-  checkBox1: any;
+  // arr:any =  [];
+  // cocoM: any = {};
+  // checkBox1: any;
   //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
+  // alertTest():void {
+  //   ++this.counter; 
+  //   alert(this.counter);
+  // }
   setMockValues(): void {
+    this.associate = 
+      new Associate(
+        1,
+        'sarmife',
+        '2233',
+        true,
+        5,
+        3,
+        new Date(),
+        true
+      );
+    this.locations = [
+      new Location(
+        1,
+        'New York',
+        true
+      ),
+      new Location(
+        2,
+        'Michingan',
+        false
+      ),
+      new Location(
+        3,
+        'Los Angel',
+        false
+      )
+    ];
     this.departments = [
       new Department(
         1,

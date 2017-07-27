@@ -100,31 +100,36 @@
                 <div class="col-md-12">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="panel-group" id="accordion">
-
+                                            
                             <div 
                                     class="panel panel-primary"
-                                    *ngFor="let dept of departments">
+                                    *ngFor="let dpt of departments">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{dept.DepartmentID}}">
-                                            {{dept.DepartmentDescr}}
+                                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{dpt.DepartmentID}}">
+                                            {{dpt.DepartmentDescr}}
                                         </a>
                                     </h4>
                                 </div> <!--panel heading-->
-                                <div id="collapse{{dept.DepartmentID}}" class="panel-collapse collapse">
+                                <div id="collapse{{dpt.DepartmentID}}" class="panel-collapse collapse">
                                     <div class="panel-body">
-                                        <div class="row">
+                                        <!--<div class="row">
                                             <div class="col-md-3"><input id="checkall" type="checkbox" class="css-checkbox med"><label for="checkall" class="css-label med elegant">Check All</label></div>
-                                        </div>
+                                        </div>-->
                                         <br />
                                         <div class="row">
-                                            <div class="col-md-3"><input id="skill1" type="checkbox" class="css-checkbox med"><label for="skill1" class="css-label med elegant">Skill 1</label></div>
-                                            <div class="col-md-3"><input id="skill2" type="checkbox" class="css-checkbox med"><label for="skill2" class="css-label med elegant">Skill 2</label></div>
-                                            <div class="col-md-3"><input id="skill3" type="checkbox" class="css-checkbox med"><label for="skill3" class="css-label med elegant">Skill 3</label></div>
-                                            <div class="col-md-3"><input id="skill4" type="checkbox" class="css-checkbox med"><label for="skill4" class="css-label med elegant">Skill 4</label></div>
-                                            <div class="col-md-3"><input id="skill5" type="checkbox" class="css-checkbox med"><label for="skill5" class="css-label med elegant">Skill 5</label></div>
+                                            <div *ngFor="let dptSklDBO of departmentSkillsetDBOs">
+                                                <div class="col-md-3" *ngIf="dptSklDBO.DepartmentID == dpt.DepartmentID">
+                                                    <input 
+                                                            id="{{dptSklDBO.DepartmentSkillsetID}}" 
+                                                            type="checkbox" 
+                                                            class="css-checkbox med"
+                                                            [(ngModel)]="skillsetCheck['' + dptSklDBO.DepartmentSkillsetID]" [ngModelOptions]="{standalone: true}" >
+                                                    <label for="{{dptSklDBO.DepartmentSkillsetID}}" class="css-label med elegant">{{dptSklDBO.SkillsetDescr}}</label>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </div><!--panelbody-->
                                 </div> <!--collapse-->
                             </div><!--panel primary-->
 
