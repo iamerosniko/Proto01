@@ -14,14 +14,17 @@ import {
   Set_User,
   Location,
   Department,
-  Skillset
+  Skillset,
+  DepartmentSkillsets
 } from '../com_entities/entities';
+import { DepartmentSkillsetDBO } from  '../com_entities/dbo_skillset';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
+import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
 
 @Component({
   moduleId: module.id,
@@ -37,7 +40,9 @@ export class SkillSetComponent {
   private user: Set_User;
   private locations: Location[];
   private departments: Department[];
-  private skills: Skillset[];
+  private skillsets: Skillset[];
+  private departmentSkillsets: DepartmentSkillsets[];
+  private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   private skillsetFrm: FormGroup;
 
   constructor(
@@ -47,6 +52,7 @@ export class SkillSetComponent {
       private locSvc: LocationSvc,
       private depSvc: DepartmentSvc,
       private sklSvc: SkillsetSvc,
+      private dptSklSvc: DepartmentSkillsetsSvc,
       private fb: FormBuilder){
         
     this.skillsetFrm = this.fb.group({
@@ -68,7 +74,8 @@ export class SkillSetComponent {
     this.currentUser = await this.curUserSvc.getCurrentUser();
     this.locations = await this.locSvc.getLocations();
     this.departments = await this.depSvc.getDepartments();
-    this.skills = await this.sklSvc.getSkillsets();
+    this.skillsets = await this.sklSvc.getSkillsets();
+    this.departmentSkillsets = await this.dptSklSvc.getDepartmentSkillsets();
   }
  
   //TEMPLATE: memory clean up
@@ -78,6 +85,7 @@ export class SkillSetComponent {
       this.locSvc = null;
       this.depSvc = null;
       this.sklSvc = null;
+      this.dptSklSvc = null;
   }
 
   //TEMPLATE: this will run functions in order
@@ -85,6 +93,7 @@ export class SkillSetComponent {
     await this.getDependencies();
     await this.getCurrentUserData();
     await this.cleanUp();
+    await this.prepareDBO();
   }
 
   //this will get info of current user
@@ -106,6 +115,34 @@ export class SkillSetComponent {
     this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-4));
   }
   
+  //this will prepare DBO
+  prepareDBO(): void {
+    if(this.departmentSkillsets && this.departments && this.skillsets) {
+      //extract data from DepartmentSkillsets
+      for (let item of this.departmentSkillsets) {
+        let dptSklDBO = new DepartmentSkillsetDBO();
+        dptSklDBO.DepartmentSkillsetID = item.DepartmentSkillsetID;
+        dptSklDBO.DepartmentID = item.DepartmentID;
+        dptSklDBO.SkillsetID = item.SkillsetID
+        this.departmentSkillsetDBOs.push(dptSklDBO);
+      }
+
+      //get description of DepartmentID
+      for (let item of this.departmentSkillsetDBOs) {
+        let dpt = this.departments.find(dept => dept.DepartmentID === item.DepartmentID);
+        item.DepartmentDescr = dpt.DepartmentDescr;
+      }
+
+      //get description of Skillsets
+      for (let item of this.departmentSkillsetDBOs) {
+        let skl = this.skillsets.find(skill => skill.SkillsetID === item.SkillsetID);
+        item.SkillsetDescr = skl.SkillsetDescr;
+      }
+    } else {
+      alert('There are missing dependencies');
+    }
+  }
+
   //form submission
   async onSubmit(formData: any) {
     alert('Your record has been updated.')
@@ -115,6 +152,7 @@ export class SkillSetComponent {
   }
 
   ngOnInit(): void {
+    this.departmentSkillsetDBOs = [];
     this.dateToday = new Date();
     this.associate = new Associate(
       0,
@@ -126,11 +164,11 @@ export class SkillSetComponent {
       new Date(),
       false
     );
-    //!this.runFunctions();
+    this.runFunctions();
 
     //TEST:
     // this.testVal = this.skillsetFrm.controls;
-    this.setMockValues();
+    //this.setMockValues();
     //TEST:
   }
 
@@ -139,7 +177,7 @@ export class SkillSetComponent {
   checkBox1: any;
   //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
   setMockValues(): void {
-    this.departments =[
+    this.departments = [
       new Department(
         1,
         'Admin',
@@ -154,6 +192,45 @@ export class SkillSetComponent {
         3,
         'Support',
         true
+      )
+    ];
+    this.skillsets = [
+      new Skillset(
+        1,
+        'Windows',
+        true
+      ),
+      new Skillset(
+        2,
+        'Linux',
+        true
+      ),
+      new Skillset(
+        3,
+        'MacOS',
+        true
+      )
+    ];
+    this.departmentSkillsets = [
+      new DepartmentSkillsets (
+        1,
+        2,
+        1
+      ),
+      new DepartmentSkillsets (
+        2,
+        1,
+        1
+      ),
+      new DepartmentSkillsets (
+        3,
+        1,
+        2
+      ),
+      new DepartmentSkillsets (
+        4,
+        1,
+        3
       )
     ];
   }
