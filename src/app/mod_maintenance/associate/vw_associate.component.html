@@ -96,7 +96,7 @@
                 <label class="col-md-2 control-label">Full Name</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" [(ngModel)]="associate.UserName">
-                        <option *ngFor="let x of set_Users" [value]="x.user_name"> {{x.user_first_name+" " +x.user_last_name}} </option>
+                        <option *ngFor="let x of getUnusedUsers()" [value]="x.user_name"> {{x.user_first_name+" " +x.user_last_name}} </option>
                     </select>
                 </div>
             </div>
@@ -104,7 +104,7 @@
             <div class="row">
                 <label class="col-md-2 control-label">Username</label>
                 <div class="col-md-4">
-                    <input [(ngModel)]="associate.UserName" readonly type="text" class="form-control input-sm" />
+                    <input value="{{associate.UserName + ' - ' +getFullName(associate.UserName) }}" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />
@@ -147,7 +147,7 @@
             <div class="row">
                 <label class="col-md-2 control-label">Updated On</label>
                 <div class="col-md-4">
-                    <input [(ngModel)]="associate.UpdatedOn" readonly type="text" class="form-control input-sm" />
+                    <input value="{{associate.UpdatedOn | date: 'dd/MM/yyyy'}}" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
             <br />

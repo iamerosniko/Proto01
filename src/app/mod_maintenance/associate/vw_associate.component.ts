@@ -36,8 +36,6 @@ export class VWAssociateComponent implements OnInit {
     this.departments = await this.departmentSvc.getDepartments();
     this.associates = await this.associateSvc.getAssociates();
     this.set_Users = await this.setUserSvc.getSet_Users();
-    // this.departments= this.departments.filter(x=>x.IsActive==true);
-    // this.locations=this.locations.filter(x=>x.IsActive=true);
   }
 
   getActiveDepartments():Department[]{
@@ -50,14 +48,23 @@ export class VWAssociateComponent implements OnInit {
     return tempLocation;
   }
 
+  getUnusedUsers():Set_User[]{
+    let tempUsers:Set_User[]=this.set_Users;
+    for(var i=0; i<this.associates.length; i++){
+      var assoc=this.associates[i];
+      tempUsers=tempUsers.filter(x=>x.user_name!=assoc.UserName);
+    }
+    return tempUsers;
+  }
+
   getDepartmentName(id:number):string{
     let department:Department = this.departments.find(x=>x.DepartmentID==id);
-    return department.DepartmentDescr
+    return department.DepartmentDescr;
   }
 
   getLocationName(id:number):string{
     let location:Location = this.locations.find(x=>x.LocationID==id);
-    return location.LocationDescr
+    return location.LocationDescr;
   }
 
   getStatus(status:boolean):string{
@@ -92,6 +99,8 @@ export class VWAssociateComponent implements OnInit {
   }
 
   async saveAssociate(){
+
+
     this.associate.UpdatedOn=new Date();
     this.mode==0 ?  await this.associateSvc.postAssociate(this.associate) : await this.associateSvc.putAssociate(this.associate);
     document.getElementById("btnGoBack").click();
