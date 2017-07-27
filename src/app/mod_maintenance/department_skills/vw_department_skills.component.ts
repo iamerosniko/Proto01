@@ -30,6 +30,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   //step1
   async getDepartments(){
     this.departments=await this.deptSvc.getDepartments();
+    this.departments= this.departments.filter(x=>x.IsActive==true);
   }
   //step2
   async getSkillSets(deptID:number){
@@ -63,10 +64,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
 
     for (var i = 0; i < this.selectedSkillsets.length; i++){
       var selectedSkillset=this.selectedSkillsets[i];
-        console.log(selectedSkillset.departmentSkillset.SkillsetID)
         this.tempDeptSkill= await this.departmentSkillsets.find(ds=>
         ds.SkillsetID==selectedSkillset.departmentSkillset.SkillsetID);
-      console.log(this.tempDeptSkill);  
       if (this.tempDeptSkill!=null){
         selectedSkillset.IsSelected=true;
       } 
@@ -77,7 +76,6 @@ export class VWDepartmentSkillsComponent implements OnInit {
     for (var i = 0; i < this.selectedSkillsets.length; i++){
       var selectedSkillset=this.selectedSkillsets[i];
       selectedSkillset.IsSelected=isChecked;
-      console.log('done');
     }
   }
 

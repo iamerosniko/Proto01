@@ -18,15 +18,26 @@ export class VWSkillsetComponent {
     this.skillset=new Skillset(0,'',true);
   }
 
-  editDetails(dept: Skillset){
+  editDetails(skillset: Skillset){
     this.viewMode=1;
     //get detail
     this.mode=1;
-    this.getDetails(dept);
+    this.getDetails(skillset);
   }
 
-  getDetails(dept : Skillset){
-    this.skillset = dept;
+  getDetails(skillset : Skillset){
+    this.skillset = skillset;
+  }
+
+  getStatus(status:boolean):string{
+    return status ? "Yes" : "No";
+  }
+
+  changeStatus(skillset:Skillset){
+    this.getDetails(skillset);
+    this.viewMode=1;
+    this.skillset.IsActive=false;
+    this.saveSkillset();
   }
 
   goBack(){

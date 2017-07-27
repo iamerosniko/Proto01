@@ -29,6 +29,17 @@ export class VWDepartmentComponent {
     this.department = dept;
   }
 
+  getStatus(status:boolean):string{
+    return status ? "Yes" : "No";
+  }
+
+  changeStatus(dept:Department){
+    this.getDetails(dept);
+    this.viewMode=1;
+    this.department.IsActive=false;
+    this.saveDepartment();
+  }
+
   goBack(){
     this.mode=0;
   }

@@ -24,8 +24,20 @@ export class VWLocationComponent {
     //get detail
     this.getDetails(loc);
   }
+
   getDetails(loc : Location){
     this.location = loc;
+  }
+
+  getStatus(status:boolean):string{
+    return status ? "Yes" : "No";
+  }
+
+  changeStatus(loc:Location){
+    this.getDetails(loc);
+    this.viewMode=1;
+    this.location.IsActive=false;
+    this.saveLocation();
   }
 
   goBack(){

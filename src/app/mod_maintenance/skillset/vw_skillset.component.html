@@ -12,7 +12,7 @@
                     <table class="table table-bordered table-striped table-hover input-sm">
                         <thead>
                             <tr>
-                                <th>Skill Id</th>
+                                <!--<th>Skill Id</th>-->
                                 <th>Skill Description</th>
                                 <th>Is Active</th>
                                 <th>&nbsp;</th>
@@ -20,13 +20,13 @@
                         </thead>
                         <tbody>
                             <tr *ngFor="let ss of skillsets">
-                                <td>{{ss.SkillsetID}}</td>
+                                <!--<td>{{ss.SkillsetID}}</td>-->
                                 <td>{{ss.SkillsetDescr}}</td>
-                                <td>{{ss.IsActive}}</td>
+                                <td>{{getStatus(ss.IsActive)}}</td>
                                 <td>
                                     <div class="btn-group">
-                                        <a href="#" (click)="editDetails(ss)" class="btn btn-default btn-xs" data-toggle="tab" data-target="#ski_editor" title="Edit"><i class="fa fa-edit"></i></a>
-                                        <a href="#" class="btn btn-default btn-xs" title="Delete"><i class="fa fa-trash"></i></a>
+                                        <a (click)="editDetails(ss)" class="btn btn-default btn-xs" data-toggle="tab" data-target="#ski_editor" title="Edit"><i class="fa fa-edit"></i></a>
+                                        <a (click)="changeStatus(ss)" class="btn btn-default btn-xs" title="Delete"><i class="fa fa-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>

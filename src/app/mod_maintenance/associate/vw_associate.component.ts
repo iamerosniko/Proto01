@@ -36,6 +36,18 @@ export class VWAssociateComponent implements OnInit {
     this.departments = await this.departmentSvc.getDepartments();
     this.associates = await this.associateSvc.getAssociates();
     this.set_Users = await this.setUserSvc.getSet_Users();
+    // this.departments= this.departments.filter(x=>x.IsActive==true);
+    // this.locations=this.locations.filter(x=>x.IsActive=true);
+  }
+
+  getActiveDepartments():Department[]{
+    let tempDept:Department[]=this.departments.filter(x=>x.IsActive==true);
+    return tempDept;
+  }
+
+  getActiveLocations():Location[]{
+    let tempLocation:Location[]=this.locations.filter(x=>x.IsActive==true);
+    return tempLocation;
   }
 
   getDepartmentName(id:number):string{
@@ -67,12 +79,20 @@ export class VWAssociateComponent implements OnInit {
     this.associate = assoc;
   }
 
+  changeStatus(assoc:Associate){
+    this.getDetails(assoc);
+    this.mode=1;
+    this.associate.IsActive=false;
+    this.saveAssociate();
+  }
+
   cleanUp(){
     this.getDependencies();
     this.associate=new Associate(0,'','',false,0,0,new Date,true);
   }
 
   async saveAssociate(){
+    this.associate.UpdatedOn=new Date();
     this.mode==0 ?  await this.associateSvc.postAssociate(this.associate) : await this.associateSvc.putAssociate(this.associate);
     document.getElementById("btnGoBack").click();
     this.goBack();
