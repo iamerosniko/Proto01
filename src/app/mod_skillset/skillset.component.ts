@@ -7,7 +7,7 @@ import {
   FormGroup, 
   Validators,
   FormControl
-} from '@angular/forms'
+} from '@angular/forms';
 import {
   Associate,
   Set_User,
@@ -61,16 +61,12 @@ export class SkillSetComponent {
         
     this.skillsetFrm = this.fb.group({
       'UserName': [' '],
-      'Department': [1],
-      'Location': [1],
+      'Department': [1, Validators.required],
+      'Location': [1, Validators.required],
       'VPN': [false],
       'PhoneNumber': [' ',Validators.maxLength(20)],
       'UpdatedOn': [' ']
     });
-    //TEST:
-    //let checkBox1 = new FormControl();
-    //this.skillsetFrm.addControl('checkBox1', checkBox1);
-    //TEST:
   }
   
   //TEMPLATE: this will get all needed data
@@ -91,7 +87,6 @@ export class SkillSetComponent {
       this.depSvc = null;
       this.sklSvc = null;
       this.dptSklSvc = null;
-      this.assDptSklSvc = null;
   }
 
   //TEMPLATE: filter/sort data remove inactive
@@ -111,19 +106,20 @@ export class SkillSetComponent {
 
   //this will get info of current user
   async getCurrentUserData() {
-    //let associates = await this.assSvc.getAssociates();
-    //this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
-    //let users = await this.useSvc.getSet_Users();
-    //this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+    let associates = await this.assSvc.getAssociates();//
+    this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);//
+    let users = await this.useSvc.getSet_Users();
+    this.user = await users.find(user => user.user_name == this.currentUser.UserName);
     this.associateForPosting = await JSON.parse(JSON.stringify(this.associate));
-    //this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
-    //this will obtain curren users skills
+    this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
+    
+    //this will obtain current users skills
     this.associateDepartmentSkillsets = 
         await this.associateDepartmentSkillsets.filter(AssociateDepartmentSkillsetSkillset => 
         AssociateDepartmentSkillsetSkillset.AssociateID == this.associateForPosting.AssociateID);
     for (let assDptSkl of this.associateDepartmentSkillsets) {
       this.skillsetCheck[assDptSkl.DepartmentSkillsetID] = await true;
-    }
+    };
   }
 
   //this will assign values to the object to be saved
@@ -132,7 +128,7 @@ export class SkillSetComponent {
     this.associateForPosting.LocationID = await formData.Location;
     this.associateForPosting.VPN = await formData.VPN;
     this.associateForPosting.PhoneNumber = await formData.PhoneNumber;
-    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-4));             
+    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-3));             
   }
 
   //this will prepare DBO
@@ -145,224 +141,102 @@ export class SkillSetComponent {
         dptSklDBO.DepartmentID = item.DepartmentID;
         dptSklDBO.SkillsetID = item.SkillsetID
         this.departmentSkillsetDBOs.push(dptSklDBO);
-      }
+      };
 
       //get description of DepartmentID
       for (let item of this.departmentSkillsetDBOs) {
         let dpt = this.departments.find(dept => dept.DepartmentID === item.DepartmentID);
         item.DepartmentDescr = dpt.DepartmentDescr;
         item.DepartmentIsActive = dpt.IsActive;
-      }
+      };
 
       //get description of Skillsets
       for (let item of this.departmentSkillsetDBOs) {
         let skl = this.skillsets.find(skill => skill.SkillsetID === item.SkillsetID);
         item.SkillsetDescr = skl.SkillsetDescr;
         item.SkillsetIsActive = skl.IsActive;
-      }
+      };
 
       //this remove entries that are InActive
       this.departmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(dptSklDBO => dptSklDBO.DepartmentIsActive == true);
       this.departmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(dptSklDBO => dptSklDBO.SkillsetIsActive == true);
     } else {
       alert('There are missing dependencies');
-    }
+    };
   }
 
   //this will map the skills selected by user
   mapSkillSet(): void {
     for ( let property in this.skillsetCheck ) {
       if( this.skillsetCheck.hasOwnProperty(property) ) {
-        //alert(property);
         //let result += p + " , " + this.skillsetCheck[p] + "\n";
         for (let item of this.departmentSkillsetDBOs) {
           if( parseInt(property) == item.DepartmentSkillsetID) {
             item.IsSelected = this.skillsetCheck[property];
-          }
-        }
-      } 
-    } 
+          };
+        };
+      }; 
+    }; 
   }
 
-  //add record in AssociateDepartmentSkill
+  //this will refresh AssociateDepartmentSkillset list 
+  async refreshAssociateDepartmentSkillset() {
+    this.associateDepartmentSkillsets = await this.assDptSklSvc.getAssociateDeptSkillsets();
+    this.associateDepartmentSkillsets = 
+        await this.associateDepartmentSkillsets.filter(AssociateDepartmentSkillsetSkillset => 
+        AssociateDepartmentSkillsetSkillset.AssociateID == this.associateForPosting.AssociateID);
+  }
+
+  //add record in AssociateDepartmentSkillset
   async addSkillset() {
-    //this.skillsetCheck['3'] = true;
+    await this.refreshAssociateDepartmentSkillset();
+    var tempDepartmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(departmentSkillsetDBOs =>
+        departmentSkillsetDBOs.IsSelected == true);
+
+    for (let tempDptSklDBO of tempDepartmentSkillsetDBOs) {
+      let tempAssDeptSkl = await this.associateDepartmentSkillsets.find(associateDepartmentSkillset =>
+          associateDepartmentSkillset.DepartmentSkillsetID == tempDptSklDBO.DepartmentSkillsetID);
+      if (!tempAssDeptSkl) {
+        let assDptSkl = await new AssociateDepartmentSkillset();
+        assDptSkl.AssociateID = await this.associateForPosting.AssociateID;
+        assDptSkl.DepartmentSkillsetID = await tempDptSklDBO.DepartmentSkillsetID;
+        await this.assDptSklSvc.postAssociateDeptSkillset(assDptSkl);
+      }
+    };
   }
 
-  //remove record in AssociateDepartmentSkill
+  //remove record in AssociateDepartmentSkillset
   async removeSkillset() {
+    await this.refreshAssociateDepartmentSkillset();
+    var tempDepartmentSkillsetDBOs = await this.departmentSkillsetDBOs.filter(departmentSkillsetDBOs =>
+        departmentSkillsetDBOs.IsSelected == false);
 
+    for (let tempDptSklDBO of tempDepartmentSkillsetDBOs) {
+      var assDptSkl = await this.associateDepartmentSkillsets.find(tempAssociateDepartmentSkillset =>
+          tempAssociateDepartmentSkillset.DepartmentSkillsetID == tempDptSklDBO.DepartmentSkillsetID);
+      
+      if (assDptSkl) {
+        await this.assDptSklSvc.DeleteAssociateDeptSkillset(assDptSkl.AssociateDepartmentSkillsetID);
+      };
+    };
   }
 
   //form submission
   async onSubmit(formData: any) {
-    //!alert('Your record has been updated.')
-    console.log('you submitted value:', formData);
-    //! await this.assignValues(formData);
-    //! await this.assSvc.putAssociate(this.associateForPosting);
-    //! await this.mapSkillSet();
+    //console.log('you submitted value:', formData);
+    alert('Your record has been updated.');
+    await this.assignValues(formData);
+    await this.assSvc.putAssociate(this.associateForPosting);
+    await this.mapSkillSet();
+    await this.addSkillset();
+    await this.removeSkillset();
   }
 
   ngOnInit(): void {
     this.departmentSkillsetDBOs = [];
     this.skillsetCheck = {};
     this.dateToday = new Date();
-    this.associate = new Associate(
-      0,
-      ' ',
-      ' ',
-      false,
-      0,
-      0,
-      new Date(),
-      false
-    );
-    //!this.runFunctions();
-
-    //TEST:
-    // this.testVal = this.skillsetFrm.controls;
-    this.setMockValues();
-    this.filterDataList();
-    this.getCurrentUserData();
-    this.prepareDBO()
-    //this.skillsetCheck['3'] = true;
-    //this.skillsetCheck['4'] = true;
-    //TEST:
-  }
-
-  
-
-
-  //cocoM: {[k:string]: any} = {};
-  //TEST:
-  //counter: number = 0;
-  //testVal: any;
-  // arr:any =  [];
-  // cocoM: any = {};
-  // checkBox1: any;
-  //<!--value="{{dateToday | date: 'dd/MM/yyyy'}}"/>-->
-  // alertTest():void {
-  //   ++this.counter; 
-  //   alert(this.counter);
-  // }
-  setMockValues(): void {
-    this.associate = 
-      new Associate(
-        1,
-        'sarmife',
-        '2233',
-        true,
-        1,
-        1,
-        new Date(),
-        true
-      );
-    this.associateForPosting = 
-      new Associate(
-        1,
-        'sarmife',
-        '2233',
-        true,
-        5,
-        3,
-        new Date(),
-        true
-      );
-    this.locations = [
-      new Location(
-        1,
-        'New York',
-        true
-      ),
-      new Location(
-        2,
-        'Michingan',
-        false
-      ),
-      new Location(
-        3,
-        'Los Angel',
-        false
-      )
-    ];
-    this.departments = [
-      new Department(
-        1,
-        'Admin',
-        true
-      ),
-      new Department(
-        2,
-        'Sales',
-        true
-      ),
-      new Department(
-        3,
-        'Support',
-        true
-      )
-    ];
-    this.skillsets = [
-      new Skillset(
-        1,
-        'Windows',
-        true
-      ),
-      new Skillset(
-        2,
-        'Linux',
-        true
-      ),
-      new Skillset(
-        3,
-        'MacOS',
-        true
-      )
-    ];
-    this.departmentSkillsets = [
-      new DepartmentSkillsets (
-        1,
-        2,
-        1
-      ),
-      new DepartmentSkillsets (
-        2,
-        1,
-        1
-      ),
-      new DepartmentSkillsets (
-        3,
-        1,
-        2
-      ),
-      new DepartmentSkillsets (
-        4,
-        1,
-        3
-      )
-    ];
-    this.associateDepartmentSkillsets = [
-      new AssociateDepartmentSkillset (
-        1,
-        1,
-        2
-      ),
-      new AssociateDepartmentSkillset (
-        2,
-        1,
-        3
-      ),
-      new AssociateDepartmentSkillset (
-        3,
-        2,
-        4
-      ),
-      new AssociateDepartmentSkillset (
-        2,
-        2,
-        1
-      )
-    ];
-  }
-  //TEST:
+    this.associate = new Associate();
+    this.runFunctions();
+  } 
 }

@@ -1,14 +1,14 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
-import { AssociateDepartmentSkillsets } from '../com_entities/entities';
+import { AssociateDepartmentSkillset } from '../com_entities/entities';
 @Injectable()
 export class AssociateDepartmentSkillsetsSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     private apiUrl = 'api/AssociateDepartmentSkillsets';
     constructor(private http: Http){}
 
-    getAssociateDeptSkillsets(): Promise<AssociateDepartmentSkillsets[]> {
+    getAssociateDeptSkillsets(): Promise<AssociateDepartmentSkillset[]> {
         return this.http
                 .get(this.apiUrl, {headers: this.headers})
                 .toPromise()
@@ -16,7 +16,7 @@ export class AssociateDepartmentSkillsetsSvc {
                 .catch(this.handleError);
     }
 
-    getAssociateDeptSkillset(id: string): Promise<AssociateDepartmentSkillsets> {
+    getAssociateDeptSkillset(id: string): Promise<AssociateDepartmentSkillset> {
         const url = `${this.apiUrl}/${id}`;
         return this.http
                 .get(url)
@@ -25,7 +25,7 @@ export class AssociateDepartmentSkillsetsSvc {
                 .catch(this.handleError);
     }
 
-    postAssociateDeptSkillset(entity: AssociateDepartmentSkillsets):Promise<any>{
+    postAssociateDeptSkillset(entity: AssociateDepartmentSkillset):Promise<any>{
         return this.http
             .post(this.apiUrl, JSON.stringify(entity), {headers: this.headers})
             .toPromise()
@@ -33,7 +33,7 @@ export class AssociateDepartmentSkillsetsSvc {
             .catch(this.handleError);
     }
 
-    putAssociateDeptSkillset(entity: AssociateDepartmentSkillsets): Promise<any> {
+    putAssociateDeptSkillset(entity: AssociateDepartmentSkillset): Promise<any> {
         const url = `${this.apiUrl}/${entity.AssociateDepartmentSkillsetID}`;
         return this.http
             .put(url, JSON.stringify(entity), {headers: this.headers})

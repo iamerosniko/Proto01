@@ -7,7 +7,6 @@ import { HttpModule } from '@angular/http';
 //skillset
 import { SkillSetComponent } from './skillset.component';
 import { SkillSetRouting } from './skillset.routing';
-import { DepartmentComponent } from './department/department.component';
 import { CommonCompModule } from '../mod_common/common_comp.module';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
@@ -20,7 +19,7 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
 
 @NgModule({
   declarations: [
-    SkillSetComponent,DepartmentComponent
+    SkillSetComponent
   ],
   imports: [
     CommonModule,
@@ -42,8 +41,7 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
     AssociateDepartmentSkillsetsSvc
   ],
   exports: [
-    SkillSetComponent,
-    DepartmentComponent
+    SkillSetComponent
   ]
 })
 

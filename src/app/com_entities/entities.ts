@@ -18,32 +18,46 @@ export class AssociateSkillsets {
 /*AssociateViews*/
 export class AssociateDepartmentSkillset {
     constructor (
-        public AssociateDepartmentSkillsetID: number,//primary key
-        public AssociateID: number,
-        public DepartmentSkillsetID : number,
-    ){}
+            public AssociateDepartmentSkillsetID?: number,//primary key
+            public AssociateID?: number,
+            public DepartmentSkillsetID?: number){
+        this.AssociateDepartmentSkillsetID = 0,
+        this.AssociateID = 0,
+        this.DepartmentSkillsetID = 0
+    }
 }
 
 /*AssociateViews*/
 export class DepartmentSkillsets {
     constructor (
-        public DepartmentSkillsetID: number,//primary key
-        public DepartmentID: number,
-        public SkillsetID: number,
-    ){}
+            public DepartmentSkillsetID?: number,//primary key
+            public DepartmentID?: number,
+            public SkillsetID?: number){
+        this.DepartmentSkillsetID = 0,
+        this.DepartmentID = 0,
+        this.SkillsetID = 0
+    }
 }
 
 export class Associate {
     constructor (
-        public AssociateID: number,
-        public UserName : string,
-        public PhoneNumber : string,
-        public VPN : Boolean,
-        public DepartmentID : number,
-        public LocationID : number,
-        public UpdatedOn : Date,
-        public IsActive : Boolean,
-    ){}
+            public AssociateID?: number,
+            public UserName? : string,
+            public PhoneNumber? : string,
+            public VPN? : Boolean,
+            public DepartmentID? : number,
+            public LocationID? : number,
+            public UpdatedOn? : Date,
+            public IsActive? : Boolean){
+        this.AssociateID = 0,
+        this.UserName = '',
+        this.PhoneNumber = '',
+        this.VPN = false,
+        this.DepartmentID = 0,
+        this.LocationID = 0,
+        this.UpdatedOn = new Date(new Date().setHours(-3)),
+        this.IsActive = false
+    }
 }
 
 export class Department {

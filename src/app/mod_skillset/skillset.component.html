@@ -29,7 +29,12 @@
                                     class="form-control"
                                     [formControl]="skillsetFrm.get('Department')"
                                     [(ngModel)]="associate.DepartmentID">
-                                <option *ngFor="let dept of departments" [ngValue]="dept.DepartmentID">{{dept.DepartmentDescr}}</option>
+                                <option 
+                                        *ngFor="let dept of departments" 
+                                        [ngValue]="dept.DepartmentID"
+                                        [selected]="dept === selectedOption" >
+                                    {{dept.DepartmentDescr}}
+                                </option>
                             </select>
                             <br />
                         </div>
@@ -43,7 +48,12 @@
                                     class="form-control"
                                     [formControl]="skillsetFrm.get('Location')"
                                     [(ngModel)]="associate.LocationID">
-                                <option *ngFor="let loc of locations" [ngValue]="loc.LocationID">{{loc.LocationDescr}}</option>
+                                <option 
+                                        *ngFor="let loc of locations" 
+                                        [ngValue]="loc.LocationID"
+                                        [selected]="loc === selectedOption" >
+                                    {{loc.LocationDescr}}
+                                </option>
                             </select>
                             <br />
                         </div>
