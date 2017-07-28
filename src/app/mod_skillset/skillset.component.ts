@@ -6,7 +6,6 @@ import {
   FormBuilder, 
   FormGroup, 
   Validators,
-  AbstractControl,
   FormControl
 } from '@angular/forms'
 import {
@@ -15,7 +14,8 @@ import {
   Location,
   Department,
   Skillset,
-  DepartmentSkillsets
+  DepartmentSkillsets,
+  AssociateDepartmentSkillset
 } from '../com_entities/entities';
 import { DepartmentSkillsetDBO } from  '../com_entities/dbo_skillset';
 import { CurrentUserSvc } from '../com_services/currentuser.svc';
@@ -25,6 +25,7 @@ import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
+import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 
 @Component({
   moduleId: module.id,
@@ -42,6 +43,7 @@ export class SkillSetComponent {
   private departments: Department[];
   private skillsets: Skillset[];
   private departmentSkillsets: DepartmentSkillsets[];
+  private associateDepartmentSkillsets: AssociateDepartmentSkillset[];
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   private skillsetFrm: FormGroup;
   private skillsetCheck: any;
@@ -54,6 +56,7 @@ export class SkillSetComponent {
       private depSvc: DepartmentSvc,
       private sklSvc: SkillsetSvc,
       private dptSklSvc: DepartmentSkillsetsSvc,
+      private assDptSklSvc: AssociateDepartmentSkillsetsSvc,
       private fb: FormBuilder){
         
     this.skillsetFrm = this.fb.group({
@@ -77,6 +80,7 @@ export class SkillSetComponent {
     this.departments = await this.depSvc.getDepartments();
     this.skillsets = await this.sklSvc.getSkillsets();
     this.departmentSkillsets = await this.dptSklSvc.getDepartmentSkillsets();
+    this.associateDepartmentSkillsets = await this.assDptSklSvc.getAssociateDeptSkillsets();
   }
  
   //TEMPLATE: memory clean up
@@ -87,6 +91,7 @@ export class SkillSetComponent {
       this.depSvc = null;
       this.sklSvc = null;
       this.dptSklSvc = null;
+      this.assDptSklSvc = null;
   }
 
   //TEMPLATE: filter/sort data remove inactive
@@ -106,12 +111,19 @@ export class SkillSetComponent {
 
   //this will get info of current user
   async getCurrentUserData() {
-    let associates = await this.assSvc.getAssociates();
-    this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
-    let users = await this.useSvc.getSet_Users();
-    this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+    //let associates = await this.assSvc.getAssociates();
+    //this.associate = await associates.find(associate => associate.UserName == this.currentUser.UserName);
+    //let users = await this.useSvc.getSet_Users();
+    //this.user = await users.find(user => user.user_name == this.currentUser.UserName);
     this.associateForPosting = await JSON.parse(JSON.stringify(this.associate));
-    this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
+    //this.associate.UserName =  await this.user.user_first_name + ' ' + this.user.user_last_name;
+    //this will obtain curren users skills
+    this.associateDepartmentSkillsets = 
+        await this.associateDepartmentSkillsets.filter(AssociateDepartmentSkillsetSkillset => 
+        AssociateDepartmentSkillsetSkillset.AssociateID == this.associateForPosting.AssociateID);
+    for (let assDptSkl of this.associateDepartmentSkillsets) {
+      this.skillsetCheck[assDptSkl.DepartmentSkillsetID] = await true;
+    }
   }
 
   //this will assign values to the object to be saved
@@ -211,9 +223,10 @@ export class SkillSetComponent {
     // this.testVal = this.skillsetFrm.controls;
     this.setMockValues();
     this.filterDataList();
+    this.getCurrentUserData();
     this.prepareDBO()
-    this.skillsetCheck['3'] = true;
-    this.skillsetCheck['4'] = true;
+    //this.skillsetCheck['3'] = true;
+    //this.skillsetCheck['4'] = true;
     //TEST:
   }
 
@@ -234,6 +247,17 @@ export class SkillSetComponent {
   // }
   setMockValues(): void {
     this.associate = 
+      new Associate(
+        1,
+        'sarmife',
+        '2233',
+        true,
+        1,
+        1,
+        new Date(),
+        true
+      );
+    this.associateForPosting = 
       new Associate(
         1,
         'sarmife',
@@ -315,6 +339,28 @@ export class SkillSetComponent {
         4,
         1,
         3
+      )
+    ];
+    this.associateDepartmentSkillsets = [
+      new AssociateDepartmentSkillset (
+        1,
+        1,
+        2
+      ),
+      new AssociateDepartmentSkillset (
+        2,
+        1,
+        3
+      ),
+      new AssociateDepartmentSkillset (
+        3,
+        2,
+        4
+      ),
+      new AssociateDepartmentSkillset (
+        2,
+        2,
+        1
       )
     ];
   }

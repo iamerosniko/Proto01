@@ -16,6 +16,7 @@ import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
+import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
     LocationSvc,
     DepartmentSvc,
     SkillsetSvc,
-    DepartmentSkillsetsSvc
+    DepartmentSkillsetsSvc,
+    AssociateDepartmentSkillsetsSvc
   ],
   exports: [
     SkillSetComponent,

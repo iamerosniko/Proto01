@@ -16,7 +16,7 @@ export class AssociateSkillsets {
 
 
 /*AssociateViews*/
-export class AssociateDepartmentSkillsets {
+export class AssociateDepartmentSkillset {
     constructor (
         public AssociateDepartmentSkillsetID: number,//primary key
         public AssociateID: number,
