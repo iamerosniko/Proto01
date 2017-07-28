@@ -19,6 +19,7 @@ import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
+import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
 @NgModule({
   //components area
@@ -35,7 +36,7 @@ import { Set_UserSvc } from '../com_services/set_user.svc';
   //services area
   providers: [
     LocationSvc,DepartmentSvc,SkillsetSvc,AssociateSvc,
-    Set_UserSvc,DepartmentSkillsetsSvc,
+    Set_UserSvc,DepartmentSkillsetsSvc,AssociateDepartmentSkillsetsSvc
   ],
   //components to be shared and used using selector
   exports: [

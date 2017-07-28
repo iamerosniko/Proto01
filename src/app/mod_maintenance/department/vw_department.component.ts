@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { DepartmentSvc } from '../../com_services/department.svc';
 import { DepartmentSkillsetsSvc } from '../../com_services/dept_skillset.svc';
-import { Department,DepartmentSkillsets } from '../../com_entities/entities';
+import { AssociateDepartmentSkillsetsSvc } from '../../com_services/assoc_dept_skillset.svc';
+import { Department,DepartmentSkillsets,
+  AssociateDepartmentSkillset } from '../../com_entities/entities';
 @Component({
   moduleId: module.id,
   selector: 'vw-dept',
@@ -9,13 +11,15 @@ import { Department,DepartmentSkillsets } from '../../com_entities/entities';
 })
 export class VWDepartmentComponent {
   constructor(private deptSvc:DepartmentSvc,
-    private departmentSkillsetSvc:DepartmentSkillsetsSvc){
+    private departmentSkillsetSvc:DepartmentSkillsetsSvc,
+    private assocDeptSkillsetSvc:AssociateDepartmentSkillsetsSvc){
     this.goBack();
   }
   viewMode : number = 0;
   department : Department = new Department(0,'',true);
   departments: Department[] = [];
   departmentSkillsets:DepartmentSkillsets[]=[];
+  associateDepartmentSkillset:AssociateDepartmentSkillset[]=[];
   mode:number=0;
   newDetails(){
     this.department=new Department(0,'',true);
@@ -40,25 +44,36 @@ export class VWDepartmentComponent {
     this.getDetails(dept);
     this.viewMode=1;
     this.department.IsActive=false;
-    this.deleteAssociatedToDepartmentSkillset(dept.DepartmentID);
+    this.deleteDepartmentSkillset(dept.DepartmentID);
     this.saveDepartment();
   }
-
-  async deleteAssociatedToDepartmentSkillset(deptID:number){
+  //delete departmentSkillset
+  async deleteDepartmentSkillset(deptID:number){
     this.departmentSkillsets=this.departmentSkillsets.filter(x=>x.DepartmentID==deptID);
-    console.log(this.departmentSkillsets);
     for(var i = 0 ; i<this.departmentSkillsets.length ;i++)
     {
       var deptSkillset=this.departmentSkillsets[i];
       await this.departmentSkillsetSvc.DeleteDepartmentSkillset(deptSkillset.DepartmentSkillsetID);
+      this.deleteAssociateDepartmentSkillset(deptSkillset.DepartmentSkillsetID);
     }
-    console.log('done');
+    console.log('done deleting departmentSkillset');
   }
-
+  //delete assocdeptSkillset
+  async deleteAssociateDepartmentSkillset(deptSkillsetID:number){
+    let tempAssocDeptSkillset=this.associateDepartmentSkillset.filter(x=>x.DepartmentSkillsetID==deptSkillsetID);
+    for(var i = 0 ; i<tempAssocDeptSkillset.length ;i++)
+    {
+      var assocDeptSkillset=tempAssocDeptSkillset[i];
+      await this.assocDeptSkillsetSvc.DeleteAssociateDeptSkillset(assocDeptSkillset.AssociateDepartmentSkillsetID);
+    }
+    console.log('done deleting associateDepartmentSkillset');
+  }
 
   goBack(){
     this.mode=0;
     this.getDepartments();
+    this.getDepartmentSkillsets();
+    this.getAssociateDepartmentSkillsets();
     this.department=new Department(0,'',true);
   }
 
@@ -84,9 +99,15 @@ export class VWDepartmentComponent {
     return msg==''?(true):(alert(msg),false);
   }
 
-
-
   async getDepartments(){
     this.departments=await this.deptSvc.getDepartments();
+  }
+
+  async getDepartmentSkillsets(){
+    this.departmentSkillsets = await this.departmentSkillsetSvc.getDepartmentSkillsets();
+  }
+
+  async getAssociateDepartmentSkillsets(){
+    this.associateDepartmentSkillset = await this.assocDeptSkillsetSvc.getAssociateDeptSkillsets();
   }
 }
