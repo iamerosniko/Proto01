@@ -38,6 +38,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
     this.checkallValue=false;
     //1. get skillsets
     this.skillsets=await this.skillsetSvc.getSkillsets();
+    //remove all inactive skillsets
+    this.skillsets=await this.skillsets.filter(x=>x.IsActive==true);
     //clears the checkboxes
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
@@ -92,5 +94,6 @@ export class VWDepartmentSkillsComponent implements OnInit {
         await this.departmentSkillsetSvc.postDepartmentSkillset(selectedSkillset.departmentSkillset);
       }
     }
+    alert("Record has been successfully updated.");
   }
 }

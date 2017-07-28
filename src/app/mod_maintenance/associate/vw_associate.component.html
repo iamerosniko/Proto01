@@ -85,14 +85,14 @@
             </div>
             <br />
             <!--fields-->
-            <div class="row">
+            <!--<div class="row">
                 <label class="col-md-2 control-label">Associate Id</label>
                 <div class="col-md-4">
                     <input [(ngModel)]="associate.AssociateID" readonly type="text" class="form-control input-sm" />
                 </div>
             </div>
-            <br />
-            <div class="row">
+            <br />-->
+            <div class="row" *ngIf="mode==0">
                 <label class="col-md-2 control-label">Full Name</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" [(ngModel)]="associate.UserName">
@@ -100,7 +100,7 @@
                     </select>
                 </div>
             </div>
-            <br />
+            <br *ngIf="mode==0"/>
             <div class="row">
                 <label class="col-md-2 control-label">Username</label>
                 <div class="col-md-4">

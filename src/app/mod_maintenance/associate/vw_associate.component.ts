@@ -18,7 +18,6 @@ export class VWAssociateComponent implements OnInit {
   ){
 
   }
-
   set_Users:Set_User[]=[];
   associates:Associate[]=[];
   associate:Associate=new Associate(0,'','',false,0,0,new Date,true);
@@ -99,12 +98,33 @@ export class VWAssociateComponent implements OnInit {
   }
 
   async saveAssociate(){
+    if(this.entryValidation()){
+      this.associate.UpdatedOn=new Date();
+      this.mode==0 ?
+      ( 
+        await this.associateSvc.postAssociate(this.associate),
+        alert("New Record has been successfully added.") 
+      ) :
+      ( 
+        await this.associateSvc.putAssociate(this.associate),
+        alert("Record has been successfully updated.")
+      );
+      document.getElementById("btnGoBack").click();
+      this.goBack();
+      
+    }
+  }
 
-
-    this.associate.UpdatedOn=new Date();
-    this.mode==0 ?  await this.associateSvc.postAssociate(this.associate) : await this.associateSvc.putAssociate(this.associate);
-    document.getElementById("btnGoBack").click();
-    this.goBack();
+  entryValidation():boolean{
+    var msg='';
+    let tempDept:Department[] = this.getActiveDepartments();
+    let tempLoc:Location[] = this.getActiveLocations();
+    tempDept=tempDept.filter(x=>x.DepartmentID==this.associate.DepartmentID);
+    tempLoc=tempLoc.filter(x=>x.LocationID==this.associate.LocationID);
+    tempDept==null || tempDept.length==0 ? msg+='Department is Required.\n' : null ;
+    tempLoc==null || tempLoc.length==0 ? msg+='Location is Required.\n' : null ;
+    this.associate.UserName=='' ? msg+='Name is Required.':null;
+    return msg==''?(true):(alert(msg),false);
   }
 
   goBack(){

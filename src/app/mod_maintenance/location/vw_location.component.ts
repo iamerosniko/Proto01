@@ -8,7 +8,7 @@ import { Location } from '../../com_entities/entities';
 })
 export class VWLocationComponent {
   constructor(private locSvc:LocationSvc){
-    this.getLocations();
+    this.goBack();
   }
   viewMode : number = 0;
   location : Location = new Location(0,'',true);
@@ -41,17 +41,32 @@ export class VWLocationComponent {
   }
 
   goBack(){
+    this.location=new Location(0,'',true);
+    this.getLocations();
     this.mode=0;
   }
 
   async saveLocation(){
-    this.viewMode==0 ?  await this.locSvc.postLocation(this.location) : await this.locSvc.putLocation(this.location);
-    document.getElementById("btnGoBack").click();
-    this.getLocations();
-    this.location=new Location(0,'',true);
-    this.goBack();
+    if(this.entryValidation()){
+      this.viewMode==0 ?
+        ( 
+          await this.locSvc.postLocation(this.location),
+          alert("New Record has been successfully added.") 
+        ) :
+        ( 
+          this.locSvc.putLocation(this.location),
+          alert("Record has been successfully updated.")
+        );
+      document.getElementById("btnGoBack").click();
+      this.goBack();
+    }
   }
 
+  entryValidation():boolean{
+    var msg='';
+    this.location.LocationDescr.trim()=='' ? msg+='Location Description is Required.\n' : null ;
+    return msg==''?(true):(alert(msg),false);
+  }
   
   async getLocations(){
     this.locations=await this.locSvc.getLocations();
