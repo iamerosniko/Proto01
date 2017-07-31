@@ -46,3 +46,4 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
 })
 
 export class SkillsetModule { }
+
