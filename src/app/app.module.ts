@@ -15,10 +15,11 @@ import { SearchModule } from './mod_search/search.module';
 import { MaintenanceModule } from './mod_maintenance/maintenance.module';
 //modules
 import { CommonCompModule } from './mod_common/common_comp.module';
+import { ModTestExportComponent } from './mod-test-export/mod-test-export.component';
 @NgModule({
   //components area
   declarations: [
-    AppComponent,ContainerComponent,UserComponent
+    AppComponent,ContainerComponent,UserComponent, ModTestExportComponent
   ],
   //modules area
   imports: [
