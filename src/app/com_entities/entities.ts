@@ -134,3 +134,10 @@ export class SelectedSkillset{
        public SkillsetDescr:string
     ){}
 }
+
+export class ng2Items{
+    constructor (
+        public text: string,
+        public id: string
+    ){}
+}
