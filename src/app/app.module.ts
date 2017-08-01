@@ -15,18 +15,22 @@ import { SearchModule } from './mod_search/search.module';
 import { MaintenanceModule } from './mod_maintenance/maintenance.module';
 //modules
 import { CommonCompModule } from './mod_common/common_comp.module';
-import { ModTestExportComponent } from './mod-test-export/mod-test-export.component';
+import { TestExportModule } from './mod-test-export/mod-test-export.module';
 @NgModule({
   //components area
   declarations: [
-    AppComponent,ContainerComponent,UserComponent, ModTestExportComponent
+    AppComponent,ContainerComponent,UserComponent
   ],
   //modules area
   imports: [
     BrowserModule,HttpModule,CommonModule,FormsModule,
     //component's module
-    CommonCompModule,SkillsetModule,MaintenanceModule,SearchModule,
-    AppRouting
+    CommonCompModule,
+    SkillsetModule,
+    MaintenanceModule,
+    SearchModule,
+    AppRouting,
+    TestExportModule
   ],
   //services area
   providers: [],

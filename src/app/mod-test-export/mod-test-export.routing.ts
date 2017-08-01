@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //component
-import { SkillSetComponent } from './skillset.component';
+import { ModTestExportComponent } from './mod-test-export.component'
 const routes: Routes = [
     //paths
-    { path : 'skillset', component: SkillSetComponent },
+    { path : 'testexport', component: ModTestExportComponent },
 ];
 
  @NgModule ({
@@ -12,4 +12,4 @@ const routes: Routes = [
      exports: [ RouterModule ]
  })
 
-export class SkillSetRouting {}
+export class ModTestExportRouting {}

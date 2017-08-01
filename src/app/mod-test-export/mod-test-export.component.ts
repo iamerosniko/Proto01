@@ -25,7 +25,7 @@ export class ModTestExportComponent implements OnInit {
     this.persons = PERSONS;
   }
 
-  ExportToExcel(event) {
-    this.excelService.exportAsExcelFile(PERSONS, 'person');
+  exportToExcel(event) {
+    this.excelService.exportAsExcelFile(PERSONS, 'personAko');
   }
 }
