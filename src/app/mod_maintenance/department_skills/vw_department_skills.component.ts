@@ -2,7 +2,7 @@ import { Component,OnInit } from '@angular/core';
 import { DepartmentSvc } from '../../com_services/department.svc';
 import { SkillsetSvc } from '../../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../../com_services/dept_skillset.svc';
-import { Department,Skillset,DepartmentSkillsets,SelectedSkillset } from '../../com_entities/entities';
+import { Department,Skillset,DepartmentSkillsets,SelectedSkillset,DepartmentSkillsets1 } from '../../com_entities/entities';
 @Component({
   moduleId: module.id,
   selector: 'vw-dept',
@@ -44,13 +44,14 @@ export class VWDepartmentSkillsComponent implements OnInit {
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
     for (var i = 0 ; i<this.skillsets.length; i++){
+      console.log(deptID+" - "+this.skillsets[i].SkillsetID)
       this.selectedSkillsets.push(
         new SelectedSkillset( 
-          new DepartmentSkillsets(0,deptID,this.skillsets[i].SkillsetID)
+          new DepartmentSkillsets1(0,deptID,this.skillsets[i].SkillsetID)
           ,false
           ,this.skillsets[i].SkillsetDescr
         )
-      )
+      );
     }
     this.getDepartmentSkillsets(deptID).then(()=>{
       this.compareSelectedSkillsets();
@@ -86,6 +87,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
     for (var i = 0; i < this.departmentSkillsets.length; i++){
       var departmentSkillset=this.departmentSkillsets[i];
       await this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID);
+      //create delete here for assocdepartmentskillset
     }
 
     for (var i = 0; i < this.selectedSkillsets.length; i++){

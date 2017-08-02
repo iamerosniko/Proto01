@@ -11,10 +11,16 @@ export class AssociateSkillsets {
     ){}
 }
 
-
-
-
-
+/* reports - eros - */
+export class AssociateDepartmentSkillsetRpt {
+    constructor (
+            public AssociateDepartmentSkillsetID?: number,//primary key
+            public AssociateID?: number,
+            public DepartmentSkillsetID?: number,
+            public Department?:Department,
+             ){
+    }
+}
 /*AssociateViews*/
 export class AssociateDepartmentSkillset {
     constructor (
@@ -125,11 +131,18 @@ export class User {
         public UserName:string
     ){}
 }
-
+/*AssociateViews*/
+export class DepartmentSkillsets1 {
+    constructor (
+            public DepartmentSkillsetID?: number,//primary key
+            public DepartmentID?: number,
+            public SkillsetID?: number){
+    }
+}
 //extra entity
 export class SelectedSkillset{
     constructor (
-       public departmentSkillset: DepartmentSkillsets,
+       public departmentSkillset: DepartmentSkillsets1,
        public IsSelected:boolean,
        public SkillsetDescr:string
     ){}
