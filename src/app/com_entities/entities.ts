@@ -18,7 +18,7 @@ export class AssociateDepartmentSkillsetRpt {
             public AssociateID?: number,
             public DepartmentSkillsetID?: number,
             public Department?:Department,
-             ){
+            ){
     }
 }
 /*AssociateViews*/

@@ -81,7 +81,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
       selectedSkillset.IsSelected=isChecked;
     }
   }
-
+  
   async saveDepartmentSkillset(){
     //delete all departmentSkillsets
     for (var i = 0; i < this.departmentSkillsets.length; i++){
