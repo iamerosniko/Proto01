@@ -36,16 +36,16 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
 export class SkillSetComponent {
   private dateToday: Date;
   private currentUser: any;
-  private associate: Associate;
+  public associate: Associate;
   private associateForPosting: Associate;
   private user: Set_User;
-  private locations: Location[];
-  private departments: Department[];
+  public locations: Location[];
+  public departments: Department[];
   private skillsets: Skillset[];
   private departmentSkillsets: DepartmentSkillsets[];
   private associateDepartmentSkillsets: AssociateDepartmentSkillset[];
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
-  private skillsetFrm: FormGroup;
+  public skillsetFrm: FormGroup;
   private skillsetCheck: any;
 
   constructor(
