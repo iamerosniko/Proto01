@@ -114,13 +114,13 @@ export class SearchComponent implements OnInit {
  
   public value:any = ['Athens'];
  
-  public selected(value:any):void {
-    console.log('Selected value is: ', value);
-  }
+  // public selected(value:any):void {
+  //   console.log('Selected value is: ', value);
+  // }
  
-  public removed(value:any):void {
-    console.log('Removed value is: ', value);
-  }
+  // public removed(value:any):void {
+  //   console.log('Removed value is: ', value);
+  // }
  
   public refreshValue(value:any):void {
     this.value = value;

@@ -29,8 +29,7 @@
                         [items]="items"
                         [disabled]="radioSelect!=0"
                         (data)="refreshValue($event)"
-                        (selected)="selected($event)"
-                        (removed)="removed($event)"
+                        
                         placeholder="No Associate selected">
                     </ng-select>
                 </div>
@@ -47,8 +46,7 @@
                         [items]="items"
                         [disabled]="radioSelect!=1"
                         (data)="refreshValue($event)"
-                        (selected)="selected($event)"
-                        (removed)="removed($event)"
+                        
                         placeholder="No Skills selected">
                     </ng-select>
                 </div>
@@ -65,8 +63,7 @@
                         [disabled]="radioSelect!=2"
                         [active]="yourVariableName"
                         (data)="refreshValue($event)"
-                        (selected)="selected($event)"
-                        (removed)="removed($event)"
+                        
                         placeholder="No Departments selected">
                     </ng-select>
                 </div>
