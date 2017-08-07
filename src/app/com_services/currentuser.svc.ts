@@ -5,7 +5,8 @@ import { User } from '../com_entities/entities';
 @Injectable()
 export class CurrentUserSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    private apiUrl = 'api/CurrentUser';
+    // private apiUrl = 'api/CurrentUser';
+    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/CurrentUser';
     constructor(private http: Http){}
 
     getCurrentUser(): Promise<User> {

@@ -5,7 +5,8 @@ import { Set_Group } from '../com_entities/entities';
 @Injectable()
 export class Set_GroupSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    private apiUrl = 'api/Set_Groups';
+    // private apiUrl = 'api/Set_Groups';
+    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Groups';
     constructor(private http: Http){}
 
     getSet_Groups(): Promise<Set_Group[]> {

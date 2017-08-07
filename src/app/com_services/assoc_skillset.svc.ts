@@ -5,7 +5,8 @@ import { AssociateSkillsets } from '../com_entities/entities';
 @Injectable()
 export class AssociateSkillsetsSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    private apiUrl = 'api/AssociateSkillsets';
+    // private apiUrl = 'api/AssociateSkillsets';
+    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/AssociateSkillsets';
     constructor(private http: Http){}
 
     getAssociateSkillsets(): Promise<AssociateSkillsets[]> {

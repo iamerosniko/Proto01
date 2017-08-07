@@ -5,7 +5,8 @@ import { Department } from '../com_entities/entities';
 @Injectable()
 export class DepartmentSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    private apiUrl = 'api/Departments';
+    // private apiUrl = 'api/Departments';
+    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Departments';
     constructor(private http: Http){}
 
     getDepartments(): Promise<Department[]> {

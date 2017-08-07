@@ -5,7 +5,8 @@ import { Set_Module } from '../com_entities/entities';
 @Injectable()
 export class Set_ModuleSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    private apiUrl = 'api/Set_Modules';
+    // private apiUrl = 'api/Set_Modules';
+    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Modules';
     constructor(private http: Http){}
 
     getSet_Modules(): Promise<Set_Module[]> {
