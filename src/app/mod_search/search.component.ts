@@ -34,7 +34,7 @@ export class SearchComponent implements OnInit {
   associates:Associate[]=[];
   set_Users:Set_User[]=[];
   //ng2-select items
-  public associateItems:any[]=[]//Array<string>=[];
+  public associateItems:any[]=[];//Array<string>=[];
   ngOnInit(){
     this.getDependencies().then(
       ()=>{
@@ -112,7 +112,7 @@ export class SearchComponent implements OnInit {
   //   'Sofia', 'Stockholm', 'Stuttgart', 'The Hague', 'Turin', 'Valencia', 'Vienna',
   //   'Vilnius', 'Warsaw', 'Wrocław', 'Zagreb', 'Zaragoza'];
  
-  private value:any = ['Athens'];
+  public value:any = ['Athens'];
  
   public selected(value:any):void {
     console.log('Selected value is: ', value);
