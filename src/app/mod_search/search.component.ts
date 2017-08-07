@@ -26,7 +26,7 @@ export class SearchComponent implements OnInit {
 
   }
   radioSelect:number=0;
-  private yourVariableName: any=[ ];
+  public yourVariableName: any=[ ];
   //initial collection
   skillsets: Skillset[] = [];
   locations:Location[]=[];
@@ -48,9 +48,9 @@ export class SearchComponent implements OnInit {
   }
 
   async getDependencies(){
+    this.associates = await this.associateSvc.getAssociates();
     this.locations = await this.locationSvc.getLocations();
     this.departments = await this.departmentSvc.getDepartments();
-    this.associates = await this.associateSvc.getAssociates();
     this.set_Users = await this.setUserSvc.getSet_Users();
     this.skillsets=await this.skillsetSvc.getSkillsets();
   }
@@ -71,6 +71,7 @@ export class SearchComponent implements OnInit {
   async getItems(){
     this.items=[];
     if(this.radioSelect==0){
+      console.log(this.associates.length)
       for(var i = 0; i<this.associates.length;i++){
         var fullName=this.getFullName(this.associates[i].UserName);
         this.items.push( { 'id': this.associates[i].AssociateID.toString(), 'text': this.getFullName(this.associates[i].UserName)});
