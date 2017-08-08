@@ -10,17 +10,6 @@ export class AssociateSkillsets {
         public SkillsetID: number,
     ){}
 }
-
-/* reports - eros - */
-export class AssociateDepartmentSkillsetRpt {
-    constructor (
-            public AssociateDepartmentSkillsetID?: number,//primary key
-            public AssociateID?: number,
-            public DepartmentSkillsetID?: number,
-            public Department?:Department,
-            ){
-    }
-}
 /*AssociateViews*/
 export class AssociateDepartmentSkillset {
     constructor (
@@ -152,5 +141,32 @@ export class ng2Items{
     constructor (
         public text: string,
         public id: string
+    ){}
+}
+/* reports - eros - */
+export class AssociateRpt {
+    constructor (
+        public Name?: string,
+        public PhoneNumber?: string,
+        public CurrentDepartment?: string,
+        public CurrentLocation?: string,
+        public VPN?: string,
+        public LastUpdated?: string,
+        public DepartmentSkills?:DepartmentSkills[]
+        ){
+    }
+}
+export class DepartmentSkills{
+    constructor (
+        public Skils: Skillset[],
+        public DepartmentName: string
+    ){}
+}
+
+// SelectItem
+export class SelectItem{
+    constructor (
+        public id: number,
+        public text: string
     ){}
 }

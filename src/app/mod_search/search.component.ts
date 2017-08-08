@@ -6,11 +6,14 @@ import { DepartmentSvc } from '../com_services/department.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
+import { ExportAssociateReport } from './export/exportassociate.reports';
 // import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 // import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 //entities
 import { Location,Department,Skillset,
-  Associate,Set_User,ng2Items } from '../com_entities/entities';
+  Associate,Set_User,ng2Items,
+  AssociateRpt,SelectItem  
+} from '../com_entities/entities';
 @Component({
   selector: 'search',
   templateUrl: 'search.component.html',
@@ -21,7 +24,8 @@ export class SearchComponent implements OnInit {
     private departmentSvc:DepartmentSvc,
     private locationSvc:LocationSvc,
     private skillsetSvc:SkillsetSvc,
-    private setUserSvc:Set_UserSvc
+    private setUserSvc:Set_UserSvc,
+    private associateReportSvc:ExportAssociateReport
   ){
 
   }
@@ -33,6 +37,7 @@ export class SearchComponent implements OnInit {
   departments:Department[]=[];
   associates:Associate[]=[];
   set_Users:Set_User[]=[];
+  associateRpt:AssociateRpt;
   //ng2-select items
   public associateItems:any[]=[];//Array<string>=[];
   ngOnInit(){
@@ -45,6 +50,26 @@ export class SearchComponent implements OnInit {
         )
       });
     //this.removeInactive();
+  }
+
+  async getResult(){
+    if(this.radioSelect==0){
+      for(var i = 0;i<this.selectedItems.length;i++){
+        
+        await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
+        .then(
+          a=>{
+            console.log(a);
+          }
+        )
+      }
+    }
+    else if (this.radioSelect==1){
+      
+    }
+    else{
+      
+    }
   }
 
   async getDependencies(){
@@ -71,7 +96,6 @@ export class SearchComponent implements OnInit {
   async getItems(){
     this.items=[];
     if(this.radioSelect==0){
-      console.log(this.associates.length)
       for(var i = 0; i<this.associates.length;i++){
         var fullName=this.getFullName(this.associates[i].UserName);
         this.items.push( { 'id': this.associates[i].AssociateID.toString(), 'text': this.getFullName(this.associates[i].UserName)});
@@ -112,7 +136,7 @@ export class SearchComponent implements OnInit {
   //   'Sofia', 'Stockholm', 'Stuttgart', 'The Hague', 'Turin', 'Valencia', 'Vienna',
   //   'Vilnius', 'Warsaw', 'Wrocław', 'Zagreb', 'Zaragoza'];
  
-  public value:any = ['Athens'];
+  public selectedItems:SelectItem[] = [];
  
   // public selected(value:any):void {
   //   console.log('Selected value is: ', value);
@@ -123,7 +147,7 @@ export class SearchComponent implements OnInit {
   // }
  
   public refreshValue(value:any):void {
-    this.value = value;
+    this.selectedItems = value;
   }
  
   
