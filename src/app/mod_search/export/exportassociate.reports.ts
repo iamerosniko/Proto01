@@ -63,7 +63,8 @@ export class ExportAssociateReport {
         this.associateReport.LastUpdated=await '';
 
         return new Promise<AssociateRpt>((resolve) =>             
-            resolve(this.associateReport)
+            //resolve(this.associateReport)
+            resolve(null)
         );
     }
 

@@ -63,7 +63,6 @@
                         [disabled]="radioSelect!=2"
                         [active]="yourVariableName"
                         (data)="refreshValue($event)"
-                        
                         placeholder="No Departments selected">
                     </ng-select>
                 </div>
@@ -92,13 +91,8 @@
         <div class="col-md-9">
             <!--report content here-->
             <!--<div class="report-content"></div>-->
-            <div style="width: 300px; margin-bottom: 20px;">
-            <h3>Select multiple cities</h3>
-            
-            <pre>{{itemsToString(value)}}</pre>
-            <div>
-                
-            </div>
+            <div *ngIf="radioSelect==0">
+                <search-associate></search-associate>
             </div>
         </div>
     </div>

@@ -30,16 +30,19 @@ export class SearchComponent implements OnInit {
 
   }
   radioSelect:number=0;
-  public yourVariableName: any=[ ];
+  public yourVariableName: any=[];
   //initial collection
   skillsets: Skillset[] = [];
   locations:Location[]=[];
   departments:Department[]=[];
   associates:Associate[]=[];
   set_Users:Set_User[]=[];
-  associateRpt:AssociateRpt;
-  //ng2-select items
-  public associateItems:any[]=[];//Array<string>=[];
+  associateRpt:AssociateRpt[]=[];
+  //ng2 select variables
+  
+  public items:any[]=[];
+  public selectedItems:SelectItem[] = [];
+
   ngOnInit(){
     this.getDependencies().then(
       ()=>{
@@ -49,7 +52,6 @@ export class SearchComponent implements OnInit {
           }
         )
       });
-    //this.removeInactive();
   }
 
   async getResult(){
@@ -57,12 +59,15 @@ export class SearchComponent implements OnInit {
       for(var i = 0;i<this.selectedItems.length;i++){
         
         await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
-        .then(
-          a=>{
-            console.log(a);
+        .then(a=>{
+            //console.log(a);
+            if(a!=null){
+              this.associateRpt.push(a);
+            }
           }
-        )
+        );
       }
+      console.log(this.associateRpt);
     }
     else if (this.radioSelect==1){
       
@@ -89,7 +94,6 @@ export class SearchComponent implements OnInit {
 
   getFullName(username:string):string{
     let user:Set_User= this.set_Users.find(x=>x.user_name==username);
-    //console.log(user);
     return user==null ? null : user.user_first_name + ' ' + user.user_last_name
   }
 
@@ -113,52 +117,8 @@ export class SearchComponent implements OnInit {
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-  public items:any[]=[];
-  //public items:Array<string>;
-  // public items:Array<string> = ['Amsterdam', 'Antwerp', 'Athens', 'Barcelona',
-  //   'Berlin', 'Birmingham', 'Bradford', 'Bremen', 'Brussels', 'Bucharest',
-  //   'Budapest', 'Cologne', 'Copenhagen', 'Dortmund', 'Dresden', 'Dublin', 'Düsseldorf',
-  //   'Essen', 'Frankfurt', 'Genoa', 'Glasgow', 'Gothenburg', 'Hamburg', 'Hannover',
-  //   'Helsinki', 'Leeds', 'Leipzig', 'Lisbon', 'Łódź', 'London', 'Kraków', 'Madrid',
-  //   'Málaga', 'Manchester', 'Marseille', 'Milan', 'Munich', 'Naples', 'Palermo',
-  //   'Paris', 'Poznań', 'Prague', 'Riga', 'Rome', 'Rotterdam', 'Seville', 'Sheffield',
-  //   'Sofia', 'Stockholm', 'Stuttgart', 'The Hague', 'Turin', 'Valencia', 'Vienna',
-  //   'Vilnius', 'Warsaw', 'Wrocław', 'Zagreb', 'Zaragoza'];
- 
-  public selectedItems:SelectItem[] = [];
- 
-  // public selected(value:any):void {
-  //   console.log('Selected value is: ', value);
-  // }
- 
-  // public removed(value:any):void {
-  //   console.log('Removed value is: ', value);
-  // }
- 
   public refreshValue(value:any):void {
     this.selectedItems = value;
   }
  
-  
-  
-
-  public itemsToString(value:Array<any> = []):string {
-    return value
-      .map((item:any) => {
-        return item.text;
-      }).join(',');
-  }
-
-
 }

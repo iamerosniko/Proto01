@@ -7,6 +7,9 @@ import { SearchRouting } from './search.routing';
 import { SelectModule } from 'ng2-select';
 //components
 import { SearchComponent } from './search.component';
+import { SearchAssociateComponent } from './search-associate/search-associate.component';
+import { DepartmentSkillsComponent } from './search-associate/department-skills/department-skills.component';
+
 //services
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
@@ -14,11 +17,12 @@ import { SkillsetSvc } from '../com_services/skillset.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
-import { ExportAssociateReport } from './export/exportassociate.reports';
-@NgModule({
+import { ExportAssociateReport } from './export/exportassociate.reports';@NgModule({
   //components area
   declarations: [
     SearchComponent,
+    SearchAssociateComponent,
+    DepartmentSkillsComponent,
     //maintenance-route
 
   ],
