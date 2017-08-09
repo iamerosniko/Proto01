@@ -160,7 +160,7 @@ export class AssociateRpt {
 export class SkillsetRpt {
     constructor (
         public Skillset?: string,
-        public Associates?:Associate[]
+        public Associates?:AssociateDetails[]
         ){
     }
 }
@@ -169,6 +169,16 @@ export class DepartmentSkills{
     constructor (
         public Skills: Skillset[],
         public DepartmentName: string
+    ){}
+}
+
+export class AssociateDetails{
+    constructor(
+        public Name? : string,
+        public VPN? : string,
+        public Department? : string,
+        public Location? : string,
+        public UpdatedOn? : string,
     ){}
 }
 

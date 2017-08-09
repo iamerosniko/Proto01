@@ -7,12 +7,14 @@ import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
 import { ExportAssociateReport } from './export/exportassociate.reports';
+import { ExportSkillsetReport } from './export/exportskillset.reports';
 // import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 // import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 //entities
 import { Location,Department,Skillset,
   Associate,Set_User,ng2Items,
-  AssociateRpt,SelectItem  
+  AssociateRpt,SelectItem,
+  SkillsetRpt  
 } from '../com_entities/entities';
 @Component({
   selector: 'search',
@@ -25,7 +27,8 @@ export class SearchComponent implements OnInit {
     private locationSvc:LocationSvc,
     private skillsetSvc:SkillsetSvc,
     private setUserSvc:Set_UserSvc,
-    private associateReportSvc:ExportAssociateReport
+    private associateReportSvc:ExportAssociateReport,
+    private skillsetReportSvc:ExportSkillsetReport
   ){
 
   }
@@ -39,6 +42,7 @@ export class SearchComponent implements OnInit {
   associates:Associate[]=[];
   set_Users:Set_User[]=[];
   associateRpt:AssociateRpt[]=[];
+  skillsetRpt:SkillsetRpt[]=[];
   //ng2 select variables
   
   public items:any[]=[];
@@ -72,7 +76,12 @@ export class SearchComponent implements OnInit {
       console.log(this.associateRpt);
     }
     else if (this.radioSelect==1){
-      
+      this.skillsetRpt=[];
+      for(var i = 0;i<this.selectedItems.length;i++){
+        await this.skillsetReportSvc.getSkillsetReport(this.selectedItems[i].id)
+        .then(a=>this.skillsetRpt.push(a));
+      }
+      console.log(this.skillsetRpt);
     }
     else{
       
@@ -102,6 +111,8 @@ export class SearchComponent implements OnInit {
   async getItems(){
     this.items=[];
     this.yourVariableName=[];
+    this.associateRpt=[];
+    this.skillsetRpt=[];
     if(this.radioSelect==0){
       let associates=this.associates.filter(x=>x.LocationID==this.selectedLocation);
       for(var i = 0; i<associates.length;i++){
