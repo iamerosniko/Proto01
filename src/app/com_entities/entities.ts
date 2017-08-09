@@ -156,6 +156,15 @@ export class AssociateRpt {
         ){
     }
 }
+
+export class SkillsetRpt {
+    constructor (
+        public Skillset?: string,
+        public Associates?:Associate[]
+        ){
+    }
+}
+
 export class DepartmentSkills{
     constructor (
         public Skills: Skillset[],

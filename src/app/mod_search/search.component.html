@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <label class="control-label">Search by Location</label>
                     <select class="form-control input-sm" (change)="getItems()" [(ngModel)]="selectedLocation">
-                        <option value="-1"disabled selected> Select Location </option>
+                        <option value="-1" disabled selected> Select Location </option>
                         <option *ngFor="let x of locations" [value]="x.LocationID"> {{x.LocationDescr}} </option>
                     </select>
                 </div>
@@ -92,8 +92,24 @@
         <div class="col-md-9">
             <!--report content here-->
             <!--<div class="report-content"></div>-->
+            <div class="col-md-12">
+                <div class="pull-right">
+                    <div class="btn-group">
+                        <a class="btn btn-primary btn-sm" title="Export to Excel"><i class="fa fa-file-excel-o"></i></a>
+                        <!--<a class="btn btn-primary btn-sm"></a>-->
+                    </div>
+                </div>
+            </div>
             <div *ngIf="radioSelect==0" >
                 <search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>
+            </div>
+            <div *ngIf="radioSelect==1" >
+                <!--<search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>-->
+                <search-skillset></search-skillset>
+            </div>
+            <div *ngIf="radioSelect==2" >
+                <search-department></search-department>
+                <!--<search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>-->
             </div>
         </div>
     </div>
