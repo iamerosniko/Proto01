@@ -30,7 +30,7 @@ export class SearchComponent implements OnInit {
 
   }
   radioSelect:number=0;
-  selectedLocation:number;
+  selectedLocation:number=-1;
   public yourVariableName: any=[];
   //initial collection
   skillsets: Skillset[] = [];
@@ -101,6 +101,7 @@ export class SearchComponent implements OnInit {
 
   async getItems(){
     this.items=[];
+    this.yourVariableName=[];
     if(this.radioSelect==0){
       let associates=this.associates.filter(x=>x.LocationID==this.selectedLocation);
       for(var i = 0; i<associates.length;i++){
