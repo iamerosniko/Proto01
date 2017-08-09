@@ -63,8 +63,8 @@ export class ExportAssociateReport {
         this.associateReport.LastUpdated=await '';
 
         return new Promise<AssociateRpt>((resolve) =>             
-            //resolve(this.associateReport)
-            resolve(null)
+            resolve(this.associateReport)
+            //resolve(null)
         );
     }
 
@@ -124,7 +124,7 @@ export class ExportAssociateReport {
         departmentSKills.DepartmentName=tempDepartment.DepartmentDescr;
 
         for (var i = 0;i<tempDS.length ;i++){
-            departmentSKills.Skils.push(
+            departmentSKills.Skills.push(
                 await this.getSkillset(tempDS[i].SkillsetID)
             );
         }

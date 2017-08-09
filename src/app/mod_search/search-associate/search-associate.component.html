@@ -1,6 +1,6 @@
 <!--associate name-->
 <div class="col-md-12">
-    <h4>Michael Petrowski</h4>
+    <h4>{{associate.Name}}</h4>
     <br />
 </div>
 <!--details-->
@@ -9,21 +9,21 @@
         <tbody>
             <tr>
                 <th>Best Phone Number:</th> <!--variable-->
-                <td>978-526-6984</td> <!--value-->
+                <td>{{associate.PhoneNumber}}</td> <!--value-->
                 <td>&nbsp;</td><!--separator-->
                 <th>VPN:</th> <!--variable-->
-                <td>Yes</td> <!--value-->
+                <td>{{associate.VPN}}</td> <!--value-->
             </tr>
             <tr>
                 <th>Current Department:</th> <!--variable-->
-                <td>Service Admin</td> <!--value-->
+                <td>{{associate.CurrentDepartment}}</td> <!--value-->
                 <td>&nbsp;</td><!--separator-->
                 <th>Last Updated:</th> <!--variable-->
-                <td>04/16/2017</td> <!--value-->
+                <td>{{associate.LastUpdated}}</td> <!--value-->
             </tr>
             <tr>
                 <th>Location:</th> <!--variable-->
-                <td>Portsmouth</td> <!--value-->
+                <td>{{associate.CurrentLocation}}</td> <!--value-->
                 <td>&nbsp;</td><!--separator-->
                 <th>&nbsp;</th> <!--blank field-->
                 <td>&nbsp;</td> <!--blank field-->
@@ -37,22 +37,9 @@
 <div class="row">
     <div class="col-md-12">
         <div class="searchByAssocDepartmentSection" style="max-height: 500px; overflow-y: auto; overflow-x: hidden;">
-            <div class="row">
+            <div class="row" *ngFor="let x of deptSkillsGrp">
                 <div class="col-md-12">
-                    <department-skills></department-skills>
-                
-                    <department-skills></department-skills>
-                
-                    <department-skills></department-skills>
-                
-                    <department-skills></department-skills>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <department-skills></department-skills>
-                
-                    <department-skills></department-skills>
+                    <department-skills [departmentSkill]="y" *ngFor="let y of x"></department-skills>
                 </div>
             </div>
         </div>

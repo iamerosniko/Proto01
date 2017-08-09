@@ -2,15 +2,12 @@
   <table class="table">
     <thead>
       <tr>
-          <th>Contact Center</th>
+          <th>{{departmentSkill.DepartmentName}}</th>
       </tr>
     </thead>
     <tbody style="background-color:white;">
-      <tr>
-          <td>Kumaen</td>
-      </tr>
-      <tr>
-          <td>Matulog</td>
+      <tr *ngFor="let y of departmentSkill.Skills">
+          <td>{{y.SkillsetDescr}}</td>
       </tr>
     </tbody>
   </table>

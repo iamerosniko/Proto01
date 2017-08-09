@@ -158,7 +158,7 @@ export class AssociateRpt {
 }
 export class DepartmentSkills{
     constructor (
-        public Skils: Skillset[],
+        public Skills: Skillset[],
         public DepartmentName: string
     ){}
 }

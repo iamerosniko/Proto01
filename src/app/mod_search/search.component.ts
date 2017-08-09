@@ -56,6 +56,7 @@ export class SearchComponent implements OnInit {
 
   async getResult(){
     if(this.radioSelect==0){
+      this.associateRpt=[];
       for(var i = 0;i<this.selectedItems.length;i++){
         
         await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
