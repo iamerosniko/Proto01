@@ -32,6 +32,7 @@ export class ExportAssociateReport {
     setUsers:Set_User[]=[];
 
     async getAssociateReport(associateID:number):Promise<AssociateRpt>{
+        this.associateReport=new AssociateRpt('','','','','','',[]);
         let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
         let associate:Associate=await this.getAssociateDetails(associateID);
@@ -47,8 +48,8 @@ export class ExportAssociateReport {
         while(departmentSkillsets.length>0){
             let tempdsTobeRemoved:DepartmentSkillsets1=departmentSkillsets[0];
             var a=await this.mergeSkillstoDepartment(departmentSkillsets,tempdsTobeRemoved.DepartmentID)
+            departmentSkillsets= await departmentSkillsets.filter(x=>x.DepartmentID!=tempdsTobeRemoved.DepartmentID);
             this.associateReport.DepartmentSkills.push(a);
-            departmentSkillsets= departmentSkillsets.filter(x=>x.DepartmentID!=tempdsTobeRemoved.DepartmentID);
         }
         //getting current department and location
         currentDepartment=await this.getDepartment(associate.DepartmentID);
