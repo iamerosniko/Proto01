@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">Search by Location</label>
-                    <select class="form-control input-sm">
+                    <select class="form-control input-sm" (change)="getItems()" [(ngModel)]="selectedLocation">
                         <option *ngFor="let x of locations" [value]="x.LocationID"> {{x.LocationDescr}} </option>
                     </select>
                 </div>

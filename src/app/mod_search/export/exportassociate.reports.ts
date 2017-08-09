@@ -64,7 +64,6 @@ export class ExportAssociateReport {
 
         return new Promise<AssociateRpt>((resolve) =>             
             resolve(this.associateReport)
-            //resolve(null)
         );
     }
 

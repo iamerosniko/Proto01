@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit {
 
   }
   radioSelect:number=0;
+  selectedLocation:number;
   public yourVariableName: any=[];
   //initial collection
   skillsets: Skillset[] = [];
@@ -101,9 +102,10 @@ export class SearchComponent implements OnInit {
   async getItems(){
     this.items=[];
     if(this.radioSelect==0){
-      for(var i = 0; i<this.associates.length;i++){
-        var fullName=this.getFullName(this.associates[i].UserName);
-        this.items.push( { 'id': this.associates[i].AssociateID.toString(), 'text': this.getFullName(this.associates[i].UserName)});
+      let associates=this.associates.filter(x=>x.LocationID==this.selectedLocation);
+      for(var i = 0; i<associates.length;i++){
+        var fullName=this.getFullName(associates[i].UserName);
+        this.items.push( { 'id': associates[i].AssociateID.toString(), 'text': this.getFullName(associates[i].UserName)});
       }
     }
     else if (this.radioSelect==1){
