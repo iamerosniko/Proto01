@@ -89,18 +89,18 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-9" id="assocRpt" #assocRpt>
             <!--report content here-->
             <!--<div class="report-content"></div>-->
             <div class="col-md-12">
                 <div class="pull-right">
                     <div class="btn-group">
-                        <a class="btn btn-primary btn-sm" title="Export to Excel"><i class="fa fa-file-excel-o"></i></a>
+                        <a class="btn btn-primary btn-sm" (click)="samp()" title="Export to Excel"><i class="fa fa-file-excel-o"></i></a>
                         <!--<a class="btn btn-primary btn-sm"></a>-->
                     </div>
                 </div>
             </div>
-            <div *ngIf="radioSelect==0" >
+            <div *ngIf="radioSelect==0">
                 <search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>
             </div>
             <div *ngIf="radioSelect==1" >

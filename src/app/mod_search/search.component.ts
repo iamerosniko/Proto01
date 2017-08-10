@@ -1,4 +1,4 @@
-import { Component,OnInit  } from '@angular/core';
+import { Component,OnInit,ViewChild,ElementRef  } from '@angular/core';
 import { Router }  from '@angular/router';
 //services
 import { SkillsetSvc } from '../com_services/skillset.svc';
@@ -8,6 +8,8 @@ import { LocationSvc } from '../com_services/location.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
 import { ExportAssociateReport } from './export/exportassociate.reports';
 import { ExportSkillsetReport } from './export/exportskillset.reports';
+let jsPDF = require('jspdf');
+//import * as jsPDF from 'jspdf';
 // import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 // import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 //entities
@@ -20,6 +22,8 @@ import { Location,Department,Skillset,
   selector: 'search',
   templateUrl: 'search.component.html',
 })
+
+
 export class SearchComponent implements OnInit {
   constructor(
     private associateSvc:AssociateSvc,
@@ -32,6 +36,7 @@ export class SearchComponent implements OnInit {
   ){
 
   }
+  @ViewChild('assocRpt') el:ElementRef;
   radioSelect:number=0;
   selectedLocation:number=-1;
   public yourVariableName: any=[];
@@ -47,6 +52,20 @@ export class SearchComponent implements OnInit {
   
   public items:any[]=[];
   public selectedItems:SelectItem[] = [];
+
+  samp(){
+    // let doc = new jsPDF();
+    // doc.text("Hello", 20, 20);
+    // doc.save('table.pdf');
+    let pdf = new jsPDF();
+   let options = {
+      pagesplit: true,
+      format:"PNG", background:"#FFFFFF"
+   };
+   pdf.addHTML(this.el.nativeElement, options, () => {
+      pdf.save("test.pdf");
+   });
+  }
 
   ngOnInit(){
     this.getDependencies().then(
@@ -113,6 +132,7 @@ export class SearchComponent implements OnInit {
     this.yourVariableName=[];
     this.associateRpt=[];
     this.skillsetRpt=[];
+    this.selectedItems=[];
     if(this.radioSelect==0){
       let associates=this.associates.filter(x=>x.LocationID==this.selectedLocation);
       for(var i = 0; i<associates.length;i++){

@@ -62,6 +62,7 @@ export class ExportSkillsetReport {
     async getAssociateInfo(assocDeptSkillset:AssociateDepartmentSkillset[]){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
         console.log(assocDeptSkillset);
+        //note: change for to while assocDeptSkillset.leng>0
         for(var i =0;i<assocDeptSkillset.length;i++){
             let associate:Associate=await this.getAssociateDetails(assocDeptSkillset[i].AssociateID);
            
