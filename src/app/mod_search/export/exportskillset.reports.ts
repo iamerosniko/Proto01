@@ -59,12 +59,14 @@ export class ExportSkillsetReport {
         );
     }
 
-    async getAssociateInfo(assocDeptSkillset:AssociateDepartmentSkillset[]){
+    async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[]){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
-        console.log(assocDeptSkillset);
+        console.log(assocDeptSkillsets);
         //note: change for to while assocDeptSkillset.leng>0
-        for(var i =0;i<assocDeptSkillset.length;i++){
-            let associate:Associate=await this.getAssociateDetails(assocDeptSkillset[i].AssociateID);
+
+        while (assocDeptSkillsets.length>0){
+            var assocDeptSkillset = assocDeptSkillsets.pop();
+            let associate:Associate=await this.getAssociateDetails(assocDeptSkillset.AssociateID);
            
             let department:Department=await this.getDepartment(associate.DepartmentID);
             let location:Location=await this.getLocation(associate.LocationID);
@@ -77,7 +79,24 @@ export class ExportSkillsetReport {
             this.associates.push(associateDetails);
 
             associateDetails=new AssociateDetails('','','','','');
+            assocDeptSkillsets=assocDeptSkillsets.filter(x=>x.AssociateID!=assocDeptSkillset.AssociateID);
         }
+
+        // for(var i =0;i<assocDeptSkillset.length;i++){
+        //     let associate:Associate=await this.getAssociateDetails(assocDeptSkillset[i].AssociateID);
+           
+        //     let department:Department=await this.getDepartment(associate.DepartmentID);
+        //     let location:Location=await this.getLocation(associate.LocationID);
+        //     associateDetails.Department=await department.DepartmentDescr;
+        //     associateDetails.Location=await location.LocationDescr;
+        //     associateDetails.Name=await this.getFullName(associate.UserName);
+        //     associateDetails.VPN=associate.VPN?'Yes':'No';
+        //     associateDetails.UpdatedOn='';
+
+        //     this.associates.push(associateDetails);
+
+        //     associateDetails=new AssociateDetails('','','','','');
+        // }
     }
 
     async getDepartmentSkillsets(skillsetID):Promise<DepartmentSkillsets1[]>{
