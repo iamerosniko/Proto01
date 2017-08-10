@@ -59,8 +59,7 @@ export class SearchComponent implements OnInit {
     // doc.save('table.pdf');
     let pdf = new jsPDF();
    let options = {
-      pagesplit: true,
-      format:"PNG", background:"#FFFFFF"
+      pagesplit: true, background:"#FFFFFF"
    };
    pdf.addHTML(this.el.nativeElement, options, () => {
       pdf.save("test.pdf");
