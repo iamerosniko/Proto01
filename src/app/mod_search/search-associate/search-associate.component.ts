@@ -13,7 +13,6 @@ export class SearchAssociateComponent implements OnInit {
 
   ngOnInit() {
     this.sliceToFour();
-    console.log(this.associate.Associate);
   }
   //separate departmentskills to 4 parts. 
   sliceToFour(){

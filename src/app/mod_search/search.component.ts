@@ -129,7 +129,7 @@ export class SearchComponent implements OnInit {
       else if (this.radioSelect==2){
         await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation).
         then(a=>this.departmentRpt.push(a));
-        console.log(this.departmentRpt);
+        //console.log(this.departmentRpt);
       }
     }
   }

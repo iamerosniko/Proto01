@@ -73,7 +73,7 @@ export class DataSkillsetReport {
 
     async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[],locationID:number){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
-        console.log(assocDeptSkillsets);
+        //console.log(assocDeptSkillsets);
         //note: change for to while assocDeptSkillset.leng>0
 
         while (assocDeptSkillsets.length>0){
