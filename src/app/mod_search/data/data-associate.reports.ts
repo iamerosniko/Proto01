@@ -12,11 +12,11 @@ import { AssociateDepartmentSkillsetsSvc } from '../../com_services/assoc_dept_s
 import { Location,Department,Skillset,
   Associate,Set_User,
   AssociateDepartmentSkillset,DepartmentSkillsets1,
-  AssociateRpt,DepartmentSkills 
+  AssociateRpt,DepartmentSkills,AssociateDetails
 } from '../../com_entities/entities';
 
 @Injectable()
-export class ExportAssociateReport {
+export class DataAssociateReport {
     constructor(
         private associateSvc:AssociateSvc,
         private departmentSvc:DepartmentSvc,
@@ -28,11 +28,11 @@ export class ExportAssociateReport {
     ){
 
     }
-    associateReport:AssociateRpt=new AssociateRpt('','','','','','',[]);
+    associateReport:AssociateRpt=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
     setUsers:Set_User[]=[];
 
     async getAssociateReport(associateID:number):Promise<AssociateRpt>{
-        this.associateReport=new AssociateRpt('','','','','','',[]);
+        this.associateReport=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
         let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
         let associate:Associate=await this.getAssociateDetails(associateID);
@@ -55,12 +55,51 @@ export class ExportAssociateReport {
         currentDepartment=await this.getDepartment(associate.DepartmentID);
         currentLocation=await this.getLocation(associate.LocationID);
         //fill details of the associateReport
-        this.associateReport.Name=this.getFullName(associate.UserName);
-        this.associateReport.CurrentDepartment=await currentDepartment.DepartmentDescr;
-        this.associateReport.CurrentLocation=await currentLocation.LocationDescr;
-        this.associateReport.PhoneNumber=await associate.PhoneNumber;
-        this.associateReport.VPN=await associate.VPN?'Yes':'No';
-        this.associateReport.LastUpdated=await '';
+        this.associateReport.Associate.Name=this.getFullName(associate.UserName);
+        this.associateReport.Associate.Department=await currentDepartment.DepartmentDescr;
+        this.associateReport.Associate.Location=await currentLocation.LocationDescr;
+        this.associateReport.Associate.Phone=await associate.PhoneNumber;
+        this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
+        this.associateReport.Associate.UpdatedOn=await '';
+
+        return new Promise<AssociateRpt>((resolve) =>             
+            resolve(this.associateReport)
+        );
+    }
+
+    async getAssociateReport2(associateID:number,departmentID:number):Promise<AssociateRpt>{
+        this.associateReport=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
+        let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
+        let departmentSkillsets:DepartmentSkillsets1[]=[];
+        let associate:Associate=await this.getAssociateDetails(associateID);
+        let currentDepartment:Department;
+        let currentLocation:Location;
+        this.getSetUser();
+        //loop ads to get departmentskillsets
+        for(var i=0;i<associatesDepartmentSkillsets.length;i++){
+            departmentSkillsets.push(
+                await this.getDepartmentSkillsets(associatesDepartmentSkillsets[i].DepartmentSkillsetID)
+            );
+        }
+        //filter departmentskillsets according to associates current department
+        departmentSkillsets=departmentSkillsets.filter(x=>x.DepartmentID==departmentID);
+        //getting the associates' skills per departments
+        while(departmentSkillsets.length>0){
+            let tempdsTobeRemoved:DepartmentSkillsets1=departmentSkillsets[0];
+            var a=await this.mergeSkillstoDepartment(departmentSkillsets,tempdsTobeRemoved.DepartmentID)
+            departmentSkillsets= await departmentSkillsets.filter(x=>x.DepartmentID!=tempdsTobeRemoved.DepartmentID);
+            this.associateReport.DepartmentSkills.push(a);
+        }
+        //getting current department and location
+        currentDepartment=await this.getDepartment(associate.DepartmentID);
+        currentLocation=await this.getLocation(associate.LocationID);
+        //fill details of the associateReport
+        this.associateReport.Associate.Name=this.getFullName(associate.UserName);
+        this.associateReport.Associate.Department=await currentDepartment.DepartmentDescr;
+        this.associateReport.Associate.Location=await currentLocation.LocationDescr;
+        this.associateReport.Associate.Phone=await associate.PhoneNumber;
+        this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
+        this.associateReport.Associate.UpdatedOn=await '';
 
         return new Promise<AssociateRpt>((resolve) =>             
             resolve(this.associateReport)

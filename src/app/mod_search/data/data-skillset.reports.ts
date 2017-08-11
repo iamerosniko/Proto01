@@ -18,7 +18,7 @@ import { Location,Department,Skillset,
 } from '../../com_entities/entities';
 
 @Injectable()
-export class ExportSkillsetReport {
+export class DataSkillsetReport {
     constructor(
         private associateSvc:AssociateSvc,
         private departmentSvc:DepartmentSvc,
@@ -30,7 +30,6 @@ export class ExportSkillsetReport {
     ){
 
     }
-    associateReport:AssociateRpt=new AssociateRpt('','','','','','',[]);
     associates:AssociateDetails[]=[];
     setUsers:Set_User[]=[];
 
@@ -99,7 +98,7 @@ export class ExportSkillsetReport {
         // }
     }
 
-    async getDepartmentSkillsets(skillsetID):Promise<DepartmentSkillsets1[]>{
+    async getDepartmentSkillsets(skillsetID:number):Promise<DepartmentSkillsets1[]>{
         let departmentSkillsets:DepartmentSkillsets1[]=await this.departmentSkillsetSvc.getDepartmentSkillsets();
         return new Promise<DepartmentSkillsets1[]>((resolve) =>             
             resolve(

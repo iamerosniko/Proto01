@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="Index.html">Skillset Database</a>
+                <a class="navbar-brand" >Skillset Database</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">

@@ -6,17 +6,15 @@ import { DepartmentSvc } from '../com_services/department.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { LocationSvc } from '../com_services/location.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
-import { ExportAssociateReport } from './export/exportassociate.reports';
-import { ExportSkillsetReport } from './export/exportskillset.reports';
+import { DataAssociateReport } from './data/data-associate.reports';
+import { DataSkillsetReport } from './data/data-skillset.reports';
+import { DataDepartmentReport } from './data/data-department.reports';
 let jsPDF = require('jspdf');
-//import * as jsPDF from 'jspdf';
-// import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
-// import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 //entities
 import { Location,Department,Skillset,
   Associate,Set_User,ng2Items,
   AssociateRpt,SelectItem,
-  SkillsetRpt  
+  SkillsetRpt,DepartmentRpt
 } from '../com_entities/entities';
 @Component({
   selector: 'search',
@@ -31,8 +29,9 @@ export class SearchComponent implements OnInit {
     private locationSvc:LocationSvc,
     private skillsetSvc:SkillsetSvc,
     private setUserSvc:Set_UserSvc,
-    private associateReportSvc:ExportAssociateReport,
-    private skillsetReportSvc:ExportSkillsetReport
+    private associateReportSvc:DataAssociateReport,
+    private skillsetReportSvc:DataSkillsetReport,
+    private departmentReportSvc:DataDepartmentReport
   ){
 
   }
@@ -48,6 +47,7 @@ export class SearchComponent implements OnInit {
   set_Users:Set_User[]=[];
   associateRpt:AssociateRpt[]=[];
   skillsetRpt:SkillsetRpt[]=[];
+  departmentRpt:DepartmentRpt[]=[];
   //ng2 select variables
   
   public items:any[]=[];
@@ -78,31 +78,59 @@ export class SearchComponent implements OnInit {
   }
 
   async getResult(){
-    if(this.radioSelect==0){
-      this.associateRpt=[];
-      for(var i = 0;i<this.selectedItems.length;i++){
+    // if(this.radioSelect==0){
+    //   this.associateRpt=[];
+    //   for(var i = 0;i<this.selectedItems.length;i++){
         
-        await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
+    //     await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
+    //     .then(a=>{
+    //         //console.log(a);
+    //         if(a!=null){
+    //           this.associateRpt.push(a);
+    //         }
+    //       }
+    //     );
+    //   }
+    //   console.log(this.associateRpt);
+    // }
+    // else if (this.radioSelect==1){
+    //   this.skillsetRpt=[];
+    //   for(var i = 0;i<this.selectedItems.length;i++){
+    //     await this.skillsetReportSvc.getSkillsetReport(this.selectedItems[i].id)
+    //     .then(a=>this.skillsetRpt.push(a));
+    //   }
+    //   console.log(this.skillsetRpt);
+    // }
+    // else{
+    //   this.departmentRpt=[];
+    //   for(let selectedItem of this.selectedItems){
+    //     await this.departmentReportSvc.getDepartmentReport(selectedItem.id).
+    //     then(a=>this.departmentRpt.push(a));
+    //   }
+    //   console.log(this.departmentRpt);
+    // }
+    this.associateRpt=[];
+    this.skillsetRpt=[];
+    this.departmentRpt=[];
+    for(let selectedItem of this.selectedItems){
+      if(this.radioSelect==0){
+        await this.associateReportSvc.getAssociateReport(selectedItem.id)
         .then(a=>{
-            //console.log(a);
-            if(a!=null){
-              this.associateRpt.push(a);
-            }
+          //console.log(a);
+          if(a!=null){
+            this.associateRpt.push(a);
           }
-        );
+        });
       }
-      console.log(this.associateRpt);
-    }
-    else if (this.radioSelect==1){
-      this.skillsetRpt=[];
-      for(var i = 0;i<this.selectedItems.length;i++){
-        await this.skillsetReportSvc.getSkillsetReport(this.selectedItems[i].id)
+      else if (this.radioSelect==1){
+        await this.skillsetReportSvc.getSkillsetReport(selectedItem.id)
         .then(a=>this.skillsetRpt.push(a));
       }
-      console.log(this.skillsetRpt);
-    }
-    else{
-      
+      else if (this.radioSelect==2){
+        await this.departmentReportSvc.getDepartmentReport(selectedItem.id).
+        then(a=>this.departmentRpt.push(a));
+        console.log(this.departmentRpt);
+      }
     }
   }
 

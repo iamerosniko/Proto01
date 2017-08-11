@@ -80,7 +80,6 @@ export class Location {
 }
 
 /*BTSS*/
-
 export class Set_Module {
     constructor (
         public mod_id: string,//primary key
@@ -146,12 +145,13 @@ export class ng2Items{
 /* reports - eros - */
 export class AssociateRpt {
     constructor (
-        public Name?: string,
-        public PhoneNumber?: string,
-        public CurrentDepartment?: string,
-        public CurrentLocation?: string,
-        public VPN?: string,
-        public LastUpdated?: string,
+        // public Name?: string,
+        // public PhoneNumber?: string,
+        // public CurrentDepartment?: string,
+        // public CurrentLocation?: string,
+        // public VPN?: string,
+        // public LastUpdated?: string,
+        public Associate:AssociateDetails,
         public DepartmentSkills?:DepartmentSkills[]
         ){
     }
@@ -162,6 +162,15 @@ export class SkillsetRpt {
         public Skillset?: string,
         public Associates?:AssociateDetails[]
         ){
+    }
+}
+
+export class DepartmentRpt{
+    constructor(
+        public Department?:string,
+        public AssociateRpts?:AssociateRpt[]
+    ){
+
     }
 }
 
@@ -176,6 +185,7 @@ export class AssociateDetails{
     constructor(
         public Name? : string,
         public VPN? : string,
+        public Phone?: string,
         public Department? : string,
         public Location? : string,
         public UpdatedOn? : string,

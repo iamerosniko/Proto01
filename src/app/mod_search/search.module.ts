@@ -11,6 +11,7 @@ import { SearchAssociateComponent } from './search-associate/search-associate.co
 import { DepartmentSkillsComponent } from './search-associate/department-skills/department-skills.component';
 import { SearchSkillsetComponent } from './search-skillset/search-skillset.component';
 import { SearchDepartmentComponent } from './search-department/search-department.component';
+import { AssociateSkillsComponent } from './search-department/associate-skills/associate-skills.component';
 //services
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
@@ -18,8 +19,9 @@ import { SkillsetSvc } from '../com_services/skillset.svc';
 import { AssociateSvc } from '../com_services/associate.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
-import { ExportAssociateReport } from './export/exportassociate.reports';
-import { ExportSkillsetReport } from './export/exportskillset.reports';
+import { DataAssociateReport } from './data/data-associate.reports';
+import { DataSkillsetReport } from './data/data-skillset.reports';
+import { DataDepartmentReport } from './data/data-department.reports';
 @NgModule({
   //components area
   declarations: [
@@ -28,6 +30,7 @@ import { ExportSkillsetReport } from './export/exportskillset.reports';
     DepartmentSkillsComponent,
     SearchSkillsetComponent,
     SearchDepartmentComponent,
+    AssociateSkillsComponent,
     //maintenance-route
 
   ],
@@ -42,7 +45,7 @@ import { ExportSkillsetReport } from './export/exportskillset.reports';
     LocationSvc,DepartmentSvc,SkillsetSvc,AssociateSvc,
     DepartmentSkillsetsSvc,AssociateDepartmentSkillsetsSvc,
     //reports
-    ExportAssociateReport,ExportSkillsetReport
+    DataAssociateReport,DataSkillsetReport,DataDepartmentReport
   ],
   //components to be shared and used using selector
   exports: [
