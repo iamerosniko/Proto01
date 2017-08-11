@@ -108,7 +108,7 @@
                 <search-skillset [skillsetRpt]="x" *ngFor="let x of skillsetRpt"></search-skillset>
             </div>
             <div *ngIf="radioSelect==2" >
-                <search-department></search-department>
+                <search-department [departmentRpt]="x" *ngFor="let x of departmentRpt"></search-department>
                 <!--<search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>-->
             </div>
         </div>

@@ -3,12 +3,12 @@
       <tbody>
         <tr>
           <th class="col-md-1">Name:</th>
-          <td class="col-md-2">Albert Rick Martires</td> <!--assoc name-->
+          <td class="col-md-2">{{assoc.Associate.Name}}</td> <!--assoc name-->
           <th class="col-md-1">Location:</th>
-          <td class="col-md-2">Manila</td><!--location-->
+          <td class="col-md-2">{{assoc.Associate.Location}}</td><!--location-->
           <th class="col-md-1">VPN</th>
-          <td class="col-md-2">No</td><!--vpn-->
-          <th class="col-md-3">Last updated on April 20, 2017</th><!--last updated date-->
+          <td class="col-md-2">{{assoc.Associate.VPN}}</td><!--vpn-->
+          <th class="col-md-3">Last updated on {{assoc.Associate.UpdatedOn}}</th><!--last updated date-->
         </tr>
         <tr>
           <td colspan="3" class="col-md-12">
@@ -19,8 +19,7 @@
                   </tr>
               </thead>
               <tbody>
-                  <tr><td>Skill 1</td></tr>
-                  <tr><td>Skill 2</td></tr>
+                  <tr *ngFor="let x of assoc.DepartmentSkills[0].Skills"><td>{{x.SkillsetDescr}}</td></tr>
               </tbody>
             </table>
           </td>

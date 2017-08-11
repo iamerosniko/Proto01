@@ -45,6 +45,7 @@ export class DataDepartmentReport {
             this.tempAssociates=this.tempAssociates.concat(await this.skillsetRptSvc.getAssociateDetails(associateDepartmentSkillset.AssociateID));
         }
         //getting associates for the current department
+        this.tempAssociates=this.tempAssociates.filter(x=>x.DepartmentID==departmentID);
         while(this.tempAssociates.length>0){
             let tempAssoc = this.tempAssociates.pop();
             associates=associates.concat(tempAssoc);

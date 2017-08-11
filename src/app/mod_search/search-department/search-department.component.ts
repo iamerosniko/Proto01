@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { DepartmentRpt } from '../../com_entities/entities';
 
 @Component({
   selector: 'search-department',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./search-department.component.css']
 })
 export class SearchDepartmentComponent implements OnInit {
-
+@Input() departmentRpt:DepartmentRpt;
   constructor() { }
 
   ngOnInit() {
