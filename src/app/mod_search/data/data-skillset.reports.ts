@@ -32,10 +32,23 @@ export class DataSkillsetReport {
     }
     associates:AssociateDetails[]=[];
     setUsers:Set_User[]=[];
-
-
     skillsetRpt:SkillsetRpt;
-    async getSkillsetReport(skillsetID:number):Promise<SkillsetRpt>{
+
+    getDateString(myDate:Date):string{
+        var dateStr:string='';
+        var dd:number = myDate.getDate();
+        var mm = myDate.getMonth()+1; //January is 0!
+
+        var yyyy = myDate.getFullYear();
+
+        dateStr+=((dd<10)?'0'+dd.toString():dd.toString()) + '/';
+        dateStr+=(mm<10)?'0'+mm.toString():mm.toString();
+        dateStr+='/'+yyyy.toString();
+
+        return dateStr;
+    }
+
+    async getSkillsetReport(skillsetID:number,locationID:number):Promise<SkillsetRpt>{
         this.skillsetRpt=new SkillsetRpt('',[]);
         this.associates=[];
         await this.getSetUser();
@@ -49,7 +62,7 @@ export class DataSkillsetReport {
             associatedepartmentskillset=associatedepartmentskillset.concat(await this.getAssociateDepartmentSkillset(departmentSkillsets[i].DepartmentSkillsetID));
         }
         //getting the associate
-        await this.getAssociateInfo(associatedepartmentskillset);
+        await this.getAssociateInfo(associatedepartmentskillset,locationID);
 
         this.skillsetRpt.Associates=await this.associates;
         this.skillsetRpt.Skillset=await skillset.SkillsetDescr;
@@ -58,7 +71,7 @@ export class DataSkillsetReport {
         );
     }
 
-    async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[]){
+    async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[],locationID:number){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
         console.log(assocDeptSkillsets);
         //note: change for to while assocDeptSkillset.leng>0
@@ -73,9 +86,9 @@ export class DataSkillsetReport {
             associateDetails.Location=await location.LocationDescr;
             associateDetails.Name=await this.getFullName(associate.UserName);
             associateDetails.VPN=associate.VPN?'Yes':'No';
-            associateDetails.UpdatedOn='';
-
-            this.associates.push(associateDetails);
+            associateDetails.UpdatedOn= this.getDateString(new Date(associate.UpdatedOn));
+            
+            associate.LocationID==locationID ? this.associates.push(associateDetails): null;
 
             associateDetails=new AssociateDetails('','','','','');
             assocDeptSkillsets=assocDeptSkillsets.filter(x=>x.AssociateID!=assocDeptSkillset.AssociateID);

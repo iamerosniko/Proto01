@@ -31,6 +31,21 @@ export class DataAssociateReport {
     associateReport:AssociateRpt=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
     setUsers:Set_User[]=[];
 
+
+    getDateString(myDate:Date):string{
+        var dateStr:string='';
+        var dd:number = myDate.getDate();
+        var mm = myDate.getMonth()+1; //January is 0!
+
+        var yyyy = myDate.getFullYear();
+
+        dateStr+=((dd<10)?'0'+dd.toString():dd.toString()) + '/';
+        dateStr+=(mm<10)?'0'+mm.toString():mm.toString();
+        dateStr+='/'+yyyy.toString();
+
+        return dateStr;
+    }
+
     async getAssociateReport(associateID:number):Promise<AssociateRpt>{
         this.associateReport=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
         let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
@@ -60,7 +75,7 @@ export class DataAssociateReport {
         this.associateReport.Associate.Location=await currentLocation.LocationDescr;
         this.associateReport.Associate.Phone=await associate.PhoneNumber;
         this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
-        this.associateReport.Associate.UpdatedOn=await '';
+        this.associateReport.Associate.UpdatedOn= await this.getDateString(new Date(associate.UpdatedOn));
 
         return new Promise<AssociateRpt>((resolve) =>             
             resolve(this.associateReport)
@@ -99,8 +114,7 @@ export class DataAssociateReport {
         this.associateReport.Associate.Location=await currentLocation.LocationDescr;
         this.associateReport.Associate.Phone=await associate.PhoneNumber;
         this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
-        this.associateReport.Associate.UpdatedOn=await '';
-
+        this.associateReport.Associate.UpdatedOn= this.getDateString(new Date(associate.UpdatedOn));
         return new Promise<AssociateRpt>((resolve) =>             
             resolve(this.associateReport)
         );

@@ -20,7 +20,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">
-                        <input type="radio" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="0"/>&nbsp;Search by Associate(s)
+                        <input type="radio" [disabled]=" selectedLocation==-1" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="0"/>&nbsp;Search by Associate(s)
                     </label>
                     <!--<select class="form-control input-sm"></select>-->
                     <ng-select  [multiple]="true"
@@ -28,7 +28,7 @@
                         [active]="yourVariableName"
                         [allowClear]="true"
                         [items]="items"
-                        [disabled]="radioSelect!=0"
+                        [disabled]="radioSelect!=0 || selectedLocation==-1"
                         (data)="refreshValue($event)"
                         
                         placeholder="No Associate selected">
@@ -39,13 +39,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">
-                        <input type="radio" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="1"/>&nbsp;Search by Skillset(s)
+                        <input type="radio" [disabled]=" selectedLocation==-1" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="1"/>&nbsp;Search by Skillset(s)
                     </label>
                     <ng-select  [multiple]="true"
                         [allowClear]="true"
                         [active]="yourVariableName"
                         [items]="items"
-                        [disabled]="radioSelect!=1"
+                        [disabled]="radioSelect!=1 || selectedLocation==-1"
                         (data)="refreshValue($event)"
                         
                         placeholder="No Skills selected">
@@ -56,12 +56,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">
-                        <input type="radio" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="2"/>&nbsp;Search by Department(s)
+                        <input type="radio" [disabled]=" selectedLocation==-1" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="2"/>&nbsp;Search by Department(s)
                     </label>
                     <ng-select  [multiple]="true"
                     [allowClear]="true"
                         [items]="items"
-                        [disabled]="radioSelect!=2"
+                        [disabled]="radioSelect!=2 || selectedLocation==-1"
                         [active]="yourVariableName"
                         (data)="refreshValue($event)"
                         placeholder="No Departments selected">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </div>
-            <div *ngIf="radioSelect==0">
+            <div *ngIf="radioSelect==0 ">
                 <search-associate [associate]="x" *ngFor="let x of associateRpt"></search-associate>
             </div>
             <div *ngIf="radioSelect==1" >

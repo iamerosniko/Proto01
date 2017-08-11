@@ -123,11 +123,11 @@ export class SearchComponent implements OnInit {
         });
       }
       else if (this.radioSelect==1){
-        await this.skillsetReportSvc.getSkillsetReport(selectedItem.id)
+        await this.skillsetReportSvc.getSkillsetReport(selectedItem.id,this.selectedLocation)
         .then(a=>this.skillsetRpt.push(a));
       }
       else if (this.radioSelect==2){
-        await this.departmentReportSvc.getDepartmentReport(selectedItem.id).
+        await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation).
         then(a=>this.departmentRpt.push(a));
         console.log(this.departmentRpt);
       }

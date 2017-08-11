@@ -26,7 +26,7 @@ export class DataDepartmentReport {
 
     tempAssociates:Associate[]=[];
 
-    async getDepartmentReport(departmentID:number):Promise<DepartmentRpt>{
+    async getDepartmentReport(departmentID:number,locationID:number):Promise<DepartmentRpt>{
         let department:Department=await this.skillsetRptSvc.getDepartment(departmentID);
         let departmentRpt:DepartmentRpt=new DepartmentRpt('',[]);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
@@ -45,7 +45,7 @@ export class DataDepartmentReport {
             this.tempAssociates=this.tempAssociates.concat(await this.skillsetRptSvc.getAssociateDetails(associateDepartmentSkillset.AssociateID));
         }
         //getting associates for the current department
-        this.tempAssociates=this.tempAssociates.filter(x=>x.DepartmentID==departmentID);
+        this.tempAssociates=this.tempAssociates.filter(x=>x.DepartmentID==departmentID && x.LocationID==locationID);
         while(this.tempAssociates.length>0){
             let tempAssoc = this.tempAssociates.pop();
             associates=associates.concat(tempAssoc);
