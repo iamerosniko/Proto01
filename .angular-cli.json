@@ -24,7 +24,9 @@
     		"assets/css/Checkboxes.css",
         "../node_modules/bootstrap/dist/css/bootstrap.css",
         "assets/Css/bootstrap-3.3.7-dist/css/bootstrap-theme.css",
-    		"assets/css/Site.css"
+        "assets/css/Site.css",
+        "assets/css/googleicon.css",
+        "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

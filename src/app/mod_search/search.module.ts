@@ -1,6 +1,7 @@
 import { NgModule }      from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { SearchRouting } from './search.routing';
@@ -22,6 +23,10 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
 import { DataAssociateReport } from './data/data-associate.reports';
 import { DataSkillsetReport } from './data/data-skillset.reports';
 import { DataDepartmentReport } from './data/data-department.reports';
+import { MaterialModule,MdDatepickerModule,MdNativeDateModule
+   } from '@angular/material';
+
+//material
 @NgModule({
   //components area
   declarations: [
@@ -32,12 +37,12 @@ import { DataDepartmentReport } from './data/data-department.reports';
     SearchDepartmentComponent,
     AssociateSkillsComponent,
     //maintenance-route
-
   ],
   //module area
   imports: [
-    BrowserModule,HttpModule,CommonModule,FormsModule,
-    SelectModule,
+    BrowserModule,BrowserAnimationsModule,HttpModule,CommonModule,FormsModule,
+    SelectModule,MaterialModule,
+    MdNativeDateModule,
     SearchRouting
   ],
   //services area
@@ -49,7 +54,7 @@ import { DataDepartmentReport } from './data/data-department.reports';
   ],
   //components to be shared and used using selector
   exports: [
-    SearchComponent,
+    SearchComponent, MdDatepickerModule
     //maintenance-route
   ]
 })

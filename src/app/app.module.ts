@@ -30,7 +30,7 @@ import { TestExportModule } from './mod-test-export/mod-test-export.module';
     MaintenanceModule,
     SearchModule,
     AppRouting,
-    TestExportModule
+    TestExportModule,
   ],
   //services area
   providers: [],

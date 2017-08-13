@@ -10,6 +10,7 @@ import { DataAssociateReport } from './data/data-associate.reports';
 import { DataSkillsetReport } from './data/data-skillset.reports';
 import { DataDepartmentReport } from './data/data-department.reports';
 let jsPDF = require('jspdf');
+import 'hammerjs';
 //entities
 import { Location,Department,Skillset,
   Associate,Set_User,ng2Items,
@@ -49,10 +50,12 @@ export class SearchComponent implements OnInit {
   skillsetRpt:SkillsetRpt[]=[];
   departmentRpt:DepartmentRpt[]=[];
   //ng2 select variables
-  
   public items:any[]=[];
   public selectedItems:SelectItem[] = [];
-
+  //material dates
+  dateFrom:number=null;
+  dateTo:number=null;
+  //sample export
   samp(){
     // let doc = new jsPDF();
     // doc.text("Hello", 20, 20);
@@ -77,63 +80,6 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  async getResult(){
-    // if(this.radioSelect==0){
-    //   this.associateRpt=[];
-    //   for(var i = 0;i<this.selectedItems.length;i++){
-        
-    //     await this.associateReportSvc.getAssociateReport(this.selectedItems[i].id)
-    //     .then(a=>{
-    //         //console.log(a);
-    //         if(a!=null){
-    //           this.associateRpt.push(a);
-    //         }
-    //       }
-    //     );
-    //   }
-    //   console.log(this.associateRpt);
-    // }
-    // else if (this.radioSelect==1){
-    //   this.skillsetRpt=[];
-    //   for(var i = 0;i<this.selectedItems.length;i++){
-    //     await this.skillsetReportSvc.getSkillsetReport(this.selectedItems[i].id)
-    //     .then(a=>this.skillsetRpt.push(a));
-    //   }
-    //   console.log(this.skillsetRpt);
-    // }
-    // else{
-    //   this.departmentRpt=[];
-    //   for(let selectedItem of this.selectedItems){
-    //     await this.departmentReportSvc.getDepartmentReport(selectedItem.id).
-    //     then(a=>this.departmentRpt.push(a));
-    //   }
-    //   console.log(this.departmentRpt);
-    // }
-    this.associateRpt=[];
-    this.skillsetRpt=[];
-    this.departmentRpt=[];
-    for(let selectedItem of this.selectedItems){
-      if(this.radioSelect==0){
-        await this.associateReportSvc.getAssociateReport(selectedItem.id)
-        .then(a=>{
-          //console.log(a);
-          if(a!=null){
-            this.associateRpt.push(a);
-          }
-        });
-      }
-      else if (this.radioSelect==1){
-        await this.skillsetReportSvc.getSkillsetReport(selectedItem.id,this.selectedLocation)
-        .then(a=>this.skillsetRpt.push(a));
-      }
-      else if (this.radioSelect==2){
-        await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation).
-        then(a=>this.departmentRpt.push(a));
-        //console.log(this.departmentRpt);
-      }
-    }
-  }
-
   async getDependencies(){
     this.associates = await this.associateSvc.getAssociates();
     this.locations = await this.locationSvc.getLocations();
@@ -141,17 +87,12 @@ export class SearchComponent implements OnInit {
     this.set_Users = await this.setUserSvc.getSet_Users();
     this.skillsets=await this.skillsetSvc.getSkillsets();
   }
-
+  
   async removeInactive(){
     this.locations=await this.locations.filter(x=>x.IsActive==true);
     this.departments=await this.departments.filter(x=>x.IsActive==true);
     this.associates=await this.associates.filter(x=>x.IsActive==true);
     this.skillsets=await this.skillsets.filter(x=>x.IsActive==true);
-  }
-
-  getFullName(username:string):string{
-    let user:Set_User= this.set_Users.find(x=>x.user_name==username);
-    return user==null ? null : user.user_first_name + ' ' + user.user_last_name
   }
 
   async getItems(){
@@ -179,6 +120,62 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  async getResult(){
+    this.associateRpt=[];
+    this.skillsetRpt=[];
+    this.departmentRpt=[];
+    
+    if(this.compareRequiredFields()&&this.compareDate()) 
+    {
+      for(let selectedItem of this.selectedItems){
+        if(this.radioSelect==0){
+          await this.associateReportSvc.getAssociateReport(selectedItem.id)
+          .then(a=>{
+            //console.log(a);
+            if(a!=null){
+              this.associateRpt.push(a);
+            }
+          });
+        }
+        else if (this.radioSelect==1){
+          await this.skillsetReportSvc.getSkillsetReport(selectedItem.id,this.selectedLocation)
+          .then(a=>this.skillsetRpt.push(a));
+        }
+        else if (this.radioSelect==2){
+          await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation).
+          then(a=>this.departmentRpt.push(a));
+          //console.log(this.departmentRpt);
+        }
+      }
+    }
+  }
+
+  compareDate():boolean{
+    let result:boolean=false;
+    result=(this.dateFrom==null||this.dateTo==null) 
+      ? (alert('Two Dates are Required'),false) 
+      : (this.dateFrom>this.dateTo) 
+        ? (alert('Date From is later than Date to.'),false) 
+        : true;
+    return result;
+  }
+
+  compareRequiredFields():boolean{
+    let result:boolean=false;
+    result=(this.selectedLocation==-1)
+    ?(alert('Location is Required'),false)
+    :(this.selectedItems.length==0)
+      ? (alert('Please choose filter first.'),false)
+      : true
+
+    return result;
+  }
+
+  getFullName(username:string):string{
+    let user:Set_User= this.set_Users.find(x=>x.user_name==username);
+    return user==null ? null : user.user_first_name + ' ' + user.user_last_name
+  }
+  //ng2-select on select
   public refreshValue(value:any):void {
     this.selectedItems = value;
   }

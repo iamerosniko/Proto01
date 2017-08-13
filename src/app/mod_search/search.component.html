@@ -72,14 +72,24 @@
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">Date From</label>
-                    <input type="text" class="form-control input-sm" />
+                    <br />
+                    <md-input-container>  
+                        <input mdInput readonly [mdDatepicker]="picker1" [(ngModel)]="dateFrom">
+                        <button mdSuffix [mdDatepickerToggle]="picker1"></button>
+                    </md-input-container>   
+                    <md-datepicker #picker1></md-datepicker>
                 </div>
             </div>
             <br />
             <div class="row">
                 <div class="col-md-12">
                     <label class="control-label">Date To</label>
-                    <input type="text" class="form-control input-sm" />
+                    <br />
+                    <md-input-container> 
+                        <input mdInput readonly [mdDatepicker]="picker2" [(ngModel)]="dateTo" (disabled)="dateFrom==null">
+                        <button mdSuffix [mdDatepickerToggle]="picker2" (disabled)="dateFrom==null"> </button>
+                    </md-input-container>    
+                    <md-datepicker #picker2 (disabled)="dateFrom==null"></md-datepicker>
                 </div>
             </div>
             <br />
