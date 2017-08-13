@@ -2,13 +2,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Location } from '../com_entities/entities';
-
+import { AppSettings } from '../com_entities/app_settings';
 @Injectable()
 export class LocationSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     //private apiUrl ='api/Locations';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Locations';
-    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Locations';
+    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Locations';
+    private apiUrl = AppSettings.CURRENT_URL + 'Locations';
+
     constructor(private http: Http,
         ){
         //this.apiUrl=this.config.getUrl(true);

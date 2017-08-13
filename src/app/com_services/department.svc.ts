@@ -2,12 +2,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Department } from '../com_entities/entities';
+import { AppSettings } from '../com_entities/app_settings';
 @Injectable()
 export class DepartmentSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Departments';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Departments';
-    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Departments';
+    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Departments';
+    private apiUrl = AppSettings.CURRENT_URL + 'Departments';
+
     constructor(private http: Http){}
 
     getDepartments(): Promise<Department[]> {

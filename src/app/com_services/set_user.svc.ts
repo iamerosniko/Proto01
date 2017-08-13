@@ -2,12 +2,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Set_User } from '../com_entities/entities';
+import { AppSettings } from '../com_entities/app_settings';
 @Injectable()
 export class Set_UserSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Set_User';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Set_User';
-    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_User';
+    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_User';
+    private apiUrl = AppSettings.CURRENT_URL + 'Set_User';
+
     constructor(private http: Http){}
 
     getSet_Users(): Promise<Set_User[]> {

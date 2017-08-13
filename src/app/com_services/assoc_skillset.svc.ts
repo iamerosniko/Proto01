@@ -2,12 +2,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { AssociateSkillsets } from '../com_entities/entities';
+import { AppSettings } from '../com_entities/app_settings';
 @Injectable()
 export class AssociateSkillsetsSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/AssociateSkillsets';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/AssociateSkillsets';
-    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/AssociateSkillsets';
+    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/AssociateSkillsets';
+    private apiUrl = AppSettings.CURRENT_URL + 'AssociateSkillsets';
+
     constructor(private http: Http){}
 
     getAssociateSkillsets(): Promise<AssociateSkillsets[]> {

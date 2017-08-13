@@ -2,12 +2,15 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { Set_Group } from '../com_entities/entities';
+import { AppSettings } from '../com_entities/app_settings';
 @Injectable()
 export class Set_GroupSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Set_Groups';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Set_Groups';
-    private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Groups';
+    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Groups';
+    private apiUrl = AppSettings.CURRENT_URL + 'Set_Groups';
+
     constructor(private http: Http){}
 
     getSet_Groups(): Promise<Set_Group[]> {
