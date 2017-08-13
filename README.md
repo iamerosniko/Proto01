@@ -16,6 +16,9 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 $ ng build --target=production --base-href '/'
 $ ng build --target=development --base-href '/'
 
+If having problems in building as production 
+ng build --prod --aot=false
+
 ## Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
