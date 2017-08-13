@@ -6,6 +6,7 @@ import { Set_User } from '../com_entities/entities';
 export class Set_UserSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Set_User';
+    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Set_User';
     private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_User';
     constructor(private http: Http){}
 

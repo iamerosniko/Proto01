@@ -6,6 +6,7 @@ import { User } from '../com_entities/entities';
 export class CurrentUserSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/CurrentUser';
+    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/CurrentUser';
     private apiUrl = 'https://skillsetazure.azurewebsites.net/api/CurrentUser';
     constructor(private http: Http){}
 

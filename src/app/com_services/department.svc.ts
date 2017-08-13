@@ -6,6 +6,7 @@ import { Department } from '../com_entities/entities';
 export class DepartmentSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Departments';
+    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Departments';
     private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Departments';
     constructor(private http: Http){}
 

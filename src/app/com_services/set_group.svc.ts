@@ -6,6 +6,7 @@ import { Set_Group } from '../com_entities/entities';
 export class Set_GroupSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     // private apiUrl = 'api/Set_Groups';
+    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Set_Groups';
     private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Groups';
     constructor(private http: Http){}
 

@@ -7,6 +7,7 @@ import { Location } from '../com_entities/entities';
 export class LocationSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
     //private apiUrl ='api/Locations';
+    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Locations';
     private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Locations';
     constructor(private http: Http,
         ){
