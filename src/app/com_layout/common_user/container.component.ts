@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import { 
+    Component,
+    OnInit 
+} from '@angular/core';
 import { Router } from '@angular/router';
+import { Set_User } from '../../com_entities/entities';
+import { CurrentUserSvc } from '../../com_services/currentuser.svc';
+import { Set_UserSvc } from '../../com_services/set_user.svc';
 @Component({
   selector: 'user-container',
   template: `
@@ -16,7 +22,7 @@ import { Router } from '@angular/router';
                     <li class="active"><a href="#p2" (click)="routeOnly('skillset')" data-toggle="tab" class="lnk-skillset"><i class="fa fa-cogs"></i>&nbsp;Skillset</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;Hello, Eros Niko!</a></li>
+                    <li><a href="#"><i class="fa fa-user-circle"></i>&nbsp;Hello, {{fullName}}!</a></li>
                 </ul>
             </div>
         </div>
@@ -28,7 +34,13 @@ import { Router } from '@angular/router';
 
 })
 export class UserComponent {
+    private currentUser: any;
+    private user: Set_User;
+    public fullName: string;
+
   constructor(
+      private curUserSvc: CurrentUserSvc,
+      private useSvc: Set_UserSvc,
     private router: Router,
   ){
 
@@ -36,4 +48,16 @@ export class UserComponent {
   routeOnly(path:string){
       this.router.navigate(['/'+path]);
   }
+    async getCurrentUserData() {
+        this.currentUser = await this.curUserSvc.getCurrentUser();
+        let users = await this.useSvc.getSet_Users();
+        this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+        this.fullName = this.user.user_first_name + ' ' + this.user.user_last_name;
+        this.curUserSvc = await null;
+        this.useSvc = await null;
+    }
+
+    ngOnInit(): void {
+        this.getCurrentUserData();
+    }
 }
