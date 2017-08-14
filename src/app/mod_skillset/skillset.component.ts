@@ -37,7 +37,7 @@ export class SkillSetComponent {
   private dateToday: Date;
   private currentUser: any;
   private associates: Associate[];
-  public associate: Associate;
+  public associate: Associate=new Associate(0,'test','test',false,0,0,new Date(),false);
   private associateForPosting: Associate;
   private users: Set_User[];
   private user: Set_User;
@@ -49,6 +49,7 @@ export class SkillSetComponent {
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   public skillsetFrm: FormGroup;
   private skillsetCheck: any;
+  public dummyUsername: string = 'Test';
 
   constructor(
       private curUserSvc: CurrentUserSvc,
@@ -61,8 +62,9 @@ export class SkillSetComponent {
       private assDptSklSvc: AssociateDepartmentSkillsetsSvc,
       private fb: FormBuilder){
         
+
     this.skillsetFrm = this.fb.group({
-      'UserName': [' '],
+      'UserNameF': [' '],
       'Department': [1, Validators.required],
       'Location': [1, Validators.required],
       'VPN': [false],
@@ -85,7 +87,6 @@ export class SkillSetComponent {
  
   //TEMPLATE: memory clean up
   cleanUp(): void {
-      this.assSvc = null;
       this.useSvc = null;
       this.curUserSvc = null;
       this.useSvc = null;
@@ -103,6 +104,10 @@ export class SkillSetComponent {
 
   //TEMPLATE: this will run functions in order
   async runFunctions() {
+    
+    this.departmentSkillsetDBOs = await [];
+    this.skillsetCheck = await {};
+    this.dateToday = await new Date();
     await this.getDependencies();
     await this.getCurrentUserData();
     await this.cleanUp();
@@ -237,10 +242,8 @@ export class SkillSetComponent {
   }
 
   ngOnInit(): void {
-    this.departmentSkillsetDBOs = [];
-    this.skillsetCheck = {};
-    this.dateToday = new Date();
-    this.associate = new Associate();
+    
+    
     this.runFunctions();
   } 
 }

@@ -3,7 +3,7 @@ import {
     OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Set_User } from '../../com_entities/entities';
+import { Set_User,User } from '../../com_entities/entities';
 import { CurrentUserSvc } from '../../com_services/currentuser.svc';
 import { Set_UserSvc } from '../../com_services/set_user.svc';
 @Component({
@@ -38,8 +38,9 @@ import { Set_UserSvc } from '../../com_services/set_user.svc';
 
 })
 export class ContainerComponent {
-    private currentUser: any;
+    private currentUser: User;
     private user: Set_User;
+    private users:Set_User[];
     public fullName: string;
 
   constructor(
@@ -54,8 +55,8 @@ export class ContainerComponent {
   }
     async getCurrentUserData() {
         this.currentUser = await this.curUserSvc.getCurrentUser();
-        let users = await this.useSvc.getSet_Users();
-        this.user = await users.find(user => user.user_name == this.currentUser.UserName);
+        this.users = await this.useSvc.getSet_Users();
+        this.user = await this.users.find(user => user.user_name == this.currentUser.UserName);
         this.fullName = this.user.user_first_name + ' ' + this.user.user_last_name;
         this.curUserSvc = await null;
         this.useSvc = await null;

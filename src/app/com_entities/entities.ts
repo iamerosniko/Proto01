@@ -45,7 +45,7 @@ export class Associate {
             public UpdatedOn? : Date,
             public IsActive? : Boolean){
         this.AssociateID = 0,
-        this.UserName = '',
+        this.UserName = ' ',
         this.PhoneNumber = '',
         this.VPN = false,
         this.DepartmentID = 0,
