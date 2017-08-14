@@ -49,7 +49,6 @@ export class SkillSetComponent {
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   public skillsetFrm: FormGroup;
   private skillsetCheck: any;
-  public dummyUsername: string = 'Test';
 
   constructor(
       private curUserSvc: CurrentUserSvc,
@@ -64,7 +63,7 @@ export class SkillSetComponent {
         
 
     this.skillsetFrm = this.fb.group({
-      'UserNameF': [' '],
+      'UserName': [' '],
       'Department': [1, Validators.required],
       'Location': [1, Validators.required],
       'VPN': [false],
