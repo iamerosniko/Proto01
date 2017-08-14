@@ -20,7 +20,7 @@ export class VWAssociateComponent implements OnInit {
   }
   set_Users:Set_User[]=[];
   associates:Associate[]=[];
-  associate:Associate=new Associate(0,'','',false,0,0,new Date,true);
+  associate:Associate=new Associate(0,'','',false,-1,-1,new Date,true);
   locations:Location[]=[];
   departments:Department[]=[];
 
@@ -94,7 +94,7 @@ export class VWAssociateComponent implements OnInit {
 
   cleanUp(){
     this.getDependencies();
-    this.associate=new Associate(0,'','',false,0,0,new Date,true);
+    this.associate=new Associate(0,'','',false,-1,-1,new Date,true);
   }
 
   async saveAssociate(){

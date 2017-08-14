@@ -86,7 +86,7 @@
                     <label class="control-label">Date To</label>
                     <br />
                     <md-input-container> 
-                        <input mdInput readonly [mdDatepicker]="picker2" [(ngModel)]="dateTo" (disabled)="dateFrom==null">
+                        <input  style="background-color:white;" mdInput readonly [mdDatepicker]="picker2" [(ngModel)]="dateTo" (disabled)="dateFrom==null">
                         <button mdSuffix [mdDatepickerToggle]="picker2" (disabled)="dateFrom==null"> </button>
                     </md-input-container>    
                     <md-datepicker #picker2 (disabled)="dateFrom==null"></md-datepicker>

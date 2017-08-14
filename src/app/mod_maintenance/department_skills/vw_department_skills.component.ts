@@ -26,7 +26,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   //department combobox
   checkallValue:boolean;
   tempDeptSkill:DepartmentSkillsets
-  selectedDepartmentID:number;
+  selectedDepartmentID:number=-1;
   associateDepartmentSkillset:AssociateDepartmentSkillset[]=[];
   departments: Department[] = [];
   skillsets: Skillset[]=[];

@@ -96,7 +96,7 @@
                 <label class="col-md-2 control-label">Full Name</label>
                 <div class="col-md-4">
                     <select class="form-control input-sm" [(ngModel)]="associate.UserName">
-                        <option value="-1"  disabled selected> Select Name </option>
+                        <option value=""  disabled selected> Select Name </option>
                         <option *ngFor="let x of getUnusedUsers()" [value]="x.user_name"> {{x.user_first_name+" " +x.user_last_name}} </option>
                     </select>
                 </div>
@@ -131,7 +131,7 @@
                 <label class="col-md-2 control-label">Department</label>
                 <div class="col-md-4">
                     <select [(ngModel)]="associate.DepartmentID" class="form-control input-sm">
-                        <option value="-1"  disabled selected> Select Department </option>
+                        <option value="0"  disabled selected> Select Department </option>
                         <option *ngFor="let x of getActiveDepartments()" [value]="x.DepartmentID"> {{x.DepartmentDescr}} </option>
                     </select>
                 </div>
@@ -141,7 +141,7 @@
                 <label class="col-md-2 control-label">Location</label>
                 <div class="col-md-4">
                     <select [(ngModel)]="associate.LocationID" class="form-control input-sm">
-                        <option value="-1"  disabled selected> Select Location </option>
+                        <option value="0"  disabled selected> Select Location </option>
                         <option *ngFor="let x of getActiveLocations()" [value]="x.LocationID"> {{x.LocationDescr}} </option>
                     </select>
                 </div>
