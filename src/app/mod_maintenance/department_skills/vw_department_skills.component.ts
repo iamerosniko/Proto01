@@ -118,7 +118,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
 
   async getDepartmentSkillsetsInSelectedSkillset():Promise<DepartmentSkillsets1[]>{
-    console.log('executing step 1 : getDepartmentSkillsetsInSelectedSkillset');
+    // console.log('executing step 1 : getDepartmentSkillsetsInSelectedSkillset');
     var tmpDeptSkills:DepartmentSkillsets1[]=[];
     for (var i = 0; i < this.selectedSkillsets.length; i++){
       var selectedSkillset=this.selectedSkillsets[i]; 
@@ -130,7 +130,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
 
   async getNewDepartmentSkillsets(){
-    console.log('executing step 2.1 : getNewDepartmentSkillset');
+    // console.log('executing step 2.1 : getNewDepartmentSkillset');
     var newDeptSkills:DepartmentSkillsets1[]=[];
     var oldDeptSkills:DepartmentSkillsets1[]=this.departmentSkillsets;
     for (var i = 0; i < this.tempDepartmentSkillsets.length; i++){
@@ -149,7 +149,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
 
   async getDelDepartmentSkillsets(){
-    console.log('executing step 2.2 : getDelDepartmentSkillsets');
+    // console.log('executing step 2.2 : getDelDepartmentSkillsets');
     var delDeptSkills:DepartmentSkillsets1[]=[];
     var oldDeptSkills:DepartmentSkillsets1[]=this.departmentSkillsets;
     for (var i = 0; i < oldDeptSkills.length; i++){
@@ -168,8 +168,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
   
   async addNewDepartmentSkillset(){
-    console.log('executing step 3 : addNewDepartmentSkillset');
-    console.log(this.newDepartmentSkillsets);
+    // console.log('executing step 3 : addNewDepartmentSkillset');
+    // console.log(this.newDepartmentSkillsets);
     //this will add the new departmentSkillset
     for (var i = 0; i < this.newDepartmentSkillsets.length; i++){
       var selectedSkillset=this.newDepartmentSkillsets[i];
@@ -178,8 +178,8 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
   
   async deleteDepartmentSkillset(){
-    console.log('executing step 4 : deleteDepartmentSkillset');
-    console.log(this.delDepartmentSkillsets);
+    // console.log('executing step 4 : deleteDepartmentSkillset');
+    // console.log(this.delDepartmentSkillsets);
     //this will delete the departmentSkillset
     for (var i = 0; i < this.delDepartmentSkillsets.length; i++){
       var departmentSkillset=this.delDepartmentSkillsets[i];
@@ -191,10 +191,10 @@ export class VWDepartmentSkillsComponent implements OnInit {
       );
       this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID).then(
         ()=>{
-          console.log('deleted: '+departmentSkillset.DepartmentSkillsetID.toString())
+          // console.log('deleted: '+departmentSkillset.DepartmentSkillsetID.toString())
         }).catch(
         ()=>{
-          console.log('failed')
+          // console.log('failed')
         });
     }
   }

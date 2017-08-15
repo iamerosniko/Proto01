@@ -48,7 +48,7 @@ export class DataSkillsetReport {
         return dateStr;
     }
 
-    async getSkillsetReport(skillsetID:number,locationID:number):Promise<SkillsetRpt>{
+    async getSkillsetReport(skillsetID:number,locationID:number,dateFrom:Date,dateTo:Date):Promise<SkillsetRpt>{
         this.skillsetRpt=new SkillsetRpt('',[]);
         this.associates=[];
         await this.getSetUser();
@@ -62,7 +62,7 @@ export class DataSkillsetReport {
             associatedepartmentskillset=associatedepartmentskillset.concat(await this.getAssociateDepartmentSkillset(departmentSkillsets[i].DepartmentSkillsetID));
         }
         //getting the associate
-        await this.getAssociateInfo(associatedepartmentskillset,locationID);
+        await this.getAssociateInfo(associatedepartmentskillset,locationID,dateFrom,dateTo);
 
         this.skillsetRpt.Associates=await this.associates;
         this.skillsetRpt.Skillset=await skillset.SkillsetDescr;
@@ -71,7 +71,7 @@ export class DataSkillsetReport {
         );
     }
 
-    async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[],locationID:number){
+    async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[],locationID:number,dateFrom:Date,dateTo:Date){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
         //console.log(assocDeptSkillsets);
         //note: change for to while assocDeptSkillset.leng>0
@@ -88,7 +88,8 @@ export class DataSkillsetReport {
             associateDetails.VPN=associate.VPN?'Yes':'No';
             associateDetails.UpdatedOn= this.getDateString(new Date(associate.UpdatedOn));
             
-            associate.LocationID==locationID ? this.associates.push(associateDetails): null;
+            (associate.LocationID==locationID  && 
+            (new Date(associate.UpdatedOn)>=dateFrom&&new Date(associate.UpdatedOn)<=dateTo)) ? this.associates.push(associateDetails): null;
 
             associateDetails=new AssociateDetails('','','','','');
             assocDeptSkillsets=assocDeptSkillsets.filter(x=>x.AssociateID!=assocDeptSkillset.AssociateID);

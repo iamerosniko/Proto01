@@ -46,7 +46,7 @@ export class DataAssociateReport {
         return dateStr;
     }
 
-    async getAssociateReport(associateID:number):Promise<AssociateRpt>{
+    async getAssociateReport(associateID:number,dateFrom:Date,dateTo:Date):Promise<AssociateRpt>{
         this.associateReport=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
         let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
@@ -76,13 +76,15 @@ export class DataAssociateReport {
         this.associateReport.Associate.Phone=await associate.PhoneNumber;
         this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
         this.associateReport.Associate.UpdatedOn= await this.getDateString(new Date(associate.UpdatedOn));
-
-        return new Promise<AssociateRpt>((resolve) =>             
-            resolve(this.associateReport)
+        
+        return new Promise<AssociateRpt>((resolve) =>       
+            (new Date(associate.UpdatedOn)>=dateFrom&&new Date(associate.UpdatedOn)<=dateTo) ?       
+            resolve(this.associateReport) :
+            resolve(null)
         );
     }
 
-    async getAssociateReport2(associateID:number,departmentID:number):Promise<AssociateRpt>{
+    async getAssociateReport2(associateID:number,departmentID:number,dateFrom:Date,dateTo:Date):Promise<AssociateRpt>{
         this.associateReport=new AssociateRpt(new AssociateDetails('','','','','',''),[]);
         let associatesDepartmentSkillsets:AssociateDepartmentSkillset[]= await this.getAssociateDepartmentSkillsets(associateID);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
@@ -116,7 +118,9 @@ export class DataAssociateReport {
         this.associateReport.Associate.VPN=await associate.VPN?'Yes':'No';
         this.associateReport.Associate.UpdatedOn= this.getDateString(new Date(associate.UpdatedOn));
         return new Promise<AssociateRpt>((resolve) =>             
-            resolve(this.associateReport)
+            (new Date(associate.UpdatedOn)>=dateFrom&&new Date(associate.UpdatedOn)<=dateTo) ?       
+            resolve(this.associateReport) :
+            resolve(null)
         );
     }
 

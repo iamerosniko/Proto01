@@ -53,8 +53,8 @@ export class SearchComponent implements OnInit {
   public items:any[]=[];
   public selectedItems:SelectItem[] = [];
   //material dates
-  dateFrom:number=null;
-  dateTo:number=null;
+  dateFrom:Date=null;
+  dateTo:Date=null;
   //sample export
   samp(){
     // let doc = new jsPDF();
@@ -129,7 +129,7 @@ export class SearchComponent implements OnInit {
     {
       for(let selectedItem of this.selectedItems){
         if(this.radioSelect==0){
-          await this.associateReportSvc.getAssociateReport(selectedItem.id)
+          await this.associateReportSvc.getAssociateReport(selectedItem.id,this.dateFrom,this.dateTo)
           .then(a=>{
             //console.log(a);
             if(a!=null){
@@ -138,11 +138,11 @@ export class SearchComponent implements OnInit {
           });
         }
         else if (this.radioSelect==1){
-          await this.skillsetReportSvc.getSkillsetReport(selectedItem.id,this.selectedLocation)
+          await this.skillsetReportSvc.getSkillsetReport(selectedItem.id,this.selectedLocation,this.dateFrom,this.dateTo)
           .then(a=>this.skillsetRpt.push(a));
         }
         else if (this.radioSelect==2){
-          await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation).
+          await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation,this.dateFrom,this.dateTo).
           then(a=>this.departmentRpt.push(a));
           //console.log(this.departmentRpt);
         }

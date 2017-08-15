@@ -26,7 +26,7 @@ export class DataDepartmentReport {
 
     tempAssociates:Associate[]=[];
 
-    async getDepartmentReport(departmentID:number,locationID:number):Promise<DepartmentRpt>{
+    async getDepartmentReport(departmentID:number,locationID:number,dateFrom:Date,dateTo:Date):Promise<DepartmentRpt>{
         let department:Department=await this.skillsetRptSvc.getDepartment(departmentID);
         let departmentRpt:DepartmentRpt=new DepartmentRpt('',[]);
         let departmentSkillsets:DepartmentSkillsets1[]=[];
@@ -45,7 +45,9 @@ export class DataDepartmentReport {
             this.tempAssociates=this.tempAssociates.concat(await this.skillsetRptSvc.getAssociateDetails(associateDepartmentSkillset.AssociateID));
         }
         //getting associates for the current department
+        
         this.tempAssociates=this.tempAssociates.filter(x=>x.DepartmentID==departmentID && x.LocationID==locationID);
+        
         while(this.tempAssociates.length>0){
             let tempAssoc = this.tempAssociates.pop();
             associates=associates.concat(tempAssoc);
@@ -53,7 +55,11 @@ export class DataDepartmentReport {
         }
         //get their skills according to their current department
         for(let assoc of associates){
-            departmentRpt.AssociateRpts=departmentRpt.AssociateRpts.concat(await this.assocRptSvc.getAssociateReport2(assoc.AssociateID,departmentID));
+            var assocrpt=await this.assocRptSvc.getAssociateReport2(assoc.AssociateID,departmentID,dateFrom,dateTo);
+            console.log(assocrpt);
+            if(assocrpt!=null)
+                departmentRpt.AssociateRpts=departmentRpt.AssociateRpts.concat(assocrpt);
+                console.log(departmentRpt);
         }
 
         departmentRpt.Department=await department.DepartmentDescr;
