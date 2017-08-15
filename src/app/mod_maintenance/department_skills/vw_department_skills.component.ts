@@ -30,14 +30,15 @@ export class VWDepartmentSkillsComponent implements OnInit {
   associateDepartmentSkillset:AssociateDepartmentSkillset[]=[];
   departments: Department[] = [];
   skillsets: Skillset[]=[];
-  //gets the previous state
-  departmentSkillsets:DepartmentSkillsets[]=[];
-  //gets the actual state
   selectedSkillsets:SelectedSkillset[]=[];
+  //gets the previous state
+  departmentSkillsets:DepartmentSkillsets1[]=[];
   //for deletion
-  deleteDepartmentSkillsets:DepartmentSkillsets[]=[];
+  delDepartmentSkillsets:DepartmentSkillsets1[]=[];
   //for new entry
-  newDepartmentSkillsets:DepartmentSkillsets[]=[];
+  newDepartmentSkillsets:DepartmentSkillsets1[]=[];
+   //gets the actual state
+  tempDepartmentSkillsets:DepartmentSkillsets1[]=[];
   //step1
   async getDepartments(){
     this.departments=await this.deptSvc.getDepartments();
@@ -49,6 +50,11 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
   //step2
   async getSkillSets(deptID:number){
+    this.tempDepartmentSkillsets=[];
+    this.newDepartmentSkillsets=[];
+    this.departmentSkillsets=[];
+    this.delDepartmentSkillsets=[];
+    console.log('getSkillsets')
     //reset checkall
     this.checkallValue=false;
     //1. get skillsets
@@ -59,7 +65,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
     this.selectedSkillsets=[];
     //2. loop skillsets to custom array
     for (var i = 0 ; i<this.skillsets.length; i++){
-      console.log(deptID+" - "+this.skillsets[i].SkillsetID)
+      //console.log(deptID+" - "+this.skillsets[i].SkillsetID)
       this.selectedSkillsets.push(
         new SelectedSkillset( 
           new DepartmentSkillsets1(0,deptID,this.skillsets[i].SkillsetID)
@@ -71,11 +77,13 @@ export class VWDepartmentSkillsComponent implements OnInit {
     this.getDepartmentSkillsets(deptID).then(()=>{
       this.compareSelectedSkillsets();
     });
+    
   }
   //step3
   async getDepartmentSkillsets(deptID:number){
     this.departmentSkillsets = await this.departmentSkillsetSvc.getDepartmentSkillsets();
     this.departmentSkillsets = this.departmentSkillsets.filter(ds=>ds.DepartmentID==deptID);
+    //console.log(this.departmentSkillsets);
   }
   //step 4
   async compareSelectedSkillsets(){
@@ -98,86 +106,105 @@ export class VWDepartmentSkillsComponent implements OnInit {
   }
   
   async saveDepartmentSkillset(){
-    //delete all departmentSkillsets
-    //previous code -- eros 07-2017
-    // for (var i = 0; i < this.departmentSkillsets.length; i++){
-    //   var departmentSkillset=this.departmentSkillsets[i];
-    //   await this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID);
-    //   //create delete here for assocdepartmentskillset
-    // }
 
-    //addDepartmentSkillset
-    //previous code -- eros 07-2017
-    // for (var i = 0; i < this.selectedSkillsets.length; i++){
-    //   var selectedSkillset=this.selectedSkillsets[i];
-    //   if(selectedSkillset.IsSelected==true){
-    //     await this.departmentSkillsetSvc.postDepartmentSkillset(selectedSkillset.departmentSkillset);
-    //   }
-    // }
-    this.getDepartmentSkillsetsInSelectedSkillset().then(
-      ()=>{
-        this.deleteDepartmentSkillset().then(
-          ()=>{
-            this.addNewDepartmentSkillset();
-          }
-        )
-      }
-    );
-    alert("Record has been successfully updated.");
+    // this.getSkillSets(this.selectedDepartmentID)
+    this.tempDepartmentSkillsets=await this.getDepartmentSkillsetsInSelectedSkillset();
+    this.newDepartmentSkillsets= await this.getNewDepartmentSkillsets();
+    this.delDepartmentSkillsets=await this.getDelDepartmentSkillsets();
+    await this.addNewDepartmentSkillset();
+    await this.deleteDepartmentSkillset();
+    await alert("Record has been successfully updated.");
+    await this.getSkillSets(this.selectedDepartmentID);
   }
 
-  async getDepartmentSkillsetsInSelectedSkillset(){
-
+  async getDepartmentSkillsetsInSelectedSkillset():Promise<DepartmentSkillsets1[]>{
+    console.log('executing step 1 : getDepartmentSkillsetsInSelectedSkillset');
+    var tmpDeptSkills:DepartmentSkillsets1[]=[];
     for (var i = 0; i < this.selectedSkillsets.length; i++){
-      var selectedSkillset=this.selectedSkillsets[i];
-      this.deleteDepartmentSkillsets.push(selectedSkillset.departmentSkillset);
-      selectedSkillset.IsSelected==true ? this.newDepartmentSkillsets.push(selectedSkillset.departmentSkillset) : null;
+      var selectedSkillset=this.selectedSkillsets[i]; 
+      selectedSkillset.IsSelected==true ? tmpDeptSkills.push(selectedSkillset.departmentSkillset) : null;
     }
-    //return new Promise<DepartmentSkillsets[]>(resolve => newDepartmentSkillsets);
-    //(x=>x=newDepartmentSkillsets);
+    return new Promise<DepartmentSkillsets1[]>(
+      (resolve)=>resolve(tmpDeptSkills)
+    );
+  }
+
+  async getNewDepartmentSkillsets(){
+    console.log('executing step 2.1 : getNewDepartmentSkillset');
+    var newDeptSkills:DepartmentSkillsets1[]=[];
+    var oldDeptSkills:DepartmentSkillsets1[]=this.departmentSkillsets;
+    for (var i = 0; i < this.tempDepartmentSkillsets.length; i++){
+      var departmentSkillset=this.tempDepartmentSkillsets[i];
+      if(oldDeptSkills.filter(x=>x.SkillsetID==departmentSkillset.SkillsetID 
+        && x.DepartmentID==departmentSkillset.DepartmentID).length==0 )
+      {
+        //this is to be added
+        newDeptSkills.push(departmentSkillset);
+      }
+    }
+    
+    return new Promise<DepartmentSkillsets1[]>(
+      (resolve)=>resolve(newDeptSkills)
+    );
+  }
+
+  async getDelDepartmentSkillsets(){
+    console.log('executing step 2.2 : getDelDepartmentSkillsets');
+    var delDeptSkills:DepartmentSkillsets1[]=[];
+    var oldDeptSkills:DepartmentSkillsets1[]=this.departmentSkillsets;
+    for (var i = 0; i < oldDeptSkills.length; i++){
+      var departmentSkillset=oldDeptSkills[i];
+      if(this.tempDepartmentSkillsets.filter(x=>x.SkillsetID==departmentSkillset.SkillsetID 
+        && x.DepartmentID==departmentSkillset.DepartmentID).length==0 )
+      {
+        //this is to be added
+        delDeptSkills.push(departmentSkillset);
+      }
+    }
+    
+    return new Promise<DepartmentSkillsets1[]>(
+      (resolve)=>resolve(delDeptSkills)
+    );
   }
   
-  async deleteDepartmentSkillset(){
-    for (var i = 0; i < this.departmentSkillsets.length; i++){
-      var departmentSkillset=this.departmentSkillsets[i];
-      this.deleteDepartmentSkillsets= await this.deleteDepartmentSkillsets.filter(
-        x=>x.DepartmentID!=departmentSkillset.DepartmentID &&
-        x.SkillsetID!=departmentSkillset.SkillsetID
-      )
-    }
-    //this will delete the departmentSkillset
-    for (var i = 0; i < this.deleteDepartmentSkillsets.length; i++){
-      var departmentSkillset=this.deleteDepartmentSkillsets[i];
-      //delete to associateDepartmentSkillset
-      this.deleteAssociateDepartmentSkillset(
-        this.associateDepartmentSkillset.filter(
-          x=>x.DepartmentSkillsetID=departmentSkillset.DepartmentSkillsetID
-        )
-      );
-      await this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID);
-    }
-
-    //make a deletion for associatedepartmentskillset
-  }
-
-  async deleteAssociateDepartmentSkillset(ads:AssociateDepartmentSkillset[]){
-    for (var i = 0 ;i < ads.length; i++){
-      await this.assocDeptSkillsetSvc.DeleteAssociateDeptSkillset(ads[i].AssociateDepartmentSkillsetID);
-    }
-  }
-
   async addNewDepartmentSkillset(){
-    for (var i = 0; i < this.deleteDepartmentSkillsets.length; i++){
-      var departmentSkillset=this.deleteDepartmentSkillsets[i];
-      this.newDepartmentSkillsets= await this.newDepartmentSkillsets.filter(
-        x=>x.DepartmentID!=departmentSkillset.DepartmentID &&
-        x.SkillsetID!=departmentSkillset.SkillsetID
-      )
-    }
+    console.log('executing step 3 : addNewDepartmentSkillset');
+    console.log(this.newDepartmentSkillsets);
     //this will add the new departmentSkillset
     for (var i = 0; i < this.newDepartmentSkillsets.length; i++){
       var selectedSkillset=this.newDepartmentSkillsets[i];
       await this.departmentSkillsetSvc.postDepartmentSkillset(selectedSkillset);
     }
   }
+  
+  async deleteDepartmentSkillset(){
+    console.log('executing step 4 : deleteDepartmentSkillset');
+    console.log(this.delDepartmentSkillsets);
+    //this will delete the departmentSkillset
+    for (var i = 0; i < this.delDepartmentSkillsets.length; i++){
+      var departmentSkillset=this.delDepartmentSkillsets[i];
+      //delete to associateDepartmentSkillset
+      await this.deleteAssociateDepartmentSkillset(
+        this.associateDepartmentSkillset.filter(
+          x=>x.DepartmentSkillsetID==departmentSkillset.DepartmentSkillsetID
+        )
+      );
+      this.departmentSkillsetSvc.DeleteDepartmentSkillset(departmentSkillset.DepartmentSkillsetID).then(
+        ()=>{
+          console.log('deleted: '+departmentSkillset.DepartmentSkillsetID.toString())
+        }).catch(
+        ()=>{
+          console.log('failed')
+        });
+    }
+  }
+
+  async deleteAssociateDepartmentSkillset(ads:AssociateDepartmentSkillset[]){
+    console.log(ads);
+    for (var i = 0 ;i < ads.length; i++){
+      await this.assocDeptSkillsetSvc.DeleteAssociateDeptSkillset(ads[i].AssociateDepartmentSkillsetID);
+    }
+  }
+
+  
 }

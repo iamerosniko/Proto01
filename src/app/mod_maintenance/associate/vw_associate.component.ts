@@ -27,7 +27,7 @@ export class VWAssociateComponent implements OnInit {
   mode:number=0;//1 if update 0 if new entry
   
   ngOnInit(){
-    this.getDependencies();
+    this.cleanUp();
   }
   
   async getDependencies(){
