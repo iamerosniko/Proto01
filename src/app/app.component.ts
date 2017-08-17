@@ -64,18 +64,30 @@ export class AppComponent {
   async getGroupAccess():Promise<number>{
     // no access = 0 //admin =1 //user=2
     var currentRole=0; 
+    var adminDetails:Set_Group,normaluserDetails:Set_Group,noaccessDetails:Set_Group;
     this.group=await this.groupSvc.getSet_Groups();
+    adminDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-001');
+    normaluserDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-002');
+    noaccessDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-003');
     this.userAccess=await this.useAccSvc.getSet_Users_Accesses();
     this.userAccess=await this.userAccess.filter(x=>x.user_id==this.user.user_id);
     
-    (this.userAccess.length>0)
-    ?
+  
+    if(this.userAccess.filter(x=>x.grp_id==adminDetails.grp_id).length==1){
+      currentRole=1;
+    }
+    else if(this.userAccess.filter(x=>x.grp_id==normaluserDetails.grp_id).length==1){
+      currentRole=2;
+    }
+    else{
+      currentRole=0;
+    }
       //this will determine if admin or user 
-      (this.userAccess.length==2) 
-      ? currentRole=1 
-      : currentRole=2// added as user and admin but the prio is admin
-    : currentRole=0;
-
+      // (this.userAccess.length==2) 
+      // ? currentRole=1 
+      // : currentRole=2// added as user and admin but the prio is admin
+   
+    this.currentRole=currentRole;
 
     return new Promise<number>((resolve)=>{
       resolve(currentRole)
