@@ -1,11 +1,7 @@
 import { 
-    Component,
-    OnInit 
+    Component,Input,OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { Set_User } from '../../com_entities/entities';
-import { CurrentUserSvc } from '../../com_services/currentuser.svc';
-import { Set_UserSvc } from '../../com_services/set_user.svc';
 @Component({
   selector: 'user-container',
   template: `
@@ -34,30 +30,18 @@ import { Set_UserSvc } from '../../com_services/set_user.svc';
 
 })
 export class UserComponent {
-    private currentUser: any;
-    private user: Set_User;
-    public fullName: string;
+    @Input() fullName:string;
+    @Input() routeUrl:string;
+    currentUrl:string='';
+    constructor(
+        private router: Router,
+    ){
 
-  constructor(
-      private curUserSvc: CurrentUserSvc,
-      private useSvc: Set_UserSvc,
-    private router: Router,
-  ){
-
-  }
-  routeOnly(path:string){
-      this.router.navigate(['/'+path]);
-  }
-    async getCurrentUserData() {
-        this.currentUser = await this.curUserSvc.getCurrentUser();
-        let users = await this.useSvc.getSet_Users();
-        this.user = await users.find(user => user.user_name == this.currentUser.UserName);
-        this.fullName = this.user.user_first_name + ' ' + this.user.user_last_name;
-        this.curUserSvc = await null;
-        this.useSvc = await null;
     }
-
-    ngOnInit(): void {
-        this.getCurrentUserData();
+    routeOnly(path:string){
+        this.router.navigate(['/'+path]);
+    }
+    ngOnInit(){
+        //get the route state.
     }
 }

@@ -9,7 +9,7 @@ export class Set_GroupSvc {
     // private apiUrl = 'api/Set_Groups';
     //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/Set_Groups';
     //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/Set_Groups';
-    private apiUrl = AppSettings.CURRENT_URL + 'Set_Groups';
+    private apiUrl = AppSettings.CURRENT_URL + 'Set_Group';
 
     constructor(private http: Http){}
 

@@ -1,2 +1,3 @@
 <!-- calls main container -->
-<main-container></main-container>
+<main-container *ngIf="currentRole==1" [fullName]="fullName" [routeUrl]="routeStr"></main-container>
+<user-container *ngIf="currentRole==2" [fullName]="fullName" [routeUrl]="routeStr"></user-container>

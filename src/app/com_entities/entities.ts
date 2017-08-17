@@ -1,15 +1,4 @@
 
-
-
-
-//THIS SHOULD BE REMOVEDBEFORE DEPLOYEMENT IN LIVE
-export class AssociateSkillsets {
-    constructor (
-        public AssociateSkillsetID: number,//primary key
-        public AssociateID: number,
-        public SkillsetID: number,
-    ){}
-}
 /*AssociateViews*/
 export class AssociateDepartmentSkillset {
     constructor (
@@ -110,6 +99,14 @@ export class Set_User {
         public can_PEER: Boolean,
         public can_DEV: Boolean,
         public created_date : Date
+    ){}
+}
+
+export class Set_User_Access {
+    constructor (
+        public id:number,
+        public user_id: string,
+        public grp_id:string
     ){}
 }
 

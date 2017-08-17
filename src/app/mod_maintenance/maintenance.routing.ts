@@ -29,6 +29,7 @@ const routes: Routes = [
             {
                 path : 'DepartmentSkills' , component : VWDepartmentSkillsComponent, outlet : 'maintenance-route'
             },
+            { path: '', redirectTo: 'Locations', pathMatch: 'full' }
         ]
     }
 ];
