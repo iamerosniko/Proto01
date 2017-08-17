@@ -1,3 +1,4 @@
 <!-- calls main container -->
+<no-accessuser *ngIf="currentRole==0" [fullName]="fullName" [routeUrl]="routeStr"></no-accessuser>
 <main-container *ngIf="currentRole==1" [fullName]="fullName" [routeUrl]="routeStr"></main-container>
 <user-container *ngIf="currentRole==2" [fullName]="fullName" [routeUrl]="routeStr"></user-container>

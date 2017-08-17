@@ -7,7 +7,7 @@ import { HttpModule } from '@angular/http';
 //app
 import { ContainerComponent } from './com_layout/admin/container.component';
 import { UserComponent } from './com_layout/common_user/container.component';
-import { NoAccessComponent } from './com_layout/noaccess/noaccess.component';
+import { NoAccessUserComponent } from './com_layout/noaccess/container.component';
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 // import { AppService } from './app.svc';EROS: i comment out this line because this is for simulation purposes only
@@ -23,7 +23,7 @@ import { TestExportModule } from './mod-test-export/mod-test-export.module';
 @NgModule({
   //components area
   declarations: [
-    AppComponent,ContainerComponent,UserComponent,NoAccessComponent
+    AppComponent,ContainerComponent,UserComponent,NoAccessUserComponent
   ],
   //modules area
   imports: [

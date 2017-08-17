@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 //component
 import { SearchComponent } from './search.component';
-import { NoAccessComponent } from '../com_layout/noaccess/noaccess.component';
+import { NoAccessComponent } from '../mod_common/noaccess.component';
 
 const routes: Routes = [
     //paths
