@@ -16,7 +16,7 @@ import { Set_GroupSvc } from './com_services/set_group.svc';
 })
 export class AppComponent {
   currentUser: User;
-  currentRole:number=1;
+  currentRole:number=0;
   user: Set_User;
   users:Set_User[];
   userAccess:Set_User_Access[]=[];
@@ -49,8 +49,10 @@ export class AppComponent {
   async getCurrentUserData() {
     this.currentUser = await this.curUserSvc.getCurrentUser();
     this.users = await this.useSvc.getSet_Users();
-    this.user = await this.users.find(user => user.user_name == this.currentUser.UserName);
-    this.fullName = this.user.user_first_name + ' ' + this.user.user_last_name;
+    if(this.currentUser!=null){
+      this.user = await this.users.find(user => user.user_name == this.currentUser.UserName);
+      this.fullName = this.user.user_first_name + ' ' + this.user.user_last_name;
+    }
     this.curUserSvc = await null;
     this.useSvc = await null;
   }
@@ -60,12 +62,13 @@ export class AppComponent {
     var currentRole=0; 
     var adminDetails:Set_Group,normaluserDetails:Set_Group,noaccessDetails:Set_Group;
     this.group=await this.groupSvc.getSet_Groups();
-    adminDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-001');
-    normaluserDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-002');
-    noaccessDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-003');
-    this.userAccess=await this.useAccSvc.getSet_Users_Accesses();
-    this.userAccess=await this.userAccess.filter(x=>x.user_id==this.user.user_id);
-    
+    if(this.user!=null){
+      adminDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-001');
+      normaluserDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-002');
+      noaccessDetails=await this.group.find(x=>x.grp_id=='GRP-2017626-003');
+      this.userAccess=await this.useAccSvc.getSet_Users_Accesses();
+      this.userAccess=await this.userAccess.filter(x=>x.user_id==this.user.user_id);
+    }
   
     if(this.userAccess.filter(x=>x.grp_id==adminDetails.grp_id).length==1){
       currentRole=1;
