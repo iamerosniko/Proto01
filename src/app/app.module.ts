@@ -4,10 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Ng2Datetime } from 'ng2-datetime-picker';
 import { HttpModule } from '@angular/http';
-//app
-import { ContainerComponent } from './com_layout/admin/container.component';
-import { UserComponent } from './com_layout/common_user/container.component';
-import { NoAccessUserComponent } from './com_layout/noaccess/container.component';
+
 import { AppComponent } from './app.component';
 import { AppRouting } from './app.routing';
 // import { AppService } from './app.svc';EROS: i comment out this line because this is for simulation purposes only
@@ -20,10 +17,12 @@ import { MaintenanceModule } from './mod_maintenance/maintenance.module';
 //modules
 import { CommonCompModule } from './mod_common/common_comp.module';
 import { TestExportModule } from './mod-test-export/mod-test-export.module';
+import { LoadItemsComponent } from './mod_common/load-items/load-items.component';
 @NgModule({
   //components area
   declarations: [
-    AppComponent,ContainerComponent,UserComponent,NoAccessUserComponent
+    AppComponent,
+    LoadItemsComponent, 
   ],
   //modules area
   imports: [

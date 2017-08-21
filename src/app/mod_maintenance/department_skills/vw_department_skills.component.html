@@ -6,7 +6,7 @@
                     <div class="row">
                         <label class="control-label col-md-3">Department</label>
                         <div class="col-md-7">
-                            <select class="form-control input-sm" [(ngModel)]="selectedDepartmentID">
+                            <select (change)="getSkillSets(selectedDepartmentID)" class="form-control input-sm" [(ngModel)]="selectedDepartmentID">
                                 <option value="-1" disabled selected> Select Department </option>
                                 <option *ngFor="let x of departments" [value]="x.DepartmentID"> {{x.DepartmentDescr}} </option>
                             </select>

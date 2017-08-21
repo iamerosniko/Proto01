@@ -37,12 +37,6 @@ export class AppComponent {
     private route:ActivatedRoute,
     private location: Location,
   ){
-  //  this.router.events.subscribe((val) => {
-  //     if(this.location.path() != ''){
-  //       this.sample = this.location.path();
-  //       this.getRoute();
-  //     }
-  //   });
   
     this.router.events.debounceTime(750).subscribe((val)=>{
         if(this.location.path() != ''){
@@ -102,7 +96,13 @@ export class AppComponent {
     //await console.log('last route:'+this.routeStr);
     var a = await this.adminRoutes.filter(x=>x.route.includes(this.routeStr)||this.routeStr.includes(x.route));
     var c = await this.commonRoutes.filter(x=>x.route.includes(this.routeStr));
-   
+
+      if(this.routeStr=='/maintenance'){
+        this.router.navigate(['/maintenance', {outlets: {'maintenance-route': ['Locations']}}]);
+      }
+
+
+
       if(isBelong==1){  
         if(a.length==0){
           await this.routeOnly('search');
@@ -121,5 +121,20 @@ export class AppComponent {
   }
   routeOnly(path:string){
       this.router.navigate(['/'+path]);
+  }
+  
+  isVisible(module:string):boolean{
+    var isVisible=false;
+    //search is for admin
+    if(this.currentRole>0){
+      if(this.currentRole==1){
+        isVisible=module!='skillset';
+      }
+      else{
+        isVisible=module=='skillset';
+      }
+      return isVisible;
+    }
+    else return isVisible;
   }
 }

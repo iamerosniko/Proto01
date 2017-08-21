@@ -1,8 +1,10 @@
 import { NgModule,OnInit } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { LoadItemsComponent } from './mod_common/load-items/load-items.component';
 const appRoutes: Routes = [
-    { path: '', redirectTo: '/skillset', pathMatch: 'full' }
+    
+    { path: '', redirectTo: '/loadAccess', pathMatch: 'full' },
+    { path: 'loadAccess', component:LoadItemsComponent}
 ];
 
 @NgModule ({
