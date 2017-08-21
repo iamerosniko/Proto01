@@ -38,7 +38,7 @@ export class AppComponent {
     private location: Location,
   ){
   
-    this.router.events.debounceTime(750).subscribe((val)=>{
+    this.router.events.debounceTime(0).subscribe((val)=>{
         if(this.location.path() != ''){
           this.routeStr = this.location.path();
         } 
