@@ -13,6 +13,5 @@ export class MaintenanceComponent implements OnInit {
   }
   ngOnInit(){
     this.goView("Locations");
-    console.log(this.route.snapshot.url);
   }
 }

@@ -42,6 +42,9 @@ export class AppComponent {
         if(this.location.path() != ''){
           this.routeStr = this.location.path();
         } 
+        else{
+          this.routeStr='';
+        }
         this.checkIfAuthenticated();
       }
     );
@@ -69,7 +72,11 @@ export class AppComponent {
       this.userAccess=await this.useAccSvc.getSet_Users_Accesses();
       this.userAccess=await this.userAccess.filter(x=>x.user_id==this.user.user_id);
     }
-  
+    
+    if(this.routeStr=='/' || this.routeStr==''){
+      this.routeOnly('loadAccess');
+    }
+
     if(this.userAccess.filter(x=>x.grp_id==adminDetails.grp_id).length==1){
       currentRole=1;
     }
