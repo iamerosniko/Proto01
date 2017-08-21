@@ -11,7 +11,6 @@ export class SearchDepartmentComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.departmentRpt);
   }
 
 }

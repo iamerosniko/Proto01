@@ -22,7 +22,7 @@ import { LoadItemsComponent } from './mod_common/load-items/load-items.component
   //components area
   declarations: [
     AppComponent,
-    LoadItemsComponent, 
+    LoadItemsComponent,
   ],
   //modules area
   imports: [

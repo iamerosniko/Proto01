@@ -139,6 +139,18 @@ export class ng2Items{
         public id: string
     ){}
 }
+
+export class AssociateDetails{
+    constructor(
+        public Name? : string,
+        public VPN? : string,
+        public Phone?: string,
+        public Department? : string,
+        public Location? : string,
+        public UpdatedOn? : string,
+    ){}
+}
+
 /* reports - eros - */
 export class AssociateRpt {
     constructor (
@@ -156,8 +168,8 @@ export class AssociateRpt {
 
 export class SkillsetRpt {
     constructor (
-        public Skillset?: string,
-        public Associates?:AssociateDetails[]
+        public Skillset: string,
+        public Associates:AssociateDetails[]
         ){
     }
 }
@@ -175,17 +187,6 @@ export class DepartmentSkills{
     constructor (
         public Skills: Skillset[],
         public DepartmentName: string
-    ){}
-}
-
-export class AssociateDetails{
-    constructor(
-        public Name? : string,
-        public VPN? : string,
-        public Phone?: string,
-        public Department? : string,
-        public Location? : string,
-        public UpdatedOn? : string,
     ){}
 }
 

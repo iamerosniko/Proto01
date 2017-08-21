@@ -6,33 +6,7 @@
         <br />
     </div>
     <!--details-->
-    <div class="col-md-12">
-        <!-- *ngIf="skillsetRpt.Associates.length>0"-->
-        <table class="table table-striped table-hover input-sm">
-            <thead>
-                <tr>
-                    <th>Associate Name</th>
-                    <th>Location</th>
-                    <th>Current Department</th>
-                    <th>VPN</th>
-                    <th>Last Updated</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let x of skillsetRpt.Associates">
-                    <td>{{x.Name}}</td>
-                    <td>{{x.Location}}</td>
-                    <td>{{x.Department}}</td>
-                    <td>{{x.VPN}}</td>
-                    <td>{{x.UpdatedOn}}</td>
-                </tr>
-                
-            </tbody>
-        </table>
-        <!--<div *ngIf="skillsetRpt.Associates.length==0">
-            No Associates found in this Skillset
-        </div>-->
-    </div>
+    <assoc-details [AssociateDetails]="skillsetRpt.Associates"></assoc-details>
     <!--divider-->
     <div class="col-md-12">
         <hr style="border-bottom: 1px solid #2196F3; margin-left: -15px; margin-right: -15px; " />
