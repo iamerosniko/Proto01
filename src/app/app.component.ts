@@ -11,7 +11,34 @@ import { Set_User_AccessSvc } from './com_services/set_user_access.svc';
 import { Set_GroupSvc } from './com_services/set_group.svc';
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
+  // templateUrl: './app.component.html',
+  template:`
+    <div class="navbar navbar-blue_2 navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" >Skillset Database</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li *ngIf="isVisible('')" [ngClass]="{'active' : routeStr=='/search'}"><a href="#p1" data-toggle="tab" (click)="routeOnly('search')" class="lnk-search"><i class="fa fa-search"></i>&nbsp;Search</a></li>
+            <li *ngIf="isVisible('skillset')" [ngClass]="{'active' : routeStr=='/skillset'}"><a href="#p2" (click)="routeOnly('skillset')" data-toggle="tab" class="lnk-skillset"><i class="fa fa-cogs"></i>&nbsp;Skillset</a></li>
+            <li *ngIf="isVisible('')" [ngClass]="{'active' : routeStr.includes('/maintenance')}"><a href="#p3" data-toggle="tab" (click)="routeOnly('maintenance')"  class="lnk-maintenance"><i class="fa fa-wrench"></i>&nbsp;Maintenance</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="fa fa-user-circle"></i><span *ngIf="user!=null">&nbsp;Hello, {{fullName}}!</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="main-body">
+      <router-outlet></router-outlet>
+    </div>
+  `,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
