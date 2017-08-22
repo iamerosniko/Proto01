@@ -32,7 +32,8 @@ export class SearchComponent implements OnInit {
     private setUserSvc:Set_UserSvc,
     private associateReportSvc:DataAssociateReport,
     private skillsetReportSvc:DataSkillsetReport,
-    private departmentReportSvc:DataDepartmentReport
+    private departmentReportSvc:DataDepartmentReport,
+    private router:Router
   ){
 
   }
@@ -81,14 +82,17 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.getDependencies().then(
-      ()=>{
-        this.removeInactive().then(
-          ()=>{
-            this.getItems();
-          }
-        )
-      });
+    this.getDependencies()
+    .then(()=>{
+        if(this.set_Users!=null){
+          this.removeInactive().then(()=>{
+              this.getItems();
+          });
+        }
+        else{
+          this.router.navigate(['/noaccess']);
+        }
+    });
   }
 
   async getDependencies(){
