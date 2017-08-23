@@ -56,29 +56,65 @@ export class SearchComponent implements OnInit {
   //material dates
   dateFrom:Date=null;
   dateTo:Date=null;
-  //sample export
-  samp(){
-    // let doc = new jsPDF();
-    // doc.text("Hello", 20, 20);
-    // doc.save('table.pdf');
-    let pdf = new jsPDF();
-   let options = {
-      pagesplit: true, background:"#FFFFFF"
-   };
-   pdf.addHTML(this.el.nativeElement, options, () => {
-      pdf.save("test.pdf");
-   });
-  }
 
-  print(){
+  async print(){
+    //determine if ie or chrome
+    var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE ");
+
+    if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./)) {
+      // alert('i am currently using IE');
+      this.ieExportToExcel();
+    }
+    //chrome / ff
+    else{
+      this.chromeExportToExcel();
+    }
+
+  }
+  async chromeExportToExcel(){
     var data_type = 'data:application/vnd.ms-excel';
     var table_div = document.getElementById('assocRpt');
     var table_html = table_div.outerHTML.replace(/ /g, '%20');
 
     var a = document.createElement('a');
     a.href = data_type + ', ' + table_html;
-    a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    // a.download = 'exported_table_' + Math.floor((Math.random() * 9999999) + 1000000) + '.xls';
+    a.download = await this.getReportName() + '.xls';
     a.click();
+  }
+  async ieExportToExcel(){
+    var table_div = document.getElementById('assocRpt');
+    var table_html = table_div.outerHTML;
+    var tab_text=table_html;
+    
+    var txtArea1:HTMLIFrameElement=<HTMLIFrameElement>document.getElementById('txtArea1');
+
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+    var iWindow = txtArea1.contentWindow
+    
+      iWindow.document.open("txt/html","replace");
+      iWindow.document.write(tab_text);
+      iWindow.document.close();
+      txtArea1.focus(); 
+      iWindow.document.execCommand("SaveAs",true,await this.getReportName() +".xls");
+  }
+
+  async getReportName():Promise<string>{
+    var str='';
+
+    if(this.radioSelect==0)
+      str='AssociateReport';
+    else if(this.radioSelect==1)
+      str='SkillsetReport';
+    else if(this.radioSelect==2)
+      str='DepartmentReport';
+    return new Promise<string>((resolve)=>
+      resolve(str+new Date().toLocaleDateString())
+    );
   }
 
   ngOnInit(){

@@ -8,6 +8,8 @@
                     <h4>{{departmentRpt.Department}}</h4>
                     <br />
                 </div>
+                <table>
+                </table>
                 <associate-skills [assoc]="x" *ngFor="let x of departmentRpt.AssociateRpts"></associate-skills>
                 <div class="col-md-12" *ngIf="departmentRpt.AssociateRpts.length==0">
                     no associates found in this department
