@@ -16,7 +16,7 @@ import { SearchModule } from './mod_search/search.module';
 import { MaintenanceModule } from './mod_maintenance/maintenance.module';
 //modules
 import { CommonCompModule } from './mod_common/common_comp.module';
-import { TestExportModule } from './mod-test-export/mod-test-export.module';
+// import { TestExportModule } from './mod-test-export/mod-test-export.module';
 import { LoadItemsComponent } from './mod_common/load-items/load-items.component';
 @NgModule({
   //components area
@@ -33,7 +33,7 @@ import { LoadItemsComponent } from './mod_common/load-items/load-items.component
     MaintenanceModule,
     SearchModule,
     AppRouting,
-    TestExportModule,
+    // TestExportModule,
   ],
   //services area
   providers: [
