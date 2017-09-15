@@ -112,8 +112,8 @@
                         <div class="panel-group" id="accordion">
                                             
                             <div 
-                                    class="panel panel-primary"
-                                    *ngFor="let dpt of departments">
+                                class="panel panel-primary"
+                                *ngFor="let dpt of departments">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{dpt.DepartmentID}}">
@@ -131,10 +131,11 @@
                                             <div *ngFor="let dptSklDBO of departmentSkillsetDBOs">
                                                 <div class="col-md-3" *ngIf="dptSklDBO.DepartmentID == dpt.DepartmentID">
                                                     <input 
-                                                            id="{{dptSklDBO.DepartmentSkillsetID}}" 
-                                                            type="checkbox" 
-                                                            class="css-checkbox med"
-                                                            [(ngModel)]="skillsetCheck['' + dptSklDBO.DepartmentSkillsetID]" [ngModelOptions]="{standalone: true}" >
+                                                        id="{{dptSklDBO.DepartmentSkillsetID}}" 
+                                                        (change)="onchange(dptSklDBO,skillsetCheck['' + dptSklDBO.DepartmentSkillsetID]);"
+                                                        type="checkbox" 
+                                                        class="css-checkbox med"
+                                                        [(ngModel)]="skillsetCheck['' + dptSklDBO.DepartmentSkillsetID]" [ngModelOptions]="{standalone: true}" >
                                                     <label for="{{dptSklDBO.DepartmentSkillsetID}}" class="css-label med elegant">{{dptSklDBO.SkillsetDescr}}</label>
                                                 </div>
                                             </div>
@@ -161,5 +162,34 @@
                 </div>
             </div>
         </nav>
+        
     </form>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Static modal</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <label class="control-label">
+            <input type="radio" name="lastupdated_1" (change)="lastWorked(1)" />&nbsp;&lt; 30 Days Ago
+        </label>
+        <label class="control-label">
+            <input type="radio" name="lastupdated_1" (change)="lastWorked(2)" />&nbsp;1-6 Months
+        </label>
+        <label class="control-label">
+            <input type="radio" name="lastupdated_1" (change)="lastWorked(3)" />&nbsp;6-12 Months
+        </label>
+        <label class="control-label">
+            <input type="radio" name="lastupdated_1" (change)="lastWorked(4)" />&nbsp;Over 1 Year ago
+        </label>
+      </div>
+    </div>
+  </div>
 </div>

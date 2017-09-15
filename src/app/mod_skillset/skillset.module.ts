@@ -16,11 +16,10 @@ import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
 import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
-
-
+import { ModalModule } from 'ngx-bootstrap'
 @NgModule({
   declarations: [
-    SkillSetComponent
+    SkillSetComponent,
   ],
   imports: [
     CommonModule,
@@ -29,7 +28,8 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
     ReactiveFormsModule,
     HttpModule,
     SkillSetRouting,
-    CommonCompModule
+    CommonCompModule,
+    ModalModule.forRoot()
   ],
   providers: [
     CurrentUserSvc,

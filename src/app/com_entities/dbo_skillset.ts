@@ -8,7 +8,8 @@ export class DepartmentSkillsetDBO {
             public SkillsetDescr?: string,
             public IsSelected?: boolean,
             public DepartmentIsActive?: Boolean,
-            public SkillsetIsActive?: Boolean){
+            public SkillsetIsActive?: Boolean,
+            public LastWorkedOn?:string ){
         this.DepartmentSkillsetID = 0,
         this.DepartmentID = 0,
         this.DepartmentDescr = '',
@@ -16,6 +17,7 @@ export class DepartmentSkillsetDBO {
         this.SkillsetDescr ='',
         this.IsSelected = false,
         this.DepartmentIsActive = false,
-        this.SkillsetIsActive = false
+        this.SkillsetIsActive = false,
+        this.LastWorkedOn=null
     }
 }

@@ -1,6 +1,6 @@
 import { 
   Component, 
-  OnInit
+  OnInit,ViewChild
 } from '@angular/core';
 import { 
   FormBuilder, 
@@ -26,7 +26,7 @@ import { DepartmentSvc } from '../com_services/department.svc';
 import { SkillsetSvc } from '../com_services/skillset.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc'
 import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
-
+import { ModalDirective } from 'ngx-bootstrap';
 @Component({
   moduleId: module.id,
   selector: 'skillset',
@@ -49,7 +49,9 @@ export class SkillSetComponent {
   private departmentSkillsetDBOs: DepartmentSkillsetDBO[];
   public skillsetFrm: FormGroup;
   private skillsetCheck: any;
-
+  @ViewChild('staticModal') public childModal:ModalDirective;
+  private lastUpdated: string=null;
+  private tempDBO:any;
   constructor(
       private curUserSvc: CurrentUserSvc,
       private useSvc: Set_UserSvc,
@@ -224,9 +226,40 @@ export class SkillSetComponent {
           tempAssociateDepartmentSkillset.DepartmentSkillsetID == tempDptSklDBO.DepartmentSkillsetID);
       
       if (assDptSkl) {
-        await this.assDptSklSvc.DeleteAssociateDeptSkillset(assDptSkl.AssociateDepartmentSkillsetID);
+        assDptSkl.LastWorkedOn=tempDptSklDBO.LastWorkedOn;
+        await this.assDptSklSvc.putAssociateDeptSkillset(assDptSkl);
+        // await this.assDptSklSvc.DeleteAssociateDeptSkillset(assDptSkl.Associa1teDepartmentSkillsetID);
       }
     }
+  }
+
+  async onchange(dsDBO:DepartmentSkillsetDBO,s:any){
+    console.log(dsDBO);
+    this.tempDBO=dsDBO;
+    //console.log(s);
+    if(<boolean>s==false){
+      this.lastUpdated=null;
+      this.childModal.show();
+    }
+  }
+
+  async lastWorked(i:number){
+    
+    if(i==1){
+      this.lastUpdated="< 30 Days Ago";
+    }
+    else if(i==2){
+      this.lastUpdated="1-6 Months";
+    }
+    else if(i==3){
+      this.lastUpdated="6-12 Months";
+    }
+    else if(i==4){
+      this.lastUpdated="Over 1 Year ago";
+    }
+    
+    this.tempDBO.LastWorkedOn=this.lastUpdated;
+    console.log(this.tempDBO);
   }
 
   //form submission

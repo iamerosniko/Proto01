@@ -4,10 +4,12 @@ export class AssociateDepartmentSkillset {
     constructor (
             public AssociateDepartmentSkillsetID?: number,//primary key
             public AssociateID?: number,
-            public DepartmentSkillsetID?: number){
+            public DepartmentSkillsetID?: number,
+            public LastWorkedOn?:string){
         this.AssociateDepartmentSkillsetID = 0,
         this.AssociateID = 0,
-        this.DepartmentSkillsetID = 0
+        this.DepartmentSkillsetID = 0,
+        this.LastWorkedOn='';
     }
 }
 
