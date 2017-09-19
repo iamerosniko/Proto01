@@ -50,8 +50,8 @@ export class SkillSetComponent {
   public skillsetFrm: FormGroup;
   private skillsetCheck: any;
   @ViewChild('staticModal') public childModal:ModalDirective;
-  private lastUpdated: string=null;
-  private tempDBO:any;
+  public lastUpdated: string=null;
+  private tempDBO:DepartmentSkillsetDBO;
   constructor(
       private curUserSvc: CurrentUserSvc,
       private useSvc: Set_UserSvc,
@@ -128,7 +128,7 @@ export class SkillSetComponent {
         await this.associateDepartmentSkillsets.filter(AssociateDepartmentSkillsetSkillset => 
         AssociateDepartmentSkillsetSkillset.AssociateID == this.associateForPosting.AssociateID);
     for (let assDptSkl of this.associateDepartmentSkillsets) {
-      this.skillsetCheck[assDptSkl.DepartmentSkillsetID] = await true;
+      this.skillsetCheck[assDptSkl.DepartmentSkillsetID] = (assDptSkl.LastWorkedOn==null||assDptSkl.LastWorkedOn=="") ? await true : await false;
     }
   }
 
@@ -212,6 +212,12 @@ export class SkillSetComponent {
         assDptSkl.DepartmentSkillsetID = await tempDptSklDBO.DepartmentSkillsetID;
         await this.assDptSklSvc.postAssociateDeptSkillset(assDptSkl);
       }
+      else
+      {
+        tempAssDeptSkl.LastWorkedOn=null;
+        await this.assDptSklSvc.putAssociateDeptSkillset(tempAssDeptSkl);
+
+      }
     }
   }
 
@@ -226,20 +232,42 @@ export class SkillSetComponent {
           tempAssociateDepartmentSkillset.DepartmentSkillsetID == tempDptSklDBO.DepartmentSkillsetID);
       
       if (assDptSkl) {
-        assDptSkl.LastWorkedOn=tempDptSklDBO.LastWorkedOn;
+        assDptSkl.LastWorkedOn=await tempDptSklDBO.LastWorkedOn;
         await this.assDptSklSvc.putAssociateDeptSkillset(assDptSkl);
         // await this.assDptSklSvc.DeleteAssociateDeptSkillset(assDptSkl.Associa1teDepartmentSkillsetID);
+        
       }
     }
   }
 
   async onchange(dsDBO:DepartmentSkillsetDBO,s:any){
-    console.log(dsDBO);
-    this.tempDBO=dsDBO;
-    //console.log(s);
-    if(<boolean>s==false){
-      this.lastUpdated=null;
-      this.childModal.show();
+    
+    var ads = this.associateDepartmentSkillsets.find(
+      x=>x.DepartmentSkillsetID==dsDBO.DepartmentSkillsetID && (
+      x.LastWorkedOn=="" || x.LastWorkedOn==null)
+    )
+    // console.log(ads);
+    // console.log(ads)
+    if(ads){
+      this.tempDBO=dsDBO;
+      // console.log(s);
+      if(<boolean>s==false||(<boolean>s==false&&dsDBO.IsSelected==true)){
+        this.lastUpdated=null;
+        this.childModal.show();
+      }
+    }
+    else{
+      dsDBO.LastWorkedOn=null;
+    }
+    // console.log(dsDBO);
+  }
+
+  async revert(){
+    var ads = this.associateDepartmentSkillsets.find(
+      x=>x.DepartmentSkillsetID==this.tempDBO.DepartmentSkillsetID
+    )
+    if(ads){
+      this.skillsetCheck[''+this.tempDBO.DepartmentSkillsetID]=true;
     }
   }
 
@@ -259,8 +287,12 @@ export class SkillSetComponent {
     }
     
     this.tempDBO.LastWorkedOn=this.lastUpdated;
-    console.log(this.tempDBO);
+    //console.log(this.tempDBO);
   }
+
+
+
+
 
   //form submission
   async onSubmit(formData: any) {
