@@ -74,7 +74,6 @@ export class DataSkillsetReport {
     async getAssociateInfo(assocDeptSkillsets:AssociateDepartmentSkillset[],locationID:number,dateFrom:Date,dateTo:Date){
         let associateDetails:AssociateDetails=new AssociateDetails('','','','','');
         //console.log(assocDeptSkillsets);
-        //note: change for to while assocDeptSkillset.leng>0
 
         while (assocDeptSkillsets.length>0){
             var assocDeptSkillset = assocDeptSkillsets.pop();
@@ -87,11 +86,12 @@ export class DataSkillsetReport {
             associateDetails.Name=await this.getFullName(associate.UserName);
             associateDetails.VPN=associate.VPN?'Yes':'No';
             associateDetails.UpdatedOn= this.getDateString(new Date(associate.UpdatedOn));
+            associateDetails.assocId=await associate.AssociateID;
             
             (associate.LocationID==locationID  && 
             (new Date(associate.UpdatedOn)>=dateFrom&&new Date(associate.UpdatedOn)<=dateTo)) ? this.associates.push(associateDetails): null;
 
-            associateDetails=new AssociateDetails('','','','','');
+            associateDetails=new AssociateDetails('','','','','','',0);
             assocDeptSkillsets=assocDeptSkillsets.filter(x=>x.AssociateID!=assocDeptSkillset.AssociateID);
         }
 

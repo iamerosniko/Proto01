@@ -150,6 +150,7 @@ export class AssociateDetails{
         public Department? : string,
         public Location? : string,
         public UpdatedOn? : string,
+        public assocId?: number
     ){}
 }
 
@@ -192,6 +193,19 @@ export class DepartmentSkills{
     ){}
 }
 
+
+//last time worked on report
+export class LastTimeWorkedOnRpt{
+    constructor(
+        
+        public lastWorkOnItem:string,
+        public skillsetRpt:SkillsetRpt[]
+    ){
+    }
+}
+
+
+
 // SelectItem
 export class SelectItem{
     constructor (
@@ -199,3 +213,4 @@ export class SelectItem{
         public text: string
     ){}
 }
+

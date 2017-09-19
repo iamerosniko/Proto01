@@ -25,6 +25,7 @@ import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skil
 import { DataAssociateReport } from './data/data-associate.reports';
 import { DataSkillsetReport } from './data/data-skillset.reports';
 import { DataDepartmentReport } from './data/data-department.reports';
+import { DataLastworkedonReport } from './data/data-lastworkedon.reports';
 import { MaterialModule,MdDatepickerModule,MdNativeDateModule
    } from '@angular/material';
 
@@ -54,7 +55,7 @@ import { MaterialModule,MdDatepickerModule,MdNativeDateModule
     LocationSvc,DepartmentSvc,SkillsetSvc,AssociateSvc,
     DepartmentSkillsetsSvc,AssociateDepartmentSkillsetsSvc,
     //reports
-    DataAssociateReport,DataSkillsetReport,DataDepartmentReport
+    DataAssociateReport,DataSkillsetReport,DataDepartmentReport,DataLastworkedonReport
   ],
   //components to be shared and used using selector
   exports: [

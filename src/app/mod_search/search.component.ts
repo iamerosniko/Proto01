@@ -9,13 +9,14 @@ import { Set_UserSvc } from '../com_services/set_user.svc';
 import { DataAssociateReport } from './data/data-associate.reports';
 import { DataSkillsetReport } from './data/data-skillset.reports';
 import { DataDepartmentReport } from './data/data-department.reports';
+import { DataLastworkedonReport } from './data/data-lastworkedon.reports';
 let jsPDF = require('jspdf');
 import 'hammerjs';
 //entities
 import { Location,Department,Skillset,
   Associate,Set_User,ng2Items,
   AssociateRpt,SelectItem,
-  SkillsetRpt,DepartmentRpt
+  SkillsetRpt,DepartmentRpt,LastTimeWorkedOnRpt
 } from '../com_entities/entities';
 @Component({
   selector: 'search',
@@ -33,6 +34,7 @@ export class SearchComponent implements OnInit {
     private associateReportSvc:DataAssociateReport,
     private skillsetReportSvc:DataSkillsetReport,
     private departmentReportSvc:DataDepartmentReport,
+    private lastWorkedOnReportSvc:DataLastworkedonReport,
     private router:Router
   ){
 
@@ -50,6 +52,7 @@ export class SearchComponent implements OnInit {
   associateRpt:AssociateRpt[]=[];
   skillsetRpt:SkillsetRpt[]=[];
   departmentRpt:DepartmentRpt[]=[];
+  lastTimeWorkedOnRpt:LastTimeWorkedOnRpt[]=[];
   //ng2 select variables
   public items:any[]=[];
   public selectedItems:SelectItem[] = [];
@@ -164,10 +167,16 @@ export class SearchComponent implements OnInit {
         this.items.push( { 'id': this.skillsets[i].SkillsetID.toString(), 'text': this.skillsets[i].SkillsetDescr});
       }
     }
-    else{
+    else if (this.radioSelect==2){
       for(var i = 0; i<this.departments.length;i++){
         this.items.push( { 'id': this.departments[i].DepartmentID.toString(), 'text': this.departments[i].DepartmentDescr});
       }
+    }
+    else if (this.radioSelect==3){
+      this.items.push({ 'id': 1, 'text': '< 30 Days Ago'});
+      this.items.push({ 'id': 2, 'text': '1-6 Months'});
+      this.items.push({ 'id': 3, 'text': '6-12 Months'});
+      this.items.push({ 'id': 4, 'text': 'Over 1 Year ago'});
     }
   }
 
@@ -175,7 +184,7 @@ export class SearchComponent implements OnInit {
     this.associateRpt=[];
     this.skillsetRpt=[];
     this.departmentRpt=[];
-    
+    this.lastTimeWorkedOnRpt=[];
     if(this.compareRequiredFields()&&this.compareDate()) 
     {
       for(let selectedItem of this.selectedItems){
@@ -196,6 +205,11 @@ export class SearchComponent implements OnInit {
           await this.departmentReportSvc.getDepartmentReport(selectedItem.id,this.selectedLocation,this.dateFrom,this.dateTo).
           then(a=>this.departmentRpt.push(a));
           //console.log(this.departmentRpt);
+        }
+        else if(this.radioSelect==3){
+          await this.lastWorkedOnReportSvc.getLastWorkedOnReport(selectedItem.text,this.selectedLocation,this.dateFrom,this.dateTo)
+          .then(a=>this.lastTimeWorkedOnRpt.push(a));
+          console.log(this.lastTimeWorkedOnRpt);
         }
       }
     }

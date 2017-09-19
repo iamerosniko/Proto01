@@ -71,6 +71,25 @@
             <br />
             <div class="row">
                 <div class="col-md-12">
+                    <label class="control-label">
+                        <input type="radio" [disabled]=" selectedLocation==-1" [(ngModel)]="radioSelect" (change)="yourVariableName=[]; getItems();" name="search_rdb" [value]="3"/>&nbsp;Search by Last Time Worked on
+                    </label>
+                    <!--<select class="form-control input-sm"></select>-->
+                    <ng-select  [multiple]="true"
+                    
+                        [active]="yourVariableName"
+                        [allowClear]="true"
+                        [items]="items"
+                        [disabled]="radioSelect!=3 || selectedLocation==-1"
+                        (data)="refreshValue($event)"
+                        
+                        placeholder="No Last Time Worked on selected">
+                    </ng-select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-12">
                     <label class="control-label">Date From</label>
                     <br />
                     <md-input-container>  
