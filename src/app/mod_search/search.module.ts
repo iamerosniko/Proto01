@@ -14,6 +14,7 @@ import { SearchSkillsetComponent } from './search-skillset/search-skillset.compo
 import { AssocDetailsComponent } from './search-skillset/assoc-details/assoc-details.component';
 import { SearchDepartmentComponent } from './search-department/search-department.component';
 import { AssociateSkillsComponent } from './search-department/associate-skills/associate-skills.component';
+import { SearchLastworkedonComponent } from './search-lastworkedon/search-lastworkedon.component';
 //services
 import { LocationSvc } from '../com_services/location.svc';
 import { DepartmentSvc } from '../com_services/department.svc';
@@ -37,7 +38,8 @@ import { MaterialModule,MdDatepickerModule,MdNativeDateModule
     SearchSkillsetComponent,
     SearchDepartmentComponent,
     AssociateSkillsComponent,
-    AssocDetailsComponent
+    AssocDetailsComponent,
+    SearchLastworkedonComponent
     //maintenance-route
   ],
   //module area
