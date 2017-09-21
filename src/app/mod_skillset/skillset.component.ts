@@ -134,11 +134,14 @@ export class SkillSetComponent {
 
   //this will assign values to the object to be saved
   async assignValues(formData: any) {
+    this.dateToday= await new Date();
     this.associateForPosting.DepartmentID = await formData.Department;
     this.associateForPosting.LocationID = await formData.Location;
     this.associateForPosting.VPN = await formData.VPN;
     this.associateForPosting.PhoneNumber = await formData.PhoneNumber;
-    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-3));             
+    this.associateForPosting.UpdatedOn = await new Date(this.dateToday.setHours(-3));  
+    this.associate.UpdatedOn=await new Date();
+    console.log(this.associate.UpdatedOn);
   }
 
   //this will prepare DBO
@@ -287,6 +290,7 @@ export class SkillSetComponent {
     }
     
     this.tempDBO.LastWorkedOn=this.lastUpdated;
+    this.lastUpdated='0';
     //console.log(this.tempDBO);
   }
 

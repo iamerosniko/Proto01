@@ -209,7 +209,6 @@ export class SearchComponent implements OnInit {
         else if(this.radioSelect==3){
           await this.lastWorkedOnReportSvc.getLastWorkedOnReport(selectedItem.text,this.selectedLocation,this.dateFrom,this.dateTo)
           .then(a=>this.lastTimeWorkedOnRpt.push(a));
-          console.log(this.lastTimeWorkedOnRpt);
         }
       }
     }

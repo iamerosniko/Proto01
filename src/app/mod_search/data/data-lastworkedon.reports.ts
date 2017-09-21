@@ -73,7 +73,7 @@ export class DataLastworkedonReport {
                 dateTo
                 )
             ).filter(x=>(x.Associates=x.Associates.filter(y=>y.assocId==associateID)));
-        console.log(tempSkillsetReport);
+        // console.log(tempSkillsetReport);
         tempSkillsetReport
     
 

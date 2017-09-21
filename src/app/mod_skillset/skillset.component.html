@@ -199,6 +199,11 @@
                     <input type="radio" name="lastupdated_1" (change)="lastWorked(4)" />&nbsp;Over 1 Year ago
                 </label>
             </div>
+            <div class="col-md-3" hidden> 
+                <label class="control-label">
+                    <input type="radio" [(ngModel)]="lastUpdated" name="lastupdated_1" [value]="null" (change)="lastWorked(4)" />&nbsp;
+                </label>
+            </div>
         </div>
         
     
