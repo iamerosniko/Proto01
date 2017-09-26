@@ -10,6 +10,7 @@ export class VWLocationComponent {
   constructor(private locSvc:LocationSvc){
     this.goBack();
   }
+  p: number = 1;
   viewMode : number = 0;
   location : Location = new Location(0,'',true);
   locations: Location[] = [];

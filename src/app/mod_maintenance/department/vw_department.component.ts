@@ -15,6 +15,8 @@ export class VWDepartmentComponent {
     private assocDeptSkillsetSvc:AssociateDepartmentSkillsetsSvc){
     this.goBack();
   }
+  
+  p: number = 1;
   viewMode : number = 0;
   department : Department = new Department(0,'',true);
   departments: Department[] = [];

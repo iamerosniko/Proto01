@@ -23,6 +23,7 @@ export class VWDepartmentSkillsComponent implements OnInit {
   ngOnInit(){
     this.getDepartments();
   }
+  p: number = 1;
   //department combobox
   checkallValue:boolean;
   tempDeptSkill:DepartmentSkillsets

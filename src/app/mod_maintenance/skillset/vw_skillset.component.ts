@@ -15,6 +15,7 @@ export class VWSkillsetComponent {
     private assocDeptSkillsetSvc:AssociateDepartmentSkillsetsSvc){
     this.goBack();
   }
+  p: number = 1;
   viewMode : number = 0;
   skillset : Skillset = new Skillset(0,'',true);
   skillsets: Skillset[] = [];
@@ -22,6 +23,8 @@ export class VWSkillsetComponent {
   associateDepartmentSkillset:AssociateDepartmentSkillset[]=[];
   mode:number=0;
   newDetails(){
+    
+    document.getElementById("txt").focus();
     this.skillset=new Skillset(0,'',true);
   }
 
@@ -30,6 +33,7 @@ export class VWSkillsetComponent {
     //get detail
     this.mode=1;
     this.getDetails(skillset);
+    document.getElementById("txt").focus();
   }
 
   getDetails(skillset : Skillset){
@@ -76,6 +80,7 @@ export class VWSkillsetComponent {
     this.getDepartmentSkillsets();
     this.getAssociateDepartmentSkillsets();
     this.mode=0;
+    this.viewMode=0;
     this.skillset=new Skillset(0,'',true);
   }
 

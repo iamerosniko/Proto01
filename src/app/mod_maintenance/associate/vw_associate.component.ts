@@ -18,6 +18,7 @@ export class VWAssociateComponent implements OnInit {
   ){
 
   }
+  p: number = 1;
   set_Users:Set_User[]=[];
   associates:Associate[]=[];
   associate:Associate=new Associate(0,'','',false,-1,-1,new Date,true);

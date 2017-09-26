@@ -21,6 +21,7 @@ import { AssociateSvc } from '../com_services/associate.svc';
 import { DepartmentSkillsetsSvc } from '../com_services/dept_skillset.svc';
 import { AssociateDepartmentSkillsetsSvc } from '../com_services/assoc_dept_skillset.svc';
 import { Set_UserSvc } from '../com_services/set_user.svc';
+import {NgxPaginationModule} from 'ngx-pagination';
 @NgModule({
   //components area
   declarations: [
@@ -31,7 +32,7 @@ import { Set_UserSvc } from '../com_services/set_user.svc';
   //module area
   imports: [
     BrowserModule,HttpModule,CommonModule,FormsModule,CommonCompModule,
-    MaintenanceRouting
+    MaintenanceRouting,NgxPaginationModule
   ],
   //services area
   providers: [

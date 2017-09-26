@@ -33,7 +33,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let x of selectedSkillsets" >
+                            <tr *ngFor="let x of selectedSkillsets | paginate: { itemsPerPage: 10, currentPage: p }" >
                                 <td><input [id]="x.departmentSkillset.SkillsetID" [(ngModel)]="x.IsSelected" type="checkbox" class="css-checkbox med"><label [attr.for]="x.departmentSkillset.SkillsetID" class="css-label med elegant"></label></td>
                                 <td>{{x.SkillsetDescr}}</td>
                             </tr>
@@ -42,7 +42,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+                
+        </div>
+        <div class="col-md-6 text-center">
+            <div class="row">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
     </div>
+    
 </div>
 <div class="save-bar">
     <!--save bar component here-->
