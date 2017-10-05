@@ -9,6 +9,8 @@ import { CurrentUserSvc } from './com_services/currentuser.svc';
 import { Set_UserSvc } from './com_services/set_user.svc';
 import { Set_User_AccessSvc } from './com_services/set_user_access.svc';
 import { Set_GroupSvc } from './com_services/set_group.svc';
+import { Inquiry }from './com_entities/inquiry';
+import { InquiryService } from './com_services/inquiry.service';
 @Component({
   selector: 'app-root',
   // templateUrl: './app.component.html',
@@ -54,6 +56,7 @@ export class AppComponent {
   adminRoutes=[{route:'/search'},{route:'/maintenance'}];
   //associateside//
   commonRoutes=[{route:'/skillset'}];
+  inquiry:Inquiry=new Inquiry('ss','ss','put','sarmife');
   public 
   constructor(
     private curUserSvc: CurrentUserSvc,
@@ -63,6 +66,7 @@ export class AppComponent {
     private router: Router,
     private route:ActivatedRoute,
     private location: Location,
+    private inquirySvc:InquiryService
   ){
   
     this.router.events.debounceTime(1000).subscribe((val)=>{
@@ -127,7 +131,14 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.getCurrentUserData();
+    this.sample();
   }
+
+  async sample(){
+    var a = await this.inquirySvc.postInquiry(this.inquiry);
+    await console.log(a);
+  }
+
   async checkIfAuthenticated(){
     var isBelong=await this.getGroupAccess();
     //await console.log('last route:'+this.routeStr);

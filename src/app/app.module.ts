@@ -18,6 +18,7 @@ import { MaintenanceModule } from './mod_maintenance/maintenance.module';
 import { CommonCompModule } from './mod_common/common_comp.module';
 // import { TestExportModule } from './mod-test-export/mod-test-export.module';
 import { LoadItemsComponent } from './mod_common/load-items/load-items.component';
+import { InquiryService } from './com_services/inquiry.service';
 @NgModule({
   //components area
   declarations: [
@@ -37,7 +38,8 @@ import { LoadItemsComponent } from './mod_common/load-items/load-items.component
   ],
   //services area
   providers: [
-    Set_GroupSvc,Set_User_AccessSvc
+    Set_GroupSvc,Set_User_AccessSvc,InquiryService
+    
   ],
   //initial component to be rendered
   bootstrap: [AppComponent]

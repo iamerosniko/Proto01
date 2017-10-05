@@ -3,26 +3,34 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { AssociateDepartmentSkillset } from '../com_entities/entities';
 import { AppSettings } from '../com_entities/app_settings';
+//BTSS INtegration
+import { Inquiry, InquiryResponse } from '../com_entities/inquiry';
+import { InquiryService } from './inquiry.service';
 @Injectable()
 export class AssociateDepartmentSkillsetsSvc {
     private headers = new Headers({'Content-Type': 'application/json'});
-    // private apiUrl = 'api/AssociateDepartmentSkillsets';
-    //private apiUrl = 'https://skillsetazureuat.azurewebsites.net/api/AssociateDepartmentSkillsets';
-    //private apiUrl = 'https://skillsetazure.azurewebsites.net/api/AssociateDepartmentSkillsets';
     private apiUrl = AppSettings.CURRENT_URL + 'AssociateDepartmentSkillsets';
 
-    constructor(private http: Http){}
+    inquiryResponse:InquiryResponse=new InquiryResponse(false,'');
+    inquiry:Inquiry=new Inquiry(AppSettings.APPLICATION_NAME,'AssociateDepartmentSkillset','','');
+    constructor(private http: Http,
+        private inquirySvc:InquiryService
+    ){}
 
     getAssociateDeptSkillsets(): Promise<AssociateDepartmentSkillset[]> {
-        return this.http
-                .get(this.apiUrl, {headers: this.headers})
-                .toPromise()
-                .then(response => response.json())
-                .catch(this.handleError);
+        // this.getInquiryResult('get','');
+        // if(this.inquiryResponse.Result)
+            return this.http
+                    .get(this.apiUrl, {headers: this.headers})
+                    .toPromise()
+                    .then(response => response.json())
+                    .catch(this.handleError);     
     }
 
     getAssociateDeptSkillset(id: string): Promise<AssociateDepartmentSkillset> {
         const url = `${this.apiUrl}/${id}`;
+        // this.getInquiryResult('get','');
+        // if(this.inquiryResponse.Result)
         return this.http
                 .get(url)
                 .toPromise()
@@ -31,6 +39,8 @@ export class AssociateDepartmentSkillsetsSvc {
     }
 
     postAssociateDeptSkillset(entity: AssociateDepartmentSkillset):Promise<any>{
+        //this.getInquiryResult('post','');
+        //if(this.inquiryResponse.Result)
         return this.http
             .post(this.apiUrl, JSON.stringify(entity), {headers: this.headers})
             .toPromise()
@@ -40,6 +50,8 @@ export class AssociateDepartmentSkillsetsSvc {
 
     putAssociateDeptSkillset(entity: AssociateDepartmentSkillset): Promise<any> {
         const url = `${this.apiUrl}/${entity.AssociateDepartmentSkillsetID}`;
+        // this.getInquiryResult('put','');
+        // if(this.inquiryResponse.Result)
         return this.http
             .put(url, JSON.stringify(entity), {headers: this.headers})
             .toPromise()
@@ -49,11 +61,19 @@ export class AssociateDepartmentSkillsetsSvc {
 
     DeleteAssociateDeptSkillset(id: number): Promise<boolean> {
         const url = `${this.apiUrl}/${id}`;
+        // this.getInquiryResult('delete','');
+        // if(this.inquiryResponse.Result)
         return this.http
             .delete(url, {headers: this.headers})
             .toPromise()
             .then(() => true)
             .catch(this.handleError);
+    }
+
+    async getInquiryResult(action:string,username:string){
+        this.inquiry.Action=action;
+        this.inquiry.UserName=username;
+        this.inquiryResponse = await this.inquirySvc.postInquiry(this.inquiry);
     }
 
     private handleError(error: any): Promise<any> {
